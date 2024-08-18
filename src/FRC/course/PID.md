@@ -30,7 +30,7 @@ Before explaining each term, keep in mind these definitions:
 
 The proportional term attempts to drive the error to zero by contributing to the control signal proportionally to the current error. Intuitively, this tries to move the output towards the reference.
 
-Essentially, as error decreases (the output approaches the setpoint), the proportional term decreases.
+As error decreases (the output approaches the setpoint), the proportional term decreases.
 
 ## The Derivative Term
 
@@ -56,12 +56,12 @@ The integral term is used to eliminate what is known as steady-state error. Stea
 
 The can be caused by things like gravity or friction overcoming the control effort being exerted. The integral term is one way of resolving this.
 
-In a PID controller, the integral term is proportional to the sum of all of the past error measurements. 
+In a PID controller, the integral term is proportional to the sum of all of the past error measurements. The integral increases the control *effort* until the system reaches the setpoint.
 
-Essentially, the integral increases the control effort until the system reaches the setpoint.
 
-For more information about the integral term and potential pitfalls, see [WPILib Docs](https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html).
 
-For a more detailed overview of all of the math involved, see [this page](https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html).
+[Introduction to Pid]
 
-For a very detailed, college level overview (not neceessary at all for our use but cool) see [Controls Engineering in FRC](https://file.tavsys.net/control/controls-engineering-in-frc.pdf).
+[WPILib Introduction To PID](https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html)
+
+[Paper on Controls Engineering in FRC (Difficult Read)](https://file.tavsys.net/control/controls-engineering-in-frc.pdf)
