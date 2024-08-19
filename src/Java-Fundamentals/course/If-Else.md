@@ -15,9 +15,6 @@ if (condition) {
 ```
 > If you need a refresher on boolean expressions, refer to [here](./Boolean-And-Equality-Operators.md)
 
-Here's an example of the decision tree when using an if statement:
-\
-![If Statement Decision Making Graph](../../assets/decision_making.jpg)
 
 Here are some examples of if statements:
 ```java
@@ -39,7 +36,7 @@ Here's an example using the [or operator](./Boolean-And-Equality-Operators.md#th
 ```java
 int x = 1
 int y = 3
-if (x < 2 || y > 20) { // This code will be executed as while y is not greater than 20, x is less than 2.
+if (x < 2 || y > 20) { // This code will be executed as even though y is not greater than 20, x is less than 2.
     System.out.println(" :) ");
 }
 ```

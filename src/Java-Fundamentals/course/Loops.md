@@ -73,7 +73,7 @@ while (i < 10) { // the condition that is evaluated
 
 ______________________________________________________________________
 
-References:
+## Resources    
 
 [W3Schools While Loop](https://www.w3schools.com/java/java_while_loop.asp) \
 [W3schools For Loop](https://www.w3schools.com/java/java_for_loop.asp)

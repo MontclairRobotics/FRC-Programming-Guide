@@ -12,7 +12,7 @@ Some common examples of when to use a PID controller include:
 - Controlling the speed / position of a motor
 - Controlling the heading of a robot
 
-> A feedback controller refers to a controller that *responds* to interference (error), we'll cover controllers that can *predict* interference before it happens
+> A feedback controller refers to a controller that *responds* to interference (error), we'll cover controllers that can *predict* interference before it happens later on
 
 
 We'll explain PID controllers by going through each term individually, building off the term before it.
@@ -28,17 +28,17 @@ Before explaining each term, keep in mind these definitions:
 
 ## The Proportional Term
 
-The proportional term attempts to drive the error to zero by contributing to the control signal proportionally to the current error. Intuitively, this tries to move the output towards the reference.
+The proportional term attempts to drive the error to zero by contributing to the control effort (voltage sent to the motor) proportionally to the current error. Intuitively, this tries to move the output towards the reference.
 
 As error decreases (the output approaches the setpoint), the proportional term decreases.
 
 ## The Derivative Term
 
->The derivative is just the rate of change over an infinitesimal (very small) time period, or the rate of change/slope for an instant.
+>The derivative is the rate of change over an infinitesimal (very small) time period, or the rate of change/slope for an instant.
 
 ![Derivative](../../assets/Derivative.png)
 
-The derivative term tries to drive the rate of change, or the *derivative* of the error to zero by contributing to the control signal proportionally to the derivative of the error. 
+The derivative term attempts to drive the rate of change, or the *derivative* of the error to zero by contributing to the control effort proportionally to the derivative of the error. 
 
 Essentially, as the rate of change of the error approaches its setpoint (the rate of change of the setpoint), this term approaches zero.
 
@@ -46,7 +46,7 @@ If the setpoint is constant, the derivative setpoint is zero, so the derivative 
 
 ## The Integral Term
 
-> The integral of a function just represents the area between the graph and the x-axis. It can be approximated using rectangles, which is how PID controllers take integrals.
+> The integral of a function represents the area between the graph and the x-axis. It can be approximated using rectangles, which is how PID controllers take integrals.
 
 ![Integrals](../../assets/Integral.svg)
 
@@ -60,8 +60,9 @@ In a PID controller, the integral term is proportional to the sum of all of the 
 
 
 
-[Introduction to Pid]
 
+
+## Resources
 [WPILib Introduction To PID](https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html)
 
 [Paper on Controls Engineering in FRC (Difficult Read)](https://file.tavsys.net/control/controls-engineering-in-frc.pdf)

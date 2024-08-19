@@ -36,7 +36,7 @@ Roadmap:
    2. Terminology \[❌\]
    3. An Electronics Primer \[🎉\]
    4. Vision \[❌\]
-   5. PID \[🚧\]
+   5. PID \[✔️\]
    6. Swerve \[❌\]
 5. Advanced Java \[❌\] 
    1. Inheritance \[❌\]

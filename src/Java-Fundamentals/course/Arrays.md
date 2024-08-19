@@ -67,7 +67,7 @@ String[] message = new String[] {"hi,", "welcome", "to", "555!"};
 int x = message.length; // 4
 ```
 
-## More Resources
+## Resources
 
 [W3Schools](https://www.w3schools.com/java/java_arrays.asp)\
 [StackOverflow](https://stackoverflow.com/questions/5570882/how-to-use-java-util-arrays)\
