@@ -1,6 +1,9 @@
 # Functions
 
-Functions are repeatable, modular blocks of code used to accomplish specific tasks. We can define our own methods that will optionally take input(s), do something with it, and optionally *return* an output.
+> Functions are also referred to as methods.
+
+
+Functions are repeatable, modular blocks of code used to accomplish specific tasks. We can define our own functions that will optionally take input(s), do something with it, and optionally *return* an output. We first saw functions in the page on [Basic Syntax](./Basic-Syntax.md) where the function is called `main`.
 
 To better explain how to read & write functions, lets look at the following example:
 
