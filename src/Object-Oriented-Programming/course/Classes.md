@@ -89,7 +89,7 @@ public class Animal {
 
 ```
 
->You can have multiple constructors with the same name in a class, as long as they have different [Signatures](../../Java-Fundamentals/course/Functions.md#method-overloading)
+>You can have multiple constructors with the same name in a class, as long as they have different [signatures](../../Java-Fundamentals/course/Functions.md#function-overloading)
 
 Let's look at an example of a class that has multiple constructors
 ```java
@@ -111,7 +111,7 @@ public class Animal {
 }
 ```
 
-In the above example we can have multiple constructors due to the properties of [Method Overloading](../../Java-Fundamentals/course/Functions.md#method-overloading)
+In the above example we can have multiple constructors due to the properties of [Method Overloading](../../Java-Fundamentals/course/Functions.md#function-overloading)
 
 This is often used when you would like some instance variables to contain certain default values. (for instance, an animal's age starting at `0`)
 

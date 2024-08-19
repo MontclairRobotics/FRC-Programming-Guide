@@ -1,6 +1,6 @@
 # Functions
 
-> Functions are also referred to as methods.
+
 
 
 Functions are repeatable, modular blocks of code used to accomplish specific tasks. We can define our own functions that will optionally take input(s), do something with it, and optionally *return* an output. We first saw functions in the page on [Basic Syntax](./Basic-Syntax.md) where the function is called `main`.
@@ -41,9 +41,9 @@ This is known as the **function declaration** and it tells the compiler the name
 
 ## Return Statement
 
-In Java, every method is [declared with a return type](./Functions.md#function-declaration) such as `int`, `float`, `double`, `string`, etc. These return types required a return statement at the end of the method. The `return` keyword is used for returning the value.
+In Java, every function is [declared with a return type](./Functions.md#function-declaration) such as `int`, `float`, `double`, `string`, etc. These return types required a return statement at the end of the function. The `return` keyword is used for returning the value.
 
-> The void return type doesn't require any return statement. If we try to return a value from a void method, the code will fail.
+> The void return type doesn't require any return statement. If we try to return a value from a void function, the code will fail.
 
 There are 3 main use cases for using the `return` keyword:
 
@@ -91,9 +91,10 @@ There are 3 main use cases for using the `return` keyword:
 
 ### One Input
 
-Information can be passed to methods as a **parameter**. Parameters act as variables inside the method. Parameters are specified after the method name, *inside* the parentheses. You can add as many parameters/inputs as you want, but they have to be seperated by a comma
+Information can be passed to functions as a **parameter**. Parameters act as [variables](./Variables.md) inside the function. Parameters are specified after the function name, *inside* the parentheses. You can add as many parameters/inputs as you want, but they have to be seperated by a comma
 
-The following example has a method that takes a `String` called `name` as a parameter. When the method is called, we pass alongside a string, which is used inside the method in a print statement:
+The following example has a function that takes a variable of type `String` called `name` as a parameter. When the function is called, we pass alongside a string, which is used inside the function in a print statement:
+
 > The variables that we pass *through* the function when we call it are known as **arguments**
 
 ```java
@@ -120,9 +121,9 @@ This function has 2 inputs, `a` and `b`. Each input has a data type (`int`) foll
 
 There is no limit to how many parameters a function can have, but they need to be seperated by commas such as in the example above.
 
-### Method Overloading
+### Function Overloading
 
-You can have multiple methods with the same name in java, as long as they have different method signatures. This means that the parameters are different in some way. For example, both 
+You can have multiple function with the same name in java, as long as they have different *function signatures*. This means that the parameters are different in some way. For example, both 
 
 ```java
 int addNumbers(int a, int b) {}
