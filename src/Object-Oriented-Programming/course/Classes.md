@@ -51,6 +51,8 @@ public class Animal {
 }
 ```
 
+>Instance variables in java should almost always be ```private```. 
+
 Instance variables will be initialized later, in the constructor, which will be explained later.
 
 ## Methods ##
@@ -118,7 +120,39 @@ This is often used when you would like some instance variables to contain certai
 If you don't need a constructor to do anything, you don't have to write one. All classes in java have an implicit, or implyed, constructor with no arguments which does nothing. We'll cover how to call the constructors we make (or ones that are implyed) [next](./Objects.md)
 
 
+## Private and Public
 
+You may have noticed two keywords before method or variable declarations: ```private``` and ```public```. These are two of four *access modiffiers* available in Java.
+
+>This may make more sense of you read the next section about objects first.
+
+>You will likely only use `public` and `private`
+
+### Syntax
+
+Access modifiers are placed at the beginning of variable or method declarations like this:
+
+```java
+//Variable
+private int num;
+
+//Method
+public static void main(String[] args){}
+```
+>In java, instance variables are typically private. 
+
+### Different Access Modifiers
+
+- `public`
+  - a public method or field is directly accessible outside of the class it is defined in by any part of your program
+- `private`
+  - a private method or field is *only* accessible within the class where it is defined.
+- `default`
+  - a method or field with the default access modifier is *only* accessible within the package (often folder) of the class where it is defined.
+- `protected`
+  - a protected method or field is accessible *only* within the package of the class where it is defined, or within any child class of the class where it is defined.
+
+  >Don't worry if you don't know what a child class or package is, it hasn't been explained. You won't really use default or protected in robotics.
 
 
 
