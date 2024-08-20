@@ -173,3 +173,5 @@ public boolean equals(Object obj) {
 }
 ```
 
+To compare two objects, you can implement `.compareTo()` in a similar way.
+
