@@ -144,3 +144,32 @@ public class Test {
     }
 }
 ```
+
+## Object Equality
+
+You may recall that equality of primitive types is assessed using the `==` operator.
+
+This does not work the same way for objects. Instead of checking if two objects are "equal", it instead checks if two objects are *the same*. This means that they occupy the same location in memory. 
+
+```java
+String str1 = new String("dog");
+String str2 = new String("dog");
+
+//is false
+str1 == str2;
+
+//is true
+str1.equals(str2);
+```
+However, by default, the `.equals()` method does the same thing as `==`. It will only do something else if you define this method in a class:
+
+```java
+public boolean equals(Object obj) {
+
+    //You may also have to check that the object is of the correct type. Don't worry about this now.
+
+    return //whatever conditions you care about
+    ...
+}
+```
+
