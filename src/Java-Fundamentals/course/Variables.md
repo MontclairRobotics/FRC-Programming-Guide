@@ -65,43 +65,7 @@ nothing else. A boolean are defined like this:
 ```java
 boolean isHungry = true
 ```
-
-## Practice
-
-1. What data type is used to store whole numbers? What about decimal numbers?
-
-   <details>
-
-   `integer` **is used to store whole numbers, while** `double` **is used to store decimal numbers.**
-
-   </details>
-
-______________________________________________________________________
-
-2. Create a boolean with the name `isHappy` with the value `false`.
-
-   <details>
-
-   ```java
-   boolean isHappy = true;
-   ```
-
-   </details>
-
-______________________________________________________________________
-
-3. Create a variable that stores your age.
-
-   <details>
-
-   ```java
-   int age = 15;
-   ```
-
-   </details>
-
-## More Resources
-
+## Resources
 [W3Schools](https://www.w3schools.com/java/java_data_types.asp)\
 [Tutorialspoint](https://www.tutorialspoint.com/java/java_variable_types.htm)\
 [Programiz](https://www.programiz.com/java-programming/variables-literals)

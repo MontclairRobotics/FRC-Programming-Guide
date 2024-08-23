@@ -107,35 +107,3 @@ boolean result = (x == y); // true, false == false
 
 > It's good practice to use parenthesis to separate the arithmetic from an equality operator, such as in the example above.
 
-## Practice
-
-1. What is the value of `result` in the following example?
-
-```java
-  double x = 9;
-  double y = 4;
-  double result = x < y;
-```
-
-<details>
-
-`x` has a value of 9 and `y` has a value of 4. We then see if x is less than (\<) y and save the value to `result`. **Since 9 is less than 4, result has a value of** `false`.
-
-</details>
-
-______________________________________________________________________
-
-2. Create 2 variables, `x` and `y`. Assign the value of `true` to x and `false` to y, then use the OR `||` operator on `x` and `y` and save it to a boolean named `result`
-
-<details>
-
-```java
-boolean x = true;
-boolean y = false;
-
-boolean result = x || y;
-```
-
-</details>
-
-______________________________________________________________________
