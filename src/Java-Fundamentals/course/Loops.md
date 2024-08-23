@@ -16,7 +16,7 @@ while (condition) { // the condition that is evaluated
 }
 ```
 Let's go over how this loop will be executed:
-1. The condition is evaluated. if it evaluates to `false`, the code is skipped.
+1. The condition is evaluated. If it evaluates to `false`, the code is skipped.
 2. Loop body is executed only if the condition evaluates to `true`
 3. Repeats 
    
@@ -44,7 +44,7 @@ for (int i = 0; i < 10; i++) { // <- Important line!
 
 ```
 
-The line containing the `for` statement itself contains several statements, lets break them down:
+The line containing the `for` statement itself contains several statements, let's break them down:
 
 1. ```java
     int i = 0;
@@ -53,17 +53,17 @@ The line containing the `for` statement itself contains several statements, lets
 2. ```java
     i < 10;
    ```
-   - This is a condition utilizing [equality operators](./Boolean-And-Equality-Operators.md#equality-operators). If this condition is true, the loop runs again, otherwise the program moves on. This is identical to the while loop's condition that we saw above.
+   - A condition utilizing [equality operators](./Boolean-And-Equality-Operators.md#equality-operators). If this condition is true, the loop runs again, otherwise the program moves on. This is identical to the while loop's condition that we saw above.
 3. ```java
     i++;
    ```
-   - This part is run at the end of each iteration of the for loop, and in this specific example is utilizing [math shorthand](./Operators-And-Math.md#operator-shorthand) to increment `i` by 1
+   - Ran at the end of each iteration of the for loop, and in this specific example is utilizing [math shorthand](./Operators-And-Math.md#operator-shorthand) to increment `i` by 1
 
 ______________________________________________________________________
 
-Finally you have the actual code which is run each iteration. Notice we reference the [variable](./Variables.md#variables) `i` in the code.
+Finally, you have the actual code which is run each iteration. Notice we reference the [variable](./Variables.md#variables) `i` in the code.
 
-One detail worth noting is that the for loop and while loop can both acomplish the same tasks. It is just a clearer and more convenient way to do many tasks. Here is what the above for loop example would look like as a while loop:
+One detail worth noting is that the for loop and while loop can both accomplish the same tasks. It is just a clearer and more convenient way to do many tasks. Here is what the above for loop example would look like as a while loop:
 
 ```java
 int number = 0;
@@ -80,5 +80,5 @@ ______________________________________________________________________
 
 ## Resources    
 
-[W3Schools While Loop](https://www.w3schools.com/java/java_while_loop.asp) \
+[W3Schools While Loop](https://www.w3schools.com/java/java_while_loop.asp)\
 [W3schools For Loop](https://www.w3schools.com/java/java_for_loop.asp)

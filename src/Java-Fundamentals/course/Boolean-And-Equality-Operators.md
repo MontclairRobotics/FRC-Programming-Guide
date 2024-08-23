@@ -6,9 +6,9 @@ There are 3 main boolean operators in Java (AND, OR, NOT). These operators are u
 
 > Conditions are statements that are created by the programmer which evaluate to either `true` or `false`
 
-### The OR Operator ( || )
+### The OR Operator (||)
 
-Given 2 booleans, the `||` operator can be used to see if **either** of the booleans are true. This is illustrated in the table below:
+Given 2 Booleans, the `||` operator can be used to see if **either** of the Booleans are true. This is illustrated in the table below:
 
 | Input 1 | Input 2 | Output |
 | ------- | ------- | ------ |
@@ -29,9 +29,9 @@ boolean y = false;
 boolean result = x || y; // false
 ```
 
-### The AND Operator ( && )
+### The AND Operator (&&)
 
-Given 2 booleans, the `&&` operator can be used to see if **both** of the 2 booleans are true. This is illustrated in the table below:
+Given 2 Booleans, the `&&` operator can be used to see if **both** of the 2 Booleans are true. This is illustrated in the table below:
 
 | Input 1 | Input 2 | Output |
 | ------- | ------- | ------ |
@@ -52,7 +52,7 @@ boolean y = true;
 boolean result = x && y; // true
 ```
 
-### The NOT Operator ( ! )
+### The NOT Operator (!)
 
 The NOT operator is special as it only uses 1 boolean, the operator inverts whatever boolean is inputted into it. This is illustrated in the table below:
 
@@ -68,7 +68,7 @@ boolean y = !x; // Not True: False
 
 ## Equality Operators
 
-Equality operators are used to create conditions. You can check if two variables are equal, not equal, or if one is greater than the other. Equality operators will *evaulate* to either `true` or `false`. Similar to the boolean operators explained above
+Equality operators are used to create conditions. You can check if two variables are equal, not equal, or if one is greater than the other. Equality operators will *evaluate* to either `true` or `false`. Similar to the boolean operators explained above
 
 **These operators are often used on Booleans, Integers, and Doubles**
 
@@ -105,7 +105,7 @@ boolean y = false;
 boolean result = (x == y); // true, false == false
 ```
 
-> It's good practice to use parenthesis to seperate the arithmetic from an equality operator, such as in the example above.
+> It's good practice to use parenthesis to separate the arithmetic from an equality operator, such as in the example above.
 
 ## Practice
 

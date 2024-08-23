@@ -26,10 +26,10 @@ There's a lot of information to dissect in the above example but for now let's l
   }
   ```
 
-This is known as the **function declaration** and it tells the compiler the name of the function alongside its inputs and outputs.
+This is known as the **function declaration**, and it tells the compiler the name of the function alongside its inputs and outputs.
 
 - `int`
-  - A function declaration starts with a [data type](./Variables.md#data-types) that specifies what type of value the function will return back to us.
+  - A function declaration starts with a [data type](./Variables.md#data-types) that specifies what type of value the function will *return* back to us.
 - `returnThree`
   - This is the name of the function, which we'll use to refer to it in our code.
 - `() { [...] }`
@@ -91,7 +91,7 @@ There are 3 main use cases for using the `return` keyword:
 
 ### One Input
 
-Information can be passed to functions as a **parameter**. Parameters act as [variables](./Variables.md) inside the function. Parameters are specified after the function name, *inside* the parentheses. You can add as many parameters/inputs as you want, but they have to be seperated by a comma
+Information can be passed to functions as a **parameter**. Parameters act as [variables](./Variables.md) inside the function. Parameters are specified after the function name, *inside* the parentheses. You can add as many parameters/inputs as you want, but they have to be separated by a comma
 
 The following example has a function that takes a variable of type `String` called `name` as a parameter. When the function is called, we pass alongside a string, which is used inside the function in a print statement:
 
@@ -117,9 +117,9 @@ int addNumbers(int a, int b) {
 }
 ```
 
-This function has 2 inputs, `a` and `b`. Each input has a data type (`int`) followed by a name (`a`/`b`). The main difference here is that the 2 inputs are seperated by a comma, which tells the compiler that these are 2 seperate inputs.
+This function has 2 inputs, `a` and `b`. Each input has a data type (`int`) followed by a name (`a`/`b`). The main difference here is that the 2 inputs are separated by a comma, which tells the compiler that these are 2 separate inputs.
 
-There is no limit to how many parameters a function can have, but they need to be seperated by commas such as in the example above.
+There is no limit to how many parameters a function can have, but they need to be separated by commas such as in the example above.
 
 ### Function Overloading
 
@@ -133,7 +133,7 @@ and
 int addNumbers(int a, int b, int c) {}
 ```
 
-are valid.
+Are valid.
 
 You can also vary the data types:
 
@@ -145,6 +145,6 @@ and
 String numString(int a, String b) {}
 ```
 
-can both appear in the same file (class).
+Can both appear in the same file (class).
 
 >It is important to note that changing the names of parameters will just cause an error, unless the data types or order of parameters is also changed (The names are irrelevant).

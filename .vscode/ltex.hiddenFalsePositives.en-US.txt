@@ -1,0 +1,6 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QW3Schools Stack Overflow Programiz\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QGiven 2 Booleans, the \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q operator can be used to see if either of the Booleans are true.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QTrue False True\nFalse True True\nFalse False False\nTrue True True\\E$"}
+{"rule":"PHRASE_REPETITION","sentence":"^\\QTrue False True\nFalse True True\nFalse False False\nTrue True True\\E$"}
+{"rule":"ITS_JJ_NNSNN","sentence":"^\\QIt's good practice to use parenthesis to separate the arithmetic from an equality operator, such as in the example above.\\E$"}
+{"rule":"RETURN_BACK","sentence":"^\\QIn this case, \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is returned back to where the function was called, and saved to the variable \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}

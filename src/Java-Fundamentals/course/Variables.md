@@ -24,7 +24,7 @@ The computer needs the `int` at the beginning of the line to understand that the
 assigned to x in an integer. All variables are given data types in this way. You just put the data
 type before the name of the variable.
 
-Java includes many different data types, but for now we'll cover the 4 major ones:
+Java includes many data types, but for now we'll cover the 4 major ones:
 
 - `Strings`
 - `Integers`
@@ -59,7 +59,7 @@ double finalGrade = -0.32
 
 ### Booleans
 
-A boolean is a value that is either true or false. It can only be true or false,
+A Boolean is a value that is either true or false. It can only be true or false,
 nothing else. A boolean are defined like this:
 
 ```java

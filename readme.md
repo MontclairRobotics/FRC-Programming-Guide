@@ -21,7 +21,7 @@ Roadmap:
    6. Arrays \[🎉\]
    7. Loops \[✔️\]
    8. Functions \[✔️\]
-   9. Best Practices \[❌\]
+   9. Best Practices \[🚧\]
 2. Object Oriented Programming \[🚧\]
    1. Classes \[✔️\]
    2. Scope \[❌\]

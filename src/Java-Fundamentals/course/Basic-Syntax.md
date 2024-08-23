@@ -1,6 +1,6 @@
 # Hello, World!
 
-A "Hello, World!" program is a simple program that outputs Hello, World! on the screen. Since it's a very simple program, it's often used to introduce a programming language to new programmers.
+A "Hello, World!" program is a simple program that outputs Hello, World! On the screen. Since it's a very simple program, it's often used to introduce a programming language to new programmers.
 
 Let's explore how a Java "Hello, World!" program works:
 

@@ -9,6 +9,7 @@
   - [Arrays](./Java-Fundamentals/course/Arrays.md)
   - [Loops](./Java-Fundamentals/course/Loops.md)
   - [Functions](./Java-Fundamentals/course/Functions.md)
+  - [Best Practices](./Java-Fundamentals/course/Best-Practices.md)
 - [Object-Oriented Programming (OOP)](./Object-Oriented-Programming/Intro.md)
   - [Classes](./Object-Oriented-Programming/course/Classes.md)
   - [Scope](./Object-Oriented-Programming/course/Scope.md)

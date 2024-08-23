@@ -1,5 +1,5 @@
 # Java Branching: If, Else, Elif
-The statements inside your code are generally executed from top to bottom, in the order that they appear. Control flow statements, however, break up the flow of execution by employing decision making, looping, and branching, enabling your program to conditionally execute particular blocks of code. This page describes the most important decision-making statements (if, else, elif). The [essential looping statements](./Loops.md) ([for](./Loops.md#for-loops), [while](./Loops.md#while-loops)) will be covered later. t
+The statements inside your code are generally executed from top to bottom, in the order that they appear. Control flow statements, however, break up the flow of execution by employing decision-making, looping, and branching, enabling your program to conditionally execute particular blocks of code. This page describes the most important decision-making statements (if, else, elif). The [essential looping statements](./Loops.md) ([for](./Loops.md#for-loops), [while](./Loops.md#while-loops)) will be covered later. 
 
 ## If Statement
 

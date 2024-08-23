@@ -59,7 +59,7 @@ While the expected value of <code>z</code> is 1.33~, this is not the case. <code
 
 ### Modulo
 
-> Given two positive numbers a and n, a modulo n (often abbreviated as a mod n) is the remainder of the division of a by n, where a is the dividend and n is the divisor.
+> Given two positive numbers `a` and `n`, `a` modulo `n` (often abbreviated as a mod n) is the remainder of the division of a by n, where `a` is the dividend and `n` is the divisor.
 
 The Modulo operator is used to get the remainder of any given division. It's helpful to think of it as doing integer division, then returning the remainder. It is represented by the `%` sign.
 
