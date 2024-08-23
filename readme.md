@@ -13,12 +13,12 @@ Roadmap:
 
 
 1. Java Fundamentals \[✔️\]
-   1. Basic Syntax \[✔️\]
+   1. Basic Syntax \[🎉\]
    2. Variables \[🎉\]
    3. Mathematical Operators \[🎉\]
    4. Boolean & Equality Operators \[🎉\]
    5. Control Flow \[🚧\]
-   6. Arrays \[✔️\]
+   6. Arrays \[🎉\]
    7. Loops \[✔️\]
    8. Functions \[✔️\]
    9. Best Practices \[❌\]

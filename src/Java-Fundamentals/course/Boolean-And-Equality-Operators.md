@@ -68,7 +68,7 @@ boolean y = !x; // Not True: False
 
 ## Equality Operators
 
-Equality operators are used to create conditions. You can check if two variables are equivalent, not equivalent, or if one is greater than the other. Equality operators will *evaulate* to either `true` or `false`
+Equality operators are used to create conditions. You can check if two variables are equal, not equal, or if one is greater than the other. Equality operators will *evaulate* to either `true` or `false`. Similar to the boolean operators explained above
 
 **These operators are often used on Booleans, Integers, and Doubles**
 

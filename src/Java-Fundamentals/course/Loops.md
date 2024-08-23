@@ -1,10 +1,10 @@
 # Loops
 
-This page is a continuation to the explanation of control flow [here](./If-Else.md#java-branching-if-if-else) Loops are frequently used in programming. Loops are handy because they save time programming and make our code easier to read and debug.
+This page is a continuation to the explanation of control flow [here](./If-Else.md#java-branching-if-if-else). Loops are extremely useful control flow statements that save time programming and make our code easier to read and debug. We'll go over the multiple types of loops and their differences in this page.
 
 ## While Loops
 
-The while loop is the simplest loop and is used to repeat a part of the program repeatedly until the specified Boolean condition is false. As soon as the Boolean condition becomes false, the loop automatically stops.
+The while loop is the simplest loop and is used to repeat a part of the program repeatedly until the specified [Boolean condition](./Boolean-And-Equality-Operators.md#) is false. As soon as the Boolean condition becomes false, the loop automatically stops.
 
 Here is the structure of a while loop:
 
@@ -15,14 +15,19 @@ while (condition) { // the condition that is evaluated
     // Last line of the loop body is the one right before the }
 }
 ```
+Let's go over how this loop will be executed:
+1. The condition is evaluated. if it evaluates to `false`, the code is skipped.
+2. Loop body is executed only if the condition evaluates to `true`
+3. Repeats 
+   
 
-First, the condition is evaluated. If the condition is true, then the loop body is executed. When the last line of the loop body is executed, the condition is *re-evaluated* (checked). This process continues until the condition is false. If the starting condition is false, the loop body is never executed and is skipped.
 
-> If the condition never becomes false, we end up with a loop that goes on forever! (This is usually bad)
+
+> If the condition switches from evaluating to `true` to evaluating to `false` *during* step 2, the while loop won't stop until it reaches step 1.
 
 ## For Loops
 
-Another common loop is the for loop. The for is useful when you need to loop through a set number of items. Let's say we want to loop through a set of numbers to add them up.
+Another common loop is the for loop. The for loop is useful when you need to loop through a set number of items. Let's say we want to loop through a set of numbers to add them up.
 Here is how you would do it:
 
 ```java
