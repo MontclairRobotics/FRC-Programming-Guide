@@ -43,3 +43,19 @@ if (x < 2 || y > 20) { // This code will be executed as even though y is not gre
 
 ## Else
 
+The `else` statement is used in conjunction with the `if` statement to run code *only if* the above `if` statement is not run. Consider the following example:
+```java
+int x = 1
+if (x > 3) {
+    System.out.println("X is greater than 3!");
+} else {
+    System.out.println("X is less than 3 :(");
+}
+```
+In the above example, "X is greater than 3!" will be printed to the screen if the condition inside the `if` statement is true. In this instance however x is *less than* 3, which means that the `else` statement is run instead, printing out "X is less than 3 :(" to the console.
+
+We can also think of an if-else *chain* as testing the condition inside the `if` statement, running the code inside the `if` statement if it's `true`, or running the code inside the `else` statement if `false`.
+
+> You can only have one `else` statement for each `for` loop.
+
+## We're missing Elif Currently please come back later!

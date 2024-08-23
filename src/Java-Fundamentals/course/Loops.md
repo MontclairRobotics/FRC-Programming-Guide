@@ -23,7 +23,7 @@ Let's go over how this loop will be executed:
 
 
 
-> If the condition switches from evaluating to `true` to evaluating to `false` *during* step 2, the while loop won't stop until it reaches step 1.
+> If the condition switches from evaluating to `true` to evaluating to `false` *during* step 2, the while loop won't stop until it ends and repeats step 1.
 
 ## For Loops
 
