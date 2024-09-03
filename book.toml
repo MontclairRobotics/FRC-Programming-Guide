@@ -1,9 +1,9 @@
 [book]
-authors = ["James 555, Teddy 5461"]
+authors = ["James 555, Abraham 555"]
 language = "zh"
 multilingual = false
 src = "src"
-title = "Programming for FRC"
+title = "Montclair Robotics Programming"
 
 [preprocessor.theme]
 pagetoc = true

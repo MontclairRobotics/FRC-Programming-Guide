@@ -166,7 +166,7 @@ However, by default, the `.equals()` method does the same thing as `==`. It will
 ```java
 public boolean equals(Object obj) {
 
-    //You may also have to check that the object is of the correct type. Don't worry about this now.
+    //You may also have to check that the object is of the correct type. Don't worry about this for now.
 
     return //whatever conditions you care about
     ...

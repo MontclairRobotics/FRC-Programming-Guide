@@ -4,7 +4,7 @@ This page is a continuation to the explanation of control flow [here](./If-Else.
 
 ## While Loops
 
-The while loop is the simplest loop and is used to repeat a part of the program repeatedly until the specified [Boolean condition](./Boolean-And-Equality-Operators.md#) is false. As soon as the Boolean condition becomes false, the loop automatically stops.
+The `while` loop is the simplest loop and is used to repeat a part of the program repeatedly until the specified [Boolean condition](./Boolean-And-Equality-Operators.md#) is false. As soon as the Boolean condition becomes false, the loop automatically stops.
 
 Here is the structure of a while loop:
 
@@ -20,15 +20,11 @@ Let's go over how this loop will be executed:
 2. Loop body is executed only if the condition evaluates to `true`
 3. Repeats 
    
-
-
-
 > If the condition switches from evaluating to `true` to evaluating to `false` *during* step 2, the while loop won't stop until it ends and repeats step 1.
 
 ## For Loops
 
-Another common loop is the for loop. The for loop is useful when you need to loop through a set number of items. Let's say we want to loop through a set of numbers to add them up.
-Here is how you would do it:
+Another common loop is the for loop. The for loop is useful when you need to loop through a set number of items. Let's say we want to loop through a set of numbers to add them up, here is how you would do it:
 
 ```java
 int number = 3;
@@ -38,9 +34,6 @@ for (int i = 0; i < 10; i++) { // <- Important line!
 
     // Once again, the last line of the loop body is the one right before the }
 }
-
-
-
 
 ```
 

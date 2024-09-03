@@ -18,7 +18,7 @@
   - [Installing](./Git/course/InstallingGit.md)
   - [Using Git & GitHub](./Git/course/Usage.md)
 - [FRC](./FRC/Intro.md)
-  - [Installing WPILib](./FRC/course/InstallingWPILib.md)
+  - [Installing WPILib (Exterior Link)](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html)
   - [Important Terminology](./FRC/course/Terminology.md)
   - [An adventure Into Electronics](./FRC/course/ElectricalPrimer.md)
   - [PID](./FRC/course/PID.md)

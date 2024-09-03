@@ -1,3 +1,3 @@
 # Installing Git
 
-todo
+to-do

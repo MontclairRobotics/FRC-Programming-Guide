@@ -4,15 +4,15 @@
 The PID controller is a common *feedback* controller consisting of 3 terms: proportional, integral, and derivative. You don't need to know what an integral/derivative is or how it works, only that they are used in PID controllers.
 
 ## Why?
-It's important to understand that when we're interfacing with electrical components (in this case, motors) the motor has no idea how to get to a certain speed or position. All the motor can do is take a given voltage and convert it to rotational speed. We need a PID controller to be able to set a motor's position or speed *instead* of an instantaneous voltage that's sent to the motor.
+It's important to understand that when we're interfacing with electrical components (in this case, motors) the motor has no idea how to get to a certain speed or position. All the motor can do is take a given voltage and convert it to rotational speed. We need a PID controller to be able to set a motor's position or velocity *instead* of an instantaneous voltage that's sent to the motor.
 
 >The motor is still being controlled using a voltage, the PID controller just calculates the voltage that the motor needs to smoothly approach the desired state.
 
 Some common examples of when to use a PID controller include:
-- Controlling the speed / position of a motor
+- Controlling the velocity / position of a motor
 - Controlling the heading of a robot
 
-> A feedback controller refers to a controller that *responds* to interference (error), we'll cover controllers that can *predict* interference before it happens later on
+> A feedback controller refers to a controller that *responds* to interference (error), we'll cover controllers that can *predict* interference before it happens later on.
 
 
 We'll explain PID controllers by going through each term individually, building off the term before it.
@@ -22,7 +22,7 @@ We'll explain PID controllers by going through each term individually, building 
 
 Before explaining each term, keep in mind these definitions:
 - Setpoint: Where the PID controller wants to be; it's goal (sometimes called the reference).
-- Output: Slightly counterintuitive, the Output is the current value of the controller's current state. The motor's **current** position, speed, voltage, etc.
+- Output: Slightly counterintuitive, the Output is the current value of the controller's state. The motor's **current** position, speed, voltage, etc.
 - Error: Error is defined as the difference between the Output and the Setpoint.
 - Control Effort: The current output of the PID controller, when controlling a motor this is usually a voltage that is then sent to the motor.
 
@@ -50,9 +50,9 @@ If the setpoint is constant, the derivative setpoint is zero, so the derivative 
 
 ![Integrals](../../assets/Integral.svg)
 
-The integral term is where PID control can become complicated. It is often not needed, and can sometimes be replaced by another method of control called *feed forward*. The integral term can make controllers behave in unexpected ways, and is difficult to tune.
+The integral term is where PID control can become complicated. It is often not needed, and can sometimes be replaced by another method of control called *feed forward*. The integral term can make controllers behave in unexpected ways but can sometimes be useful.
 
-The integral term is used to eliminate what is known as steady-state error. Steady-state error is error after the system reaches equillibrium, or if the system stops moving before reaching the setpoint.
+The integral term is used to eliminate what is known as steady-state error. Steady-state error is error after the system reaches equilibrium, or if the system stops moving before reaching the setpoint.
 
 The can be caused by things like gravity or friction overcoming the control effort being exerted. The integral term is one way of resolving this.
 

@@ -54,7 +54,7 @@ While the expected value of `z` is 1.33~, this is not the case. `z` actually end
 *Why do you think this is?*
 
 <details>
-While the expected value of <code>z</code> is 1.33~, this is not the case. <code>z</code> ends up having a value of 1. This is because since <b>both</b> <code>x</code> and <code>y</code> are of type <code>int</code>, it rounds to the nearest integer. To avoid this, <b>make sure that at least one of the types you are dividing by is of type</b> <code>z</code>
+While the expected value of <code>z</code> is 1.33~, this is not the case. <code>z</code> ends up having a value of 1. This is because since <b>both</b> <code>x</code> and <code>y</code> are of type <code>int</code>, it rounds to the nearest integer. To avoid this, <b>make sure that at least one of the types you are dividing by is of type</b> <code>double</code>
 </details>
 
 ### Modulo

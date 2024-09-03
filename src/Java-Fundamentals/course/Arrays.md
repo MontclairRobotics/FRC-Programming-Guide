@@ -62,7 +62,7 @@ Retrieving the length of an array can be done by using the `.length` modifier. T
 Consider the following example:
 
 ```java
-String[] message = new String[] {"hi,", "welcome", "to", "555!"};
+String[] message = new String[] {"hi,", "welcome", "to", "Montclair Robotics!"};
 
 int x = message.length; // 4
 ```

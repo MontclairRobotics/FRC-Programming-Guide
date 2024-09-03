@@ -8,6 +8,5 @@ As briefly [discussed earlier](../Java-Fundamentals/course/Basic-Syntax.md), the
 
 Throughout this section, we'll discuss how any why classes and objects are used, how they affect [functions](../Java-Fundamentals/course/Functions.md), and more.
 
-There will be further resources at the bottom of each page with relavent articles.
 
 

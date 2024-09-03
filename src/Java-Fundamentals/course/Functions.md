@@ -1,8 +1,5 @@
 # Functions
 
-
-
-
 Functions are repeatable, modular blocks of code used to accomplish specific tasks. We can define our own functions that will optionally take input(s), do something with it, and optionally *return* an output. We first saw functions in the page on [Basic Syntax](./Basic-Syntax.md) where the function is called `main`.
 
 To better explain how to read & write functions, lets look at the following example:
@@ -15,41 +12,34 @@ int returnThree() {
 int x = returnThree(); // 3
 
 ```
+There's a lot to dissect here. Let's focus on just the first line for now:
 
-## Function Declaration
+```java
+int returnThree() { [...] }
+```
 
-There's a lot of information to dissect in the above example but for now let's look at the first line:
-
-- ```java
-  int addTheseNumbers(int a, int b) { 
-    // [...]
-  }
-  ```
-
-This is known as the **function declaration**, and it tells the compiler the name of the function alongside its inputs and outputs.
+> This first line is known as a **function declaration**.
 
 - `int`
   - A function declaration starts with a [data type](./Variables.md#data-types) that specifies what type of value the function will *return* back to us.
 - `returnThree`
-  - This is the name of the function, which we'll use to refer to it in our code.
+  - This is the name of the function, which we'll use to refer to it in our code later.
 - `() { [...] }`
   - Inside the `()` is where we would specify any inputs to the function, we'll go over this more in a bit.
-- `return 3`
-  - This is only line of code inside the curly brackets (and thus inside the function). We'll explain the `return` keyword in a second, but for know all you need to know is that whatever comes next on the line with the `return` is *returned* to wherever the function was called. In this case, `3` is *returned* back to where the function was called, and saved to the variable `x`.
 
-> If the beginning of a function declaration has to be a data type, then how can we have a function that returns nothing? Good question. If we want to specify that the function returns *no* data, then we use the keyword `void` *instead* of a data type such as `int` or `boolean`
+Next we'll cover the code *inside* the `returnThree` function.
 
 ## Return Statement
 
-In Java, every function is [declared with a return type](./Functions.md#function-declaration) such as `int`, `float`, `double`, `string`, etc. These return types required a return statement at the end of the function. The `return` keyword is used for returning the value.
+In Java, every function is declared with a return type such as `int`, `float`, `double`, `string`, etc. These return types required a return statement at the end of the function. The `return` keyword is used for returning the value.
 
-> The void return type doesn't require any return statement. If we try to return a value from a void function, the code will fail.
+> If the beginning of a function declaration has to be a data type, then how can we have a function that returns nothing? Good question. If we want to specify that the function returns *no* data, then we use the keyword `void` *instead* of a data type such as `int` or `boolean` (The void return type doesn't require any return statement. If we try to return a value from a void function, the code will fail.)
 
 There are 3 main use cases for using the `return` keyword:
 
 - Returning a value:
   - ```java
-    int three() {
+    int returnThree() {
       return 3;
     }
     ```
