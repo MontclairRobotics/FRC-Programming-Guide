@@ -22,7 +22,7 @@
   - [Important Terminology](./FRC/course/Terminology.md)
   - [An adventure Into Electronics](./FRC/course/ElectricalPrimer.md)
   - [PID](./FRC/course/PID.md)
-  - [Vision](./FRC//course/Vision.md)
+  - [Vision](./FRC/course/Vision.md)
   - [Swerve Drivetrain](./FRC/course/Swerve.md)
 - [Appendix](./Appendix/Intro.md)
   - [A Special Thanks](./Appendix/Special-Thanks.md)

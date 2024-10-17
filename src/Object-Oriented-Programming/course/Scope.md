@@ -4,22 +4,24 @@ In Java, variables are only defined in certain parts of your program: the portio
 
 Scope in java is rather simple. If a variable is declared inside of a set of braces, it can be accessed without the `.` operator from anywhere within the set of braces.
 
+>If two variables have the same name, the one defined closer to the reference is used.
+
 For example
 
 ```java
 public class Test {
-    //In scope throughout the class
+    // In scope throughout the class
     private int num;
 
-    //Accessible outside of the class with the "." opertor
+    // Accessible outside of the class with the "." opertor
     public int publicNum;
 
     public void returnGreater(int num) {
-        //num is in scope throughout the entire method, and any enclosed blocks.
+        // num is in scope throughout the entire method, and any enclosed blocks.
 
-        //If two defined variables have the same name, the one defined closer to where it is accessed is used. 
+        // If two defined variables have the same name, the one defined closer to where it is accessed is used. 
 
-        //The "this" keyword can be used to    access instance variables in the event of a conflict.
+        // The "this" keyword can be used to    access instance variables in the event of a conflict.
 
         if (this.num > num) {
             //this.num is defined
@@ -29,7 +31,8 @@ public class Test {
             return num;
         }
 
-        //Default case
+        // Default case
         return num;
     }
 }
+```
