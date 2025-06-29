@@ -10,7 +10,7 @@ You have a class called ```Animal```, which can store the name, weight, and spec
 
 ### User-Defined Data Types
 
-To declare a variable with a class as its type, use the same syntax that is used with primative types:
+To declare a variable with a class as its type, use the same syntax that is used with primitive types:
 
 ```java
 type name;

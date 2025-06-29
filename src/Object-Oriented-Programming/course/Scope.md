@@ -13,7 +13,7 @@ public class Test {
     // In scope throughout the class
     private int num;
 
-    // Accessible outside of the class with the "." opertor
+    // Accessible outside of the class with the "." operator
     public int publicNum;
 
     public void returnGreater(int num) {

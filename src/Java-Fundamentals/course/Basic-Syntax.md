@@ -38,7 +38,7 @@ There are 2 ways to create comments in Java:
 
 1. Using `//` for single-line comments
    - ```java
-     // Hello! This is a single-line comment and is great for short explanantions of code.
+     // Hello! This is a single-line comment and is great for short explanations of code.
      ```
 2. Using `/* ... */` for multi-line comments
    - ```java

@@ -11,7 +11,7 @@ public class Main { [...] }
 ```
 >Don't worry about what `public`` means for now, we'll cover it more in depth in the page on [packages](./Packages.md).
 
-The above statement defines a class called Main, with the code inbetween the opening `{` and closing `}` parenthesis being considered *a part* of that class.
+The above statement defines a class called Main, with the code between the opening `{` and closing `}` parenthesis being considered *a part* of that class.
 
 > Class names must be unique within a package (folder), and are typically capitalized.
 
@@ -31,7 +31,7 @@ Declaration is when you create a variable, but do not immediately assign it a va
 ```java
 int x;
 ```
-Initialization is when you assign the variable a value. In Java you are not allowed to [access](../../Java-Fundamentals/course/Variables.md#variables) or [change a variable](../../Java-Fundamentals/course/Operators-And-Math.md) before *initalizing* it
+Initialization is when you assign the variable a value. In Java you are not allowed to [access](../../Java-Fundamentals/course/Variables.md#variables) or [change a variable](../../Java-Fundamentals/course/Operators-And-Math.md) before *initializing* it
 
 Here's an example of variable initialization:
 
@@ -117,12 +117,12 @@ In the above example we can have multiple constructors due to the properties of 
 
 This is often used when you would like some instance variables to contain certain default values. (for instance, an animal's age starting at `0`)
 
-If you don't need a constructor to do anything, you don't have to write one. All classes in java have an implicit, or implyed, constructor with no arguments which does nothing. We'll cover how to call the constructors we make (or ones that are implyed) [next](./Objects.md)
+If you don't need a constructor to do anything, you don't have to write one. All classes in java have an implicit, or implied, constructor with no arguments which does nothing. We'll cover how to call the constructors we make (or ones that are implied) [next](./Objects.md)
 
 
 ## Private and Public
 
-You may have noticed two keywords before method or variable declarations: ```private``` and ```public```. These are two of four *access modiffiers* available in Java.
+You may have noticed two keywords before method or variable declarations: ```private``` and ```public```. These are two of four *access modifiers* available in Java.
 
 >This may make more sense of you read the next section about objects first.
 

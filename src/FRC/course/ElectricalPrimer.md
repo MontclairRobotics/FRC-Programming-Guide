@@ -11,14 +11,14 @@ A few keywords:
 
 ## Introduction To FRC Electronics
 
-Code's job is to write code that communicates with several components that the electronics division wires together. While it's not required to know the inner workings of each part, knowing what each part does and how its connected will make it wasy easier to work with those components.
+Code's job is to write code that communicates with several components that the electronics division wires together. While it's not required to know the inner workings of each part, knowing what each part does and how its connected will make it way easier to work with those components.
 
 ![Control System Map](../../assets/frc-control-system-layout-rev.png)
 
 The above diagram shows several common parts on FRC robots. While we don't use all of them, there are several you should be familiar with:
 
 - [Voltage Regular Module (VRM)](https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#ctre-voltage-regulator-module)
-  - Responsible for delivering regulatd power to important devices, 
+  - Responsible for delivering regulated power to important devices, 
 - [RoboRIO](https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#ni-roborio)
   - The RoboRIO is the "brains" of the robot. It's responsible for running our code and facilitating communication between all other devices.
 - [SparkMAX](https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#spark-max-motor-controller)
@@ -67,7 +67,7 @@ We also conveniently use 2 brands of motor:
   - Neo 550
     - Very tiny motor. High speed, low torque.
 
-> Both of the CTRE motors we use have a built-in controller called a talo
+> Both of the CTRE motors we use have a built-in controller called a Talon FX
 
 ## Breakers & Fuses
 

@@ -1,5 +1,7 @@
 ## A guide to learning Java for FRC programming
 
+Available to view at: https://montclairrobotics.github.io/FRC-Programming-Guide/Welcome.html
+
 Key:
 
 - ❌: Not started.
