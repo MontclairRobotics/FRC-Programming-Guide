@@ -9,11 +9,11 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     env:
-      MDBOOK_VERSION: '0.4.12'
-      MDBOOK_LINKCHECK_VERSION: '0.7.4'
-      MDBOOK_MERMAID_VERSION: '0.8.3'
+      MDBOOK_VERSION: '0.4.52' # Consider checking mdBook's GitHub releases for newer versions
+      MDBOOK_LINKCHECK_VERSION: '0.7.7' # Consider checking mdbook-linkcheck's GitHub releases for newer versions
+      MDBOOK_MERMAID_VERSION: '0.15.0'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         submodules: true
     - name: Install mdbook
@@ -30,11 +30,11 @@ jobs:
                | cut -d '"' -f 4 \
                | wget -qi -
         tar -xzf mdbook-theme_linux.tar.gz -C ~/tools
-        echo ~/tools >> $GITHUB_PATH
+        echo "~/tools" >> "$GITHUB_PATH"
     - name: Build
       run: mdbook build
     # share between different jobs
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: book
         path: book/
