@@ -26,4 +26,4 @@
 
 -----------
 [Appendix](Appendix/Intro.md)
-  [A Special Thanks](Appendix/Special-Thanks.md)
+[A Special Thanks](Appendix/Special-Thanks.md)

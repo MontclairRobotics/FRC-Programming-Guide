@@ -15,22 +15,30 @@ Keep in mind the following when working with Git:
 
 - **Push/Pull**: After you commit, you will wish to *push* your commits and other changes to the remote, and *Pull* changes made to the remote onto your computer. In other words to sync your Git with GitHub including all commits. Pulling is fetching changes from the remote repository and *merging* the changes into your local repository. Pushing is sending your local changes to the remote repository.
 
-- **Merge**: For example, if changes have been made to the code since you started editing it, you will need to *merge* the code you wrote with the new version of the code. Simply put you need to merge two different versions of the same code into a singe version. If the changes each version made do not interfere with each other, then Git will usually be able to merge automatically. However if you need to merge to versions with changes that do interfere with each other, that is called a **merge conflict**. You will need to manually select which lines from each version will be combined into the final version. *The action of taking two versions of code and combining them into one* This can be done with two commits (often from different *branches*) or uncommitted changes.
+- **Merge**: For example, if changes have been made to the code since you started editing it, you will need to *merge* the code you wrote with the new version of the code. Simply put you need to merge two different versions of the same code into a singe version. If the changes each version made do not interfere with each other, then Git will usually be able to merge automatically. However if you need to merge to versions with changes that do interfere with each other, that is called a **merge conflict**. You will need to manually select which lines from each version will be combined into the final version. *The action of taking two versions of code and combining them into one.* This can be done with two commits (often from different *branches*) or uncommitted changes.
 
 - **Branch**: 
 
-- **Pull Request**:
+- **Pull Request**: 
 
-- **Code Review**:
+- **Code Review**: 
 
-- **Stash**: (including **Pop**)
+- **Stash**: (including **Pop**) 
 
-- **Origin**:
+- **Origin**: 
 
-- **Stage Changes**:
+- **Git States**: 
 
-- **Desktop Application**:
+- **Stage Changes**: 
 
-- **GitHub Issues**:
+- **HEAD**: 
+
+- **Checkout**: 
+
+- **Detached Head**: 
+
+- **Desktop Application**: 
+
+- **GitHub Issues**: 
 
 - **GitHub Actions**: (do we need this)
