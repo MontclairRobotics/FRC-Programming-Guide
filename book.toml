@@ -15,6 +15,7 @@ git-repository-url = "https://github.com/MontclairRobotics/FRC-Programming-Guide
 git-repository-icon = "fa-github"
 additional-css = ["theme/pagetoc.css"]
 additional-js = ["theme/pagetoc.js"]
+site-url = "montclairrobotics.github.io/FRC-Programming-Guide/"
 
 [output.html.fold]
 enable = false
