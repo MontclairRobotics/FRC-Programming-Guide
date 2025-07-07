@@ -9,7 +9,7 @@ The `while` loop is the simplest loop and is used to repeat a part of the progra
 Here is the structure of a while loop:
 
 ```java
-while (condition) { // the condition that is evaluated
+while (condition) { // the condition that is evaluated to true or false
     // Do things here
 
     // Last line of the loop body is the one right before the }

@@ -116,11 +116,11 @@ There is no limit to how many parameters a function can have, but they need to b
 You can have multiple function with the same name in java, as long as they have different *function signatures*. This means that the parameters are different in some way. For example, both 
 
 ```java
-int addNumbers(int a, int b) {}
+int addNumbers(int a, int b) { [...] }
 ```
 and 
 ```java
-int addNumbers(int a, int b, int c) {}
+int addNumbers(int a, int b, int c) { [...] }
 ```
 
 Are valid.
@@ -128,11 +128,11 @@ Are valid.
 You can also vary the data types:
 
 ```java
-String numString(String a, int b) {}
+String numString(String a, int b) { [...] }
 ```
 and
 ```java
-String numString(int a, String b) {}
+String numString(int a, String b) { [...] }
 ```
 
 Can both appear in the same file (class).

@@ -54,7 +54,7 @@ int secret = 42;
 Doubles are numbers, but they are more useful than integers. A double can be thought of as an integer that also supports decimal values. 0, 1, -2, and 7 are still acceptable values, but so are -3.1, 71.6 and 0.21. A double is defined like this:
 
 ```java
-double finalGrade = -0.32
+double finalGrade = -0.32;
 ```
 
 ### Booleans
@@ -63,7 +63,7 @@ A Boolean is a value that is either true or false. It can only be true or false,
 nothing else. A boolean are defined like this:
 
 ```java
-boolean isHungry = true
+boolean isHungry = true;
 ```
 ## Resources
 [W3Schools](https://www.w3schools.com/java/java_data_types.asp)\

@@ -11,7 +11,8 @@ sidebar-width = "250px"
 
 [output.html]
 default-theme = "ayu"
-git-repository-url = ""
+git-repository-url = "https://github.com/MontclairRobotics/FRC-Programming-Guide"
+git-repository-icon = "fa-github"
 additional-css = ["theme/pagetoc.css"]
 additional-js = ["theme/pagetoc.js"]
 
@@ -21,6 +22,10 @@ level = 1
 
 [output.html.playground]
 editable = true
+copyable = true
+copy-js = true
+line-numbers = false
+runnable = true
 
 [output.html.print]
 enable = false
