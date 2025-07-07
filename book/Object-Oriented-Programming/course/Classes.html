@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Object-Oriented-Programming/course/Classes.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -143,13 +149,13 @@
                         <div class="sidetoc"><nav class="pagetoc"></nav></div>
 
                         <h1 id="classes"><a class="header" href="#classes">Classes</a></h1>
-<p>A class is Java's fundamental unit of storing code. Everything you write in Java will be inside of some kind of class (or similar structure).</p>
+<p>A class is Java’s fundamental unit of storing code. Everything you write in Java will be inside of some kind of class (or similar structure).</p>
 <p>A class in java is used to represent <strong>something</strong>, similarly to how an <code>int</code> represents a number and a <code>String</code> represents a string of text. A class may be used to represent an animal, a game piece, or even a robot.</p>
-<p>You've probably seen this line at least once, at the top of your main file:</p>
+<p>You’ve probably seen this line at least once, at the top of your main file:</p>
 <pre><code class="language-java">public class Main { [...] }
 </code></pre>
 <blockquote>
-<p>Don't worry about what `public`` means for now, we'll cover it more in depth in the page on <a href="./Packages.html">packages</a>.</p>
+<p>Don’t worry about what `public`` means for now, we’ll cover it more in depth in the page on <a href="./Packages.html">packages</a>.</p>
 </blockquote>
 <p>The above statement defines a class called Main, with the code between the opening <code>{</code> and closing <code>}</code> parenthesis being considered <em>a part</em> of that class.</p>
 <blockquote>
@@ -162,13 +168,13 @@
 <li>Special methods called <strong>constructors</strong>.</li>
 </ul>
 <h2 id="instance-variables"><a class="header" href="#instance-variables">Instance Variables</a></h2>
-<p>Instance variables are <a href="../../Java-Fundamentals/course/Variables.html">variables</a> that are located <em>within</em> a given class. They differ from the type of variables that we have covered previously in that they are declared <em>outside</em> functions (unlike all the code we've seen before)</p>
+<p>Instance variables are <a href="../../Java-Fundamentals/course/Variables.html">variables</a> that are located <em>within</em> a given class. They differ from the type of variables that we have covered previously in that they are declared <em>outside</em> functions (unlike all the code we’ve seen before)</p>
 <p>You may or may not have learned the difference between a variable declaration and a variable initialization.</p>
 <p>Declaration is when you create a variable, but do not immediately assign it a value:</p>
 <pre><code class="language-java">int x;
 </code></pre>
 <p>Initialization is when you assign the variable a value. In Java you are not allowed to <a href="../../Java-Fundamentals/course/Variables.html#variables">access</a> or <a href="../../Java-Fundamentals/course/Operators-And-Math.html">change a variable</a> before <em>initializing</em> it</p>
-<p>Here's an example of variable initialization:</p>
+<p>Here’s an example of variable initialization:</p>
 <pre><code class="language-java">x = 10;
 </code></pre>
 <p>Instance variables are variables that are declared at the top of a class, right after the class declaration. For example:</p>
@@ -190,14 +196,14 @@
 <p>Methods == Functions</p>
 </blockquote>
 <p>Any method within a class can access the instance variables of that class.</p>
-<p>We'll talk more about methods later.</p>
+<p>We’ll talk more about methods later.</p>
 <h2 id="constructors"><a class="header" href="#constructors">Constructors</a></h2>
 <p>The Constructor of a class is what is used to create an instance of a class.</p>
 <blockquote>
-<p>If you don't know what an instance is, don't worry about it. It will be explained in the page on <a href="./Objects.html">Objects</a></p>
+<p>If you don’t know what an instance is, don’t worry about it. It will be explained in the page on <a href="./Objects.html">Objects</a></p>
 </blockquote>
 <p>They have no return type, and instead of a name, they use the name of the class.</p>
-<p>Let's look at an example of a constructor:</p>
+<p>Let’s look at an example of a constructor:</p>
 <pre><code class="language-java">public class Animal {
     private String name;
     private int age;
@@ -215,7 +221,7 @@
 <blockquote>
 <p>You can have multiple constructors with the same name in a class, as long as they have different <a href="../../Java-Fundamentals/course/Functions.html#function-overloading">signatures</a></p>
 </blockquote>
-<p>Let's look at an example of a class that has multiple constructors</p>
+<p>Let’s look at an example of a class that has multiple constructors</p>
 <pre><code class="language-java">public class Animal {
     public String name;
     public int age;
@@ -234,8 +240,8 @@
 }
 </code></pre>
 <p>In the above example we can have multiple constructors due to the properties of <a href="../../Java-Fundamentals/course/Functions.html#function-overloading">Method Overloading</a></p>
-<p>This is often used when you would like some instance variables to contain certain default values. (for instance, an animal's age starting at <code>0</code>)</p>
-<p>If you don't need a constructor to do anything, you don't have to write one. All classes in java have an implicit, or implied, constructor with no arguments which does nothing. We'll cover how to call the constructors we make (or ones that are implied) <a href="./Objects.html">next</a></p>
+<p>This is often used when you would like some instance variables to contain certain default values. (for instance, an animal’s age starting at <code>0</code>)</p>
+<p>If you don’t need a constructor to do anything, you don’t have to write one. All classes in java have an implicit, or implied, constructor with no arguments which does nothing. We’ll cover how to call the constructors we make (or ones that are implied) <a href="./Objects.html">next</a></p>
 <h2 id="private-and-public"><a class="header" href="#private-and-public">Private and Public</a></h2>
 <p>You may have noticed two keywords before method or variable declarations: <code>private</code> and <code>public</code>. These are two of four <em>access modifiers</em> available in Java.</p>
 <blockquote>
@@ -281,7 +287,7 @@ public static void main(String[] args){}
 <li>a protected method or field is accessible <em>only</em> within the package of the class where it is defined, or within any child class of the class where it is defined.</li>
 </ul>
 <blockquote>
-<p>Don't worry if you don't know what a child class or package is, it hasn't been explained. You won't really use default or protected in robotics.</p>
+<p>Don’t worry if you don’t know what a child class or package is, it hasn’t been explained. You won’t really use default or protected in robotics.</p>
 </blockquote>
 </li>
 </ul>

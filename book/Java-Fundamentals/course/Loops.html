@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Java-Fundamentals/course/Loops.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -143,27 +149,27 @@
                         <div class="sidetoc"><nav class="pagetoc"></nav></div>
 
                         <h1 id="loops"><a class="header" href="#loops">Loops</a></h1>
-<p>This page is a continuation to the explanation of control flow <a href="./If-Else.html#java-branching-if-if-else">here</a>. Loops are extremely useful control flow statements that save time programming and make our code easier to read and debug. We'll go over the multiple types of loops and their differences in this page.</p>
+<p>This page is a continuation to the explanation of control flow <a href="./If-Else.html#java-branching-if-if-else">here</a>. Loops are extremely useful control flow statements that save time programming and make our code easier to read and debug. We’ll go over the multiple types of loops and their differences in this page.</p>
 <h2 id="while-loops"><a class="header" href="#while-loops">While Loops</a></h2>
 <p>The <code>while</code> loop is the simplest loop and is used to repeat a part of the program repeatedly until the specified <a href="./Boolean-And-Equality-Operators.html#">Boolean condition</a> is false. As soon as the Boolean condition becomes false, the loop automatically stops.</p>
 <p>Here is the structure of a while loop:</p>
-<pre><code class="language-java">while (condition) { // the condition that is evaluated
+<pre><code class="language-java">while (condition) { // the condition that is evaluated to true or false
     // Do things here
 
     // Last line of the loop body is the one right before the }
 }
 </code></pre>
-<p>Let's go over how this loop will be executed:</p>
+<p>Let’s go over how this loop will be executed:</p>
 <ol>
 <li>The condition is evaluated. If it evaluates to <code>false</code>, the code is skipped.</li>
 <li>Loop body is executed only if the condition evaluates to <code>true</code></li>
 <li>Repeats</li>
 </ol>
 <blockquote>
-<p>If the condition switches from evaluating to <code>true</code> to evaluating to <code>false</code> <em>during</em> step 2, the while loop won't stop until it ends and repeats step 1.</p>
+<p>If the condition switches from evaluating to <code>true</code> to evaluating to <code>false</code> <em>during</em> step 2, the while loop won’t stop until it ends and repeats step 1.</p>
 </blockquote>
 <h2 id="for-loops"><a class="header" href="#for-loops">For Loops</a></h2>
-<p>Another common loop is the for loop. The for loop is useful when you need to loop through a set number of items. Let's say we want to loop through a set of numbers to add them up, here is how you would do it:</p>
+<p>Another common loop is the for loop. The for loop is useful when you need to loop through a set number of items. Let’s say we want to loop through a set of numbers to add them up, here is how you would do it:</p>
 <pre><code class="language-java">int number = 3;
 
 for (int i = 0; i &lt; 10; i++) { // &lt;- Important line!
@@ -173,7 +179,7 @@ for (int i = 0; i &lt; 10; i++) { // &lt;- Important line!
 }
 
 </code></pre>
-<p>The line containing the <code>for</code> statement itself contains several statements, let's break them down:</p>
+<p>The line containing the <code>for</code> statement itself contains several statements, let’s break them down:</p>
 <ol>
 <li>
 <pre><code class="language-java"> int i = 0;
@@ -186,7 +192,7 @@ for (int i = 0; i &lt; 10; i++) { // &lt;- Important line!
 <pre><code class="language-java"> i &lt; 10;
 </code></pre>
 <ul>
-<li>A condition utilizing <a href="./Boolean-And-Equality-Operators.html#equality-operators">equality operators</a>. If this condition is true, the loop runs again, otherwise the program moves on. This is identical to the while loop's condition that we saw above.</li>
+<li>A condition utilizing <a href="./Boolean-And-Equality-Operators.html#equality-operators">equality operators</a>. If this condition is true, the loop runs again, otherwise the program moves on. This is identical to the while loop’s condition that we saw above.</li>
 </ul>
 </li>
 <li>

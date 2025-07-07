@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/FRC/course/ElectricalPrimer.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -143,17 +149,17 @@
                         <div class="sidetoc"><nav class="pagetoc"></nav></div>
 
                         <h1 id="electrical-primer"><a class="header" href="#electrical-primer">Electrical Primer</a></h1>
-<p>Code's job is to write code that communicates with several different components that the electronics division wires together. While it's not required to know the inner workings of each part, wire, and protocol</p>
+<p>Code’s job is to write code that communicates with several different components that the electronics division wires together. While it’s not required to know the inner workings of each part, wire, and protocol</p>
 <p>A few keywords:</p>
 <ul>
-<li>Current: The "flow rate" of electrons</li>
+<li>Current: The “flow rate” of electrons</li>
 <li>Amperage: A measurement of current</li>
-<li>Voltage: The "force" that makes electrical flow</li>
+<li>Voltage: The “force” that makes electrical flow</li>
 </ul>
 <h2 id="introduction-to-frc-electronics"><a class="header" href="#introduction-to-frc-electronics">Introduction To FRC Electronics</a></h2>
-<p>Code's job is to write code that communicates with several components that the electronics division wires together. While it's not required to know the inner workings of each part, knowing what each part does and how its connected will make it way easier to work with those components.</p>
+<p>Code’s job is to write code that communicates with several components that the electronics division wires together. While it’s not required to know the inner workings of each part, knowing what each part does and how its connected will make it way easier to work with those components.</p>
 <p><img src="../../assets/frc-control-system-layout-rev.png" alt="Control System Map" /></p>
-<p>The above diagram shows several common parts on FRC robots. While we don't use all of them, there are several you should be familiar with:</p>
+<p>The above diagram shows several common parts on FRC robots. While we don’t use all of them, there are several you should be familiar with:</p>
 <ul>
 <li><a href="https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#ctre-voltage-regulator-module">Voltage Regular Module (VRM)</a>
 <ul>
@@ -162,7 +168,7 @@
 </li>
 <li><a href="https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#ni-roborio">RoboRIO</a>
 <ul>
-<li>The RoboRIO is the "brains" of the robot. It's responsible for running our code and facilitating communication between all other devices.</li>
+<li>The RoboRIO is the “brains” of the robot. It’s responsible for running our code and facilitating communication between all other devices.</li>
 </ul>
 </li>
 <li><a href="https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#spark-max-motor-controller">SparkMAX</a>
@@ -177,7 +183,7 @@
 </li>
 <li><a href="https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#ctre-voltage-regulator-module">Robot Signal Light (RSL)</a>
 <ul>
-<li>The RSL is a signal light that is used to communicate if the robot is off, on, and if it's on, enabled.</li>
+<li>The RSL is a signal light that is used to communicate if the robot is off, on, and if it’s on, enabled.</li>
 <li>These 3 states are represented by:
 <ul>
 <li>Solid light: On, disabled</li>
@@ -194,12 +200,12 @@
 </li>
 <li><a href="https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#rev-radio-power-module">Radio Power Module (RPM)</a>
 <ul>
-<li>While the RPM is not always used, it's one of two major ways to power the radio (the other one being a power connector located on the radio)</li>
+<li>While the RPM is not always used, it’s one of two major ways to power the radio (the other one being a power connector located on the radio)</li>
 </ul>
 </li>
 <li><a href="https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html#ctre-voltage-regulator-module">120A Breaker</a>
 <ul>
-<li>This breaker is the on/off switch for the robot. It is usually near the edge of the robot, so it's easier to enable and disable.</li>
+<li>This breaker is the on/off switch for the robot. It is usually near the edge of the robot, so it’s easier to enable and disable.</li>
 </ul>
 </li>
 <li><a href="https://limelightvision.io/">Limelight</a>
@@ -210,8 +216,8 @@
 </ul>
 <h2 id="can"><a class="header" href="#can">CAN</a></h2>
 <p>CAN (Control Area Network) is a protocol used to send data between different devices on the robot. It is a daisy-chained system, which means that its technically just two long intertwined wires going from one device to the next.</p>
-<p>Due to CAN's nature of each connection relying on the previous one, <em>any break</em> in the chain can cause undesired behavior.</p>
-<p>Every Device on a CAN network has a unique <strong>ID</strong>. <strong>This can be any number, but it's good practice to keep them under 40.</strong> When you hear someone referencing something's CAN ID, this is what they are referring to.</p>
+<p>Due to CAN’s nature of each connection relying on the previous one, <em>any break</em> in the chain can cause undesired behavior.</p>
+<p>Every Device on a CAN network has a unique <strong>ID</strong>. <strong>This can be any number, but it’s good practice to keep them under 40.</strong> When you hear someone referencing something’s CAN ID, this is what they are referring to.</p>
 <p><img src="../../assets/CANWire.jpg" alt="CAN Wire" /></p>
 <h2 id="motors"><a class="header" href="#motors">Motors</a></h2>
 <p>There are 2 classes of motors mainly used in FRC. These are motors <em>with</em> built-in controllers as well as motors <em>without</em> built-in controllers.</p>

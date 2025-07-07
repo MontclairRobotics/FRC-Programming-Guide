@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/FRC/course/PID.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -143,9 +149,9 @@
                         <div class="sidetoc"><nav class="pagetoc"></nav></div>
 
                         <h1 id="pid"><a class="header" href="#pid">PID</a></h1>
-<p>The PID controller is a common <em>feedback</em> controller consisting of 3 terms: proportional, integral, and derivative. You don't need to know what an integral/derivative is or how it works, only that they are used in PID controllers.</p>
+<p>The PID controller is a common <em>feedback</em> controller consisting of 3 terms: proportional, integral, and derivative. You don’t need to know what an integral/derivative is or how it works, only that they are used in PID controllers.</p>
 <h2 id="why"><a class="header" href="#why">Why?</a></h2>
-<p>It's important to understand that when we're interfacing with electrical components (in this case, motors) the motor has no idea how to get to a certain speed or position. All the motor can do is take a given voltage and convert it to rotational speed. We need a PID controller to be able to set a motor's position or velocity <em>instead</em> of an instantaneous voltage that's sent to the motor.</p>
+<p>It’s important to understand that when we’re interfacing with electrical components (in this case, motors) the motor has no idea how to get to a certain speed or position. All the motor can do is take a given voltage and convert it to rotational speed. We need a PID controller to be able to set a motor’s position or velocity <em>instead</em> of an instantaneous voltage that’s sent to the motor.</p>
 <blockquote>
 <p>The motor is still being controlled using a voltage, the PID controller just calculates the voltage that the motor needs to smoothly approach the desired state.</p>
 </blockquote>
@@ -155,14 +161,14 @@
 <li>Controlling the heading of a robot</li>
 </ul>
 <blockquote>
-<p>A feedback controller refers to a controller that <em>responds</em> to interference (error), we'll cover controllers that can <em>predict</em> interference before it happens later on.</p>
+<p>A feedback controller refers to a controller that <em>responds</em> to interference (error), we’ll cover controllers that can <em>predict</em> interference before it happens later on.</p>
 </blockquote>
-<p>We'll explain PID controllers by going through each term individually, building off the term before it.</p>
+<p>We’ll explain PID controllers by going through each term individually, building off the term before it.</p>
 <h2 id="important-terms"><a class="header" href="#important-terms">Important Terms</a></h2>
 <p>Before explaining each term, keep in mind these definitions:</p>
 <ul>
-<li>Setpoint: Where the PID controller wants to be; it's goal (sometimes called the reference).</li>
-<li>Output: Slightly counterintuitive, the Output is the current value of the controller's state. The motor's <strong>current</strong> position, speed, voltage, etc.</li>
+<li>Setpoint: Where the PID controller wants to be; it’s goal (sometimes called the reference).</li>
+<li>Output: Slightly counterintuitive, the Output is the current value of the controller’s state. The motor’s <strong>current</strong> position, speed, voltage, etc.</li>
 <li>Error: Error is defined as the difference between the Output and the Setpoint.</li>
 <li>Control Effort: The current output of the PID controller, when controlling a motor this is usually a voltage that is then sent to the motor.</li>
 </ul>
@@ -176,7 +182,7 @@
 <p><img src="../../assets/Derivative.png" alt="Derivative" /></p>
 <p>The derivative term attempts to drive the rate of change, or the <em>derivative</em> of the error to zero by contributing to the control effort proportionally to the derivative of the error.</p>
 <p>Essentially, as the rate of change of the error approaches its setpoint (the rate of change of the setpoint), this term approaches zero.</p>
-<p>If the setpoint is constant, the derivative setpoint is zero, so the derivative term acts as a "software-defined damper", which slows down systems in motion.</p>
+<p>If the setpoint is constant, the derivative setpoint is zero, so the derivative term acts as a “software-defined damper”, which slows down systems in motion.</p>
 <h2 id="the-integral-term"><a class="header" href="#the-integral-term">The Integral Term</a></h2>
 <blockquote>
 <p>The integral of a function represents the area between the graph and the x-axis. It can be approximated using rectangles, which is how PID controllers take integrals.</p>

@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Java-Fundamentals/course/Basic-Syntax.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -143,19 +149,19 @@
                         <div class="sidetoc"><nav class="pagetoc"></nav></div>
 
                         <h1 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h1>
-<p>"Hello, World!" is the name of a simple program that outputs Hello, World! On the screen. Since it's very simple, it's often used to introduce a programming language to new programmers.</p>
-<p>Let's explore how a Java "Hello, World!" program works:</p>
+<p>“Hello, World!” is the name of a simple program that outputs Hello, World! On the screen. Since it’s very simple, it’s often used to introduce a programming language to new programmers.</p>
+<p>Let’s explore how a Java “Hello, World!” program works:</p>
 <pre><code class="language-java">public class Main { 
   public static void main(String[] args) { 
     System.out.println("Hello World!"); 
   }
 }
 </code></pre>
-<p>Let's go through this line by line:</p>
+<p>Let’s go through this line by line:</p>
 <ol>
 <li><code>public class Main { [...] }</code>
 <ul>
-<li>In Java, every file contains one main <em>class</em> that has the same name as the file its in (in this case the above file would be called <code>Main.java</code>). We’ll talk about <a href="../../Object-Oriented-Programming/course/Classes.html">classes</a> more in the future, but for now think of them as a container for parts of our code. Code between the opening and closing curly parenthesis is considered "part" of that class.</li>
+<li>In Java, every file contains one main <em>class</em> that has the same name as the file its in (in this case the above file would be called <code>Main.java</code>). We’ll talk about <a href="../../Object-Oriented-Programming/course/Classes.html">classes</a> more in the future, but for now think of them as a container for parts of our code. Code between the opening and closing curly parenthesis is considered “part” of that class.</li>
 </ul>
 </li>
 <li><code>public static void main(String[] args) { [...] }</code>
@@ -165,17 +171,17 @@
 </li>
 <li><code>System.out.println("hello World");</code>
 <ul>
-<li>This is known as a <strong>print statement</strong>. It prints the text "Hello, World!" to standard output (your screen). The text inside the quotation marks is called a <a href="./Variables.html#">String</a> in Java. We use <code>System.out.println(" [...]   ")</code> to print the text inside the double quotes to the screen.</li>
+<li>This is known as a <strong>print statement</strong>. It prints the text “Hello, World!” to standard output (your screen). The text inside the quotation marks is called a <a href="./Variables.html#">String</a> in Java. We use <code>System.out.println(" [...]   ")</code> to print the text inside the double quotes to the screen.</li>
 </ul>
 </li>
 </ol>
 <hr />
 <blockquote>
-<p>How does the <em>main method</em> work? Good question. However, we will not discuss it in this article. After all, it's a basic program to introduce the Java programming language to you! We will learn the meaning of keywords like <code>public</code>, <code>static</code>, <code>void</code>, and <a href="./Functions.html">how methods work</a> in later chapters.</p>
+<p>How does the <em>main method</em> work? Good question. However, we will not discuss it in this article. After all, it’s a basic program to introduce the Java programming language to you! We will learn the meaning of keywords like <code>public</code>, <code>static</code>, <code>void</code>, and <a href="./Functions.html">how methods work</a> in later chapters.</p>
 </blockquote>
 <p>In Java, every application begins with a class definition. In the above program, <code>Main</code> is the name of the class, and is defined on the first line. We’ll talk about classes more in the <a href="../../Object-Oriented-Programming/course/Classes.html">future</a>, but for now think of them as a container for different parts of our code.</p>
 <blockquote>
-<p>All the content in this section (excluding <a href="./Functions.html">functions</a>) can be thought of as running inside the above "hello world" example (even if the code examples don't explicitly state it)</p>
+<p>All the content in this section (excluding <a href="./Functions.html">functions</a>) can be thought of as running inside the above “hello world” example (even if the code examples don’t explicitly state it)</p>
 </blockquote>
 <h2 id="comments"><a class="header" href="#comments">Comments</a></h2>
 <p>Comments are intended for users reading our code to understand its purpose &amp; functionality. They are completely ignored by the Java compiler.</p>
@@ -200,7 +206,7 @@
 </ul>
 </li>
 </ol>
-<p><strong>Code snippets throughout this guide may use comments to provide further context or explain what's going on.</strong></p>
+<p><strong>Code snippets throughout this guide may use comments to provide further context or explain what’s going on.</strong></p>
 
                     </main>
 

@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Object-Oriented-Programming/course/Objects.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -181,7 +187,7 @@
 <p>Instance variables can also be static, and are declared like this: <code>static int num;</code>.</p>
 </blockquote>
 <p>The main difference between static and non-static methods is that static methods are associated with the class, and non-static methods are associated with the instance.</p>
-<p>That means that static methods can only access information that is <em>not</em> associated with a particular instance. Essentially, they can't access non-static instance variables.</p>
+<p>That means that static methods can only access information that is <em>not</em> associated with a particular instance. Essentially, they can’t access non-static instance variables.</p>
 <p>To access a static field (instance variable) or method, you need to use the class name, and the <em>dot operator</em>:</p>
 <pre><code class="language-java">Test.method();
 </code></pre>
@@ -209,7 +215,7 @@
 </code></pre>
 <h3 id="non-static-methods"><a class="header" href="#non-static-methods">Non-Static Methods</a></h3>
 <p>To access a non-static field or method, you <em>cannot</em> use the class name. Instead, you must call them on a specific <em>instance</em> of a class (an object).</p>
-<p>Let's go back to the <code>Animal</code> example:</p>
+<p>Let’s go back to the <code>Animal</code> example:</p>
 <pre><code class="language-java">public class Animal {
     //non-static instance variables
     private String name;
@@ -248,7 +254,7 @@ System.out.println(fido.getNameAndAge());
 </code></pre>
 <h2 id="object-equality"><a class="header" href="#object-equality">Object Equality</a></h2>
 <p>You may recall that equality of primitive types is assessed using the <code>==</code> operator.</p>
-<p>This does not work the same way for objects. Instead of checking if two objects are "equal", it instead checks if two objects are <em>the same</em>. This means that they occupy the same location in memory.</p>
+<p>This does not work the same way for objects. Instead of checking if two objects are “equal”, it instead checks if two objects are <em>the same</em>. This means that they occupy the same location in memory.</p>
 <pre><code class="language-java">String str1 = new String("dog");
 String str2 = new String("dog");
 

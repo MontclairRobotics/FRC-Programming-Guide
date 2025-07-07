@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Java-Fundamentals/course/Functions.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -152,7 +158,7 @@
 int x = returnThree(); // 3
 
 </code></pre>
-<p>There's a lot to dissect here. Let's focus on just the first line for now:</p>
+<p>There’s a lot to dissect here. Let’s focus on just the first line for now:</p>
 <pre><code class="language-java">int returnThree() { [...] }
 </code></pre>
 <blockquote>
@@ -166,20 +172,20 @@ int x = returnThree(); // 3
 </li>
 <li><code>returnThree</code>
 <ul>
-<li>This is the name of the function, which we'll use to refer to it in our code later.</li>
+<li>This is the name of the function, which we’ll use to refer to it in our code later.</li>
 </ul>
 </li>
 <li><code>() { [...] }</code>
 <ul>
-<li>Inside the <code>()</code> is where we would specify any inputs to the function, we'll go over this more in a bit.</li>
+<li>Inside the <code>()</code> is where we would specify any inputs to the function, we’ll go over this more in a bit.</li>
 </ul>
 </li>
 </ul>
-<p>Next we'll cover the code <em>inside</em> the <code>returnThree</code> function.</p>
+<p>Next we’ll cover the code <em>inside</em> the <code>returnThree</code> function.</p>
 <h2 id="return-statement"><a class="header" href="#return-statement">Return Statement</a></h2>
 <p>In Java, every function is declared with a return type such as <code>int</code>, <code>float</code>, <code>double</code>, <code>string</code>, etc. These return types required a return statement at the end of the function. The <code>return</code> keyword is used for returning the value.</p>
 <blockquote>
-<p>If the beginning of a function declaration has to be a data type, then how can we have a function that returns nothing? Good question. If we want to specify that the function returns <em>no</em> data, then we use the keyword <code>void</code> <em>instead</em> of a data type such as <code>int</code> or <code>boolean</code> (The void return type doesn't require any return statement. If we try to return a value from a void function, the code will fail.)</p>
+<p>If the beginning of a function declaration has to be a data type, then how can we have a function that returns nothing? Good question. If we want to specify that the function returns <em>no</em> data, then we use the keyword <code>void</code> <em>instead</em> of a data type such as <code>int</code> or <code>boolean</code> (The void return type doesn’t require any return statement. If we try to return a value from a void function, the code will fail.)</p>
 </blockquote>
 <p>There are 3 main use cases for using the <code>return</code> keyword:</p>
 <ul>
@@ -263,17 +269,17 @@ printName("Baebraham"); // Will call the function printName with the argument "B
 <p>There is no limit to how many parameters a function can have, but they need to be separated by commas such as in the example above.</p>
 <h3 id="function-overloading"><a class="header" href="#function-overloading">Function Overloading</a></h3>
 <p>You can have multiple function with the same name in java, as long as they have different <em>function signatures</em>. This means that the parameters are different in some way. For example, both</p>
-<pre><code class="language-java">int addNumbers(int a, int b) {}
+<pre><code class="language-java">int addNumbers(int a, int b) { [...] }
 </code></pre>
 <p>and</p>
-<pre><code class="language-java">int addNumbers(int a, int b, int c) {}
+<pre><code class="language-java">int addNumbers(int a, int b, int c) { [...] }
 </code></pre>
 <p>Are valid.</p>
 <p>You can also vary the data types:</p>
-<pre><code class="language-java">String numString(String a, int b) {}
+<pre><code class="language-java">String numString(String a, int b) { [...] }
 </code></pre>
 <p>and</p>
-<pre><code class="language-java">String numString(int a, String b) {}
+<pre><code class="language-java">String numString(int a, String b) { [...] }
 </code></pre>
 <p>Can both appear in the same file (class).</p>
 <blockquote>

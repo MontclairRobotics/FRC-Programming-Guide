@@ -113,6 +113,12 @@
                     <h1 class="menu-title">Montclair Robotics Programming</h1>
 
                     <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Java-Fundamentals/course/Arrays.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -144,17 +150,17 @@
 
                         <h1 id="arrays"><a class="header" href="#arrays">Arrays</a></h1>
 <p>An array is a list of variables, or more succinctly, a list of values. Each value in an array has an <strong>index</strong>, which is a number that represents the location of the value within the array.</p>
-<p>Let's discuss more about how to create and modify arrays using the following example:</p>
+<p>Let’s discuss more about how to create and modify arrays using the following example:</p>
 <pre><code class="language-java">int[] x = new int[] {2, 4, 6, 8, 10, 12};
 </code></pre>
 <p>This stores the numbers 2, 4, 6, 8, and 10 in the array <code>x</code>. The <code>int</code> at the beginning
 tells the computer the data type of x, similar to normal variables. The <code>[]</code> tells the computer that x is an array, not a single value.
 <code>new int[]</code> tells the computer to create a new array of type <code>int</code>. Then inside the curly brackets we can put our values separated by commas.</p>
 <blockquote>
-<p><strong>Arrays can only be of one type</strong>, so you can't store both Strings and Integers in one array, etc.</p>
+<p><strong>Arrays can only be of one type</strong>, so you can’t store both Strings and Integers in one array, etc.</p>
 </blockquote>
 <h2 id="retrieving-values-from-an-array"><a class="header" href="#retrieving-values-from-an-array">Retrieving Values From An Array</a></h2>
-<p>Here's an example of retrieving a specific value from the array above:</p>
+<p>Here’s an example of retrieving a specific value from the array above:</p>
 <pre><code class="language-java">int a = x[0]; // 2
 int b = x[1]; // 4
 int c = x[2]; // 6
@@ -171,7 +177,7 @@ int e = x[4]; // 10
 </tbody></table>
 </div>
 <h2 id="setting-array-values"><a class="header" href="#setting-array-values">Setting Array Values</a></h2>
-<p>While <strong>An Array's length cannot be changed</strong>, however we can change the value of specific indices</p>
+<p>While <strong>An Array’s length cannot be changed</strong>, however we can change the value of specific indices</p>
 <p>assuming the array:</p>
 <pre><code class="language-java">double[] x = new double[] {-1.32, 5.65, 3};
 </code></pre>
@@ -182,7 +188,7 @@ x[1] = 1.59;
 x[2] = 2.65;
 </code></pre>
 <h2 id="retrieving-the-length-of-an-array"><a class="header" href="#retrieving-the-length-of-an-array">Retrieving The Length Of An Array</a></h2>
-<p>Retrieving the length of an array can be done by using the <code>.length</code> modifier. This type of syntax (known as the "dot" operator) will be explained more in the later section on <a href="../../Object-Oriented-Programming/Intro.html">Object-Oriented Programming</a>, but for now think of it as a special property that any array has.</p>
+<p>Retrieving the length of an array can be done by using the <code>.length</code> modifier. This type of syntax (known as the “dot” operator) will be explained more in the later section on <a href="../../Object-Oriented-Programming/Intro.html">Object-Oriented Programming</a>, but for now think of it as a special property that any array has.</p>
 <p>Consider the following example:</p>
 <pre><code class="language-java">String[] message = new String[] {"hi,", "welcome", "to", "Montclair Robotics!"};
 
