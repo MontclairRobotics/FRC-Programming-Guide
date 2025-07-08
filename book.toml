@@ -10,7 +10,7 @@ pagetoc = true
 sidebar-width = "250px"
 
 [output.html]
-default-theme = "ayu"
+default-theme = "navy"
 git-repository-url = "https://github.com/MontclairRobotics/FRC-Programming-Guide"
 git-repository-icon = "fa-github"
 additional-css = ["theme/pagetoc.css"]
