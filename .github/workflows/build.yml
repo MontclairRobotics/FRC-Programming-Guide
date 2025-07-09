@@ -31,9 +31,6 @@ jobs:
                | wget -qi -
         tar -xzf mdbook-theme_linux.tar.gz -C ~/tools
         echo ~/tools >> "$GITHUB_PATH"
-    - name: Install mdbook-theme
-      run: |
-        cargo install mdbook-theme
     - name: Build
       run: mdbook build
     # share between different jobs
