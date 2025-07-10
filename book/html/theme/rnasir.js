@@ -142,17 +142,22 @@
   }
 
   setTimeout(() => {
-    const path = window.location.pathname;
-    const segments = path.split("/").filter(Boolean);
+    const fullPath = window.location.pathname;
+    const segments = fullPath.split("/").filter(Boolean);
+
+    // Determine base path (everything before first known folder like 'Java-Fundamentals')
+    // Assumes base ends before the last 3 segments at most
+    const baseSegments = segments.slice(0, segments.length - 3);
+    const base = "/" + baseSegments.join("/");
 
     // Case 1: /Y/course/X/z.html → /X/z.html
     if (
       segments.length >= 4 &&
-      segments[1] === "course"
+      segments[segments.length - 4] === "course"
     ) {
-      const x = segments[2];
-      const z = segments.slice(3).join("/"); // supports subpaths like /X/folder/z.html
-      const newUrl = `/${x}/${z}`;
+      const x = segments[segments.length - 3];
+      const z = segments.slice(-2).join("/"); // e.g. [folder, file.html]
+      const newUrl = `${base}/${x}/${z}`;
       console.log(`🔁 Redirecting to: ${newUrl}`);
       sessionStorage.setItem("alreadyRedirected", "true");
       window.location.replace(newUrl + window.location.search + window.location.hash);
@@ -161,9 +166,9 @@
 
     // Case 2: /Y/X/z.html → /X/z.html
     if (segments.length >= 3) {
-      const x = segments[1];
-      const z = segments.slice(2).join("/"); // supports subpaths
-      const newUrl = `/${x}/${z}`;
+      const x = segments[segments.length - 2];
+      const z = segments[segments.length - 1];
+      const newUrl = `${base}/${x}/${z}`;
       console.log(`🔁 Redirecting to: ${newUrl}`);
       sessionStorage.setItem("alreadyRedirected", "true");
       window.location.replace(newUrl + window.location.search + window.location.hash);
