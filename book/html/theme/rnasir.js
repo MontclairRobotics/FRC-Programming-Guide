@@ -92,7 +92,8 @@
     sidebar.classList.remove('sidebar');
   }
 })();
-  
+
+/*
 //Repair broken urls in menu
 (function() {
   const url = new URL(window.location.href);
@@ -119,4 +120,55 @@
       window.location.replace(newPath + url.search + url.hash);
     }
   }
+})();*/
+
+//Repair all broken urls as of now. 
+(function () {
+  const is404 =
+    document.title.includes("Page not found") ||
+    document.body.textContent.includes("could not be found");
+
+  // If not 404, clear redirect history
+  if (!is404) {
+    sessionStorage.removeItem("alreadyRedirected");
+    return;
+  }
+
+  console.warn("⚠️ Detected 404 page");
+
+  if (sessionStorage.getItem("alreadyRedirected") === "true") {
+    console.log("Skipping redirect");
+    return;
+  }
+
+  setTimeout(() => {
+    const path = window.location.pathname;
+    const segments = path.split("/").filter(Boolean);
+
+    // Case 1: /Y/course/X/z.html → /X/z.html
+    if (
+      segments.length >= 4 &&
+      segments[1] === "course"
+    ) {
+      const x = segments[2];
+      const z = segments.slice(3).join("/"); // supports subpaths like /X/folder/z.html
+      const newUrl = `/${x}/${z}`;
+      console.log(`🔁 Redirecting to: ${newUrl}`);
+      sessionStorage.setItem("alreadyRedirected", "true");
+      window.location.replace(newUrl + window.location.search + window.location.hash);
+      return;
+    }
+
+    // Case 2: /Y/X/z.html → /X/z.html
+    if (segments.length >= 3) {
+      const x = segments[1];
+      const z = segments.slice(2).join("/"); // supports subpaths
+      const newUrl = `/${x}/${z}`;
+      console.log(`🔁 Redirecting to: ${newUrl}`);
+      sessionStorage.setItem("alreadyRedirected", "true");
+      window.location.replace(newUrl + window.location.search + window.location.hash);
+      return;
+    }
+
+  }, 62.5);
 })();
