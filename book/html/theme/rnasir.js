@@ -93,7 +93,7 @@
   }
 })();
 
-/*
+
 //Repair broken urls in menu
 (function() {
   const url = new URL(window.location.href);
@@ -120,9 +120,10 @@
       window.location.replace(newPath + url.search + url.hash);
     }
   }
-})();*/
+})();
 
 //Repair all broken urls as of now. 
+
 (function () {
   const is404 =
     document.title.includes("Page not found") ||
@@ -133,8 +134,9 @@
     return;
   }
 
-  console.warn("⚠️ Detected 404 page");
+  console.warn("Detected 404 page");
 
+  // Only redirect once 
   if (sessionStorage.getItem("alreadyRedirected") === "true") {
     console.log("Skipping redirect");
     return;
@@ -142,32 +144,37 @@
 
   setTimeout(() => {
     const segments = window.location.pathname.split("/").filter(Boolean);
+    const base = segments[0];           
+    const rem  = segments.slice(1);    
 
-    // Detect base path 
-    const base = segments[0];
-    if (!base) return;
-
-    // Case 1: /base/Y/course/X/z.html → /base/X/z.html
-    const courseIdx = segments.lastIndexOf("course");
-    if (courseIdx !== -1 && segments.length > courseIdx + 2) {
-      const x = segments[courseIdx + 1];
-      const z = segments.slice(courseIdx + 2).join("/");
-      const newPath = `/${base}/${x}/${z}`;
-      console.log(`🔁 Redirecting to (course path): ${newPath}`);
+    // 2) Generic duplicate: Y/X/X/... → Y/X/...
+    if (rem.length >= 2 && rem[0] === rem[1]) {
+      const x    = rem[0];
+      const rest = rem.slice(2).join("/");
+      const newPath = `/${base}/${x}/${rest}`;
+      console.log(`🔁 Redirecting (generic dup): ${newPath}`);
       sessionStorage.setItem("alreadyRedirected", "true");
-      window.location.replace(newPath + window.location.search + window.location.hash);
-      return;
+      return window.location.replace(newPath + location.search + location.hash);
     }
 
-    // Case 2: /base/Y/X/z.html → /base/X/z.html
-    if (segments.length >= 4) {
-      const x = segments[2];
-      const z = segments.slice(3).join("/");
-      const newPath = `/${base}/${x}/${z}`;
-      console.log(`🔁 Redirecting to (double folder): ${newPath}`);
+    // 3) Y/course/X/X/... → Y/X/...
+    if (rem.length >= 3 && rem[0] === "course" && rem[1] === rem[2]) {
+      const x    = rem[1];
+      const rest = rem.slice(3).join("/");
+      const newPath = `/${base}/${x}/${rest}`;
+      console.log(`🔁 Redirecting (course dup): ${newPath}`);
       sessionStorage.setItem("alreadyRedirected", "true");
-      window.location.replace(newPath + window.location.search + window.location.hash);
-      return;
+      return window.location.replace(newPath + location.search + location.hash);
+    }
+
+    // 4)
+    if (rem.length >= 2) {
+      const x    = rem[1];
+      const rest = rem.slice(2).join("/");
+      const newPath = `/${base}/${x}/${rest}`;
+      console.log(`🔁 Redirecting (bad-middle): ${newPath}`);
+      sessionStorage.setItem("alreadyRedirected", "true");
+      return window.location.replace(newPath + location.search + location.hash);
     }
 
   }, 62.5);
