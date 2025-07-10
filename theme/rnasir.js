@@ -141,46 +141,34 @@
   }
 
   setTimeout(() => {
-    const fullPath = window.location.pathname;
-    const segments = fullPath.split("/").filter(Boolean);
+    const segments = window.location.pathname.split("/").filter(Boolean);
 
-    // 🔍 Detect and preserve base path (e.g. FRC-Programming-Guide)
-    // Assume everything before 'course' or other content is base
-    let baseSegments = [];
-    for (let i = 0; i < segments.length; i++) {
-      if (
-        segments[i] === "course" ||
-        (segments[i + 1] && segments[i + 1].endsWith(".html"))
-      ) {
-        break;
-      }
-      baseSegments.push(segments[i]);
-    }
-    const base = "/" + baseSegments.join("/");
+    // Detect base path 
+    const base = segments[0];
+    if (!base) return;
 
-    // ✳️ Case 1: /base/Y/course/X/z.html → /base/X/z.html
-    const idx = segments.lastIndexOf("course");
-    if (idx !== -1 && segments.length > idx + 2) {
-      const x = segments[idx + 1];
-      const z = segments.slice(idx + 2).join("/");
-      const newUrl = `${base}/${x}/${z}`;
-      console.log(`🔁 Redirecting to (case 1): ${newUrl}`);
+    // Case 1: /base/Y/course/X/z.html → /base/X/z.html
+    const courseIdx = segments.lastIndexOf("course");
+    if (courseIdx !== -1 && segments.length > courseIdx + 2) {
+      const x = segments[courseIdx + 1];
+      const z = segments.slice(courseIdx + 2).join("/");
+      const newPath = `/${base}/${x}/${z}`;
+      console.log(`🔁 Redirecting to (course path): ${newPath}`);
       sessionStorage.setItem("alreadyRedirected", "true");
-      window.location.replace(newUrl + window.location.search + window.location.hash);
+      window.location.replace(newPath + window.location.search + window.location.hash);
       return;
     }
 
-    // ✳️ Case 2: /base/Y/X/z.html → /base/X/z.html
-    if (segments.length >= 3) {
-      const x = segments[segments.length - 2];
-      const z = segments[segments.length - 1];
-      const newUrl = `${base}/${x}/${z}`;
-      console.log(`🔁 Redirecting to (case 2): ${newUrl}`);
+    // Case 2: /base/Y/X/z.html → /base/X/z.html
+    if (segments.length >= 4) {
+      const x = segments[2];
+      const z = segments.slice(3).join("/");
+      const newPath = `/${base}/${x}/${z}`;
+      console.log(`🔁 Redirecting to (double folder): ${newPath}`);
       sessionStorage.setItem("alreadyRedirected", "true");
-      window.location.replace(newUrl + window.location.search + window.location.hash);
+      window.location.replace(newPath + window.location.search + window.location.hash);
       return;
     }
 
   }, 62.5);
 })();
-
