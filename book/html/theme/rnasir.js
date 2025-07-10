@@ -128,7 +128,6 @@
     document.title.includes("Page not found") ||
     document.body.textContent.includes("could not be found");
 
-  // If not 404, clear redirect history
   if (!is404) {
     sessionStorage.removeItem("alreadyRedirected");
     return;
@@ -145,31 +144,38 @@
     const fullPath = window.location.pathname;
     const segments = fullPath.split("/").filter(Boolean);
 
-    // Determine base path (everything before first known folder like 'Java-Fundamentals')
-    // Assumes base ends before the last 3 segments at most
-    const baseSegments = segments.slice(0, segments.length - 3);
+    // 🔍 Detect and preserve base path (e.g. FRC-Programming-Guide)
+    // Assume everything before 'course' or other content is base
+    let baseSegments = [];
+    for (let i = 0; i < segments.length; i++) {
+      if (
+        segments[i] === "course" ||
+        (segments[i + 1] && segments[i + 1].endsWith(".html"))
+      ) {
+        break;
+      }
+      baseSegments.push(segments[i]);
+    }
     const base = "/" + baseSegments.join("/");
 
-    // Case 1: /Y/course/X/z.html → /X/z.html
-    if (
-      segments.length >= 4 &&
-      segments[segments.length - 4] === "course"
-    ) {
-      const x = segments[segments.length - 3];
-      const z = segments.slice(-2).join("/"); // e.g. [folder, file.html]
+    // ✳️ Case 1: /base/Y/course/X/z.html → /base/X/z.html
+    const idx = segments.lastIndexOf("course");
+    if (idx !== -1 && segments.length > idx + 2) {
+      const x = segments[idx + 1];
+      const z = segments.slice(idx + 2).join("/");
       const newUrl = `${base}/${x}/${z}`;
-      console.log(`🔁 Redirecting to: ${newUrl}`);
+      console.log(`🔁 Redirecting to (case 1): ${newUrl}`);
       sessionStorage.setItem("alreadyRedirected", "true");
       window.location.replace(newUrl + window.location.search + window.location.hash);
       return;
     }
 
-    // Case 2: /Y/X/z.html → /X/z.html
+    // ✳️ Case 2: /base/Y/X/z.html → /base/X/z.html
     if (segments.length >= 3) {
       const x = segments[segments.length - 2];
       const z = segments[segments.length - 1];
       const newUrl = `${base}/${x}/${z}`;
-      console.log(`🔁 Redirecting to: ${newUrl}`);
+      console.log(`🔁 Redirecting to (case 2): ${newUrl}`);
       sessionStorage.setItem("alreadyRedirected", "true");
       window.location.replace(newUrl + window.location.search + window.location.hash);
       return;
@@ -177,3 +183,4 @@
 
   }, 62.5);
 })();
+
