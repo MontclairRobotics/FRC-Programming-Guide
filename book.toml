@@ -1,6 +1,6 @@
 [book]
 authors = ["James ~~555~~ 2539", "Abraham 555", "Connor 555", "Rayan N"]
-language = "zh"
+language = "en"
 multilingual = false
 src = "src"
 title = "Montclair Robotics Programming"

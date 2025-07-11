@@ -1,68 +1,91 @@
-// src: https://github.com/JorelAli/mdBook-pagetoc
+let activeHref = location.href;
+function updatePageToc(elem = undefined) {
+    let selectedPageTocElem = elem;
+    const pagetoc = document.getElementById("pagetoc");
 
-// Un-active everything when you click it
-Array.prototype.forEach.call(document.getElementsByClassName("pagetoc")[0].children, function(el, i) {
-    el.addEventHandler("click", function() {
-        Array.prototype.forEach.call(document.getElementsByClassName("pagetoc")[0].children, function(el, i) {
-            el.classList.remove("active");
-        });
-        el.classList.add("active");
-    });
-});
+    function getRect(element) {
+        return element.getBoundingClientRect();
+    }
 
-var updateFunction = function() {
+    function overflowTop(container, element) {
+        return getRect(container).top - getRect(element).top;
+    }
 
-    var id;
-    var elements = document.getElementsByClassName("header");
-    Array.prototype.forEach.call(elements, function(el, i) {
-        if (window.pageYOffset >= el.offsetTop) {
-            id = el;
+    function overflowBottom(container, element) {
+        return getRect(container).bottom - getRect(element).bottom;
+    }
+
+    // We've not selected a heading to highlight, and the URL needs updating
+    // so we need to find a heading based on the URL
+    if (selectedPageTocElem === undefined && location.href !== activeHref) {
+        activeHref = location.href;
+        for (const pageTocElement of pagetoc.children) {
+            if (pageTocElement.href === activeHref) {
+                selectedPageTocElem = pageTocElement;
+            }
         }
-    });
+    }
 
-    Array.prototype.forEach.call(document.getElementsByClassName("pagetoc")[0].children, function(el, i) {
-        el.classList.remove("active");
-    });
+    // We still don't have a selected heading, let's try and find the most
+    // suitable heading based on the scroll position
+    if (selectedPageTocElem === undefined) {
+        const margin = window.innerHeight / 3;
 
-    Array.prototype.forEach.call(document.getElementsByClassName("pagetoc")[0].children, function(el, i) {
-        if (id.href.localeCompare(el.href) == 0) {
-            el.classList.add("active");
+        const headers = document.getElementsByClassName("header");
+        for (let i = 0; i < headers.length; i++) {
+            const header = headers[i];
+            if (selectedPageTocElem === undefined && getRect(header).top >= 0) {
+                if (getRect(header).top < margin) {
+                    selectedPageTocElem = header;
+                } else {
+                    selectedPageTocElem = headers[Math.max(0, i - 1)];
+                }
+            }
+            // a very long last section's heading is over the screen
+            if (selectedPageTocElem === undefined && i === headers.length - 1) {
+                selectedPageTocElem = header;
+            }
         }
-    });
-};
+    }
 
-// Populate sidebar on load
-window.addEventListener('load', function() {
-    var pagetoc = document.getElementsByClassName("pagetoc")[0];
-    var elements = document.getElementsByClassName("header");
-    Array.prototype.forEach.call(elements, function(el, i) {
-        var link = document.createElement("a");
+    // Remove the active flag from all pagetoc elements
+    for (const pageTocElement of pagetoc.children) {
+        pageTocElement.classList.remove("active");
+    }
 
-        // Indent shows hierarchy
-        var indent = "";
-        switch (el.parentElement.tagName) {
-            case "H2":
-                indent = "20px";
-                break;
-            case "H3":
-                indent = "40px";
-                break;
-            case "H4":
-                indent = "60px";
-                break;
-            default:
-                break;
+    // If we have a selected heading, set it to active and scroll to it
+    if (selectedPageTocElem !== undefined) {
+        for (const pageTocElement of pagetoc.children) {
+            if (selectedPageTocElem.href.localeCompare(pageTocElement.href) === 0) {
+                pageTocElement.classList.add("active");
+                if (overflowTop(pagetoc, pageTocElement) > 0) {
+                    pagetoc.scrollTop = pageTocElement.offsetTop;
+                }
+                if (overflowBottom(pagetoc, pageTocElement) < 0) {
+                    pagetoc.scrollTop -= overflowBottom(pagetoc, pageTocElement);
+                }
+            }
         }
+    }
+}
 
-        link.appendChild(document.createTextNode(el.text));
-        link.style.paddingLeft = indent;
-        link.href = el.href;
-        pagetoc.appendChild(link);
+if (document.getElementsByClassName("header").length <= 1) {
+    // There's one or less headings, we don't need a page table of contents
+    document.getElementById("sidetoc").remove();
+} else {
+    // Populate sidebar on load
+    window.addEventListener("load", () => {
+        for (const header of document.getElementsByClassName("header")) {
+            const link = document.createElement("a");
+            link.appendChild(document.createTextNode(header.text));
+            link.href = header.hash;
+            link.classList.add("pagetoc-" + header.parentElement.tagName);
+            document.getElementById("pagetoc").appendChild(link);
+            link.onclick = () => updatePageToc(link);
+        }
+        updatePageToc();
     });
-    updateFunction.call();
-});
 
-
-
-// Handle active elements on scroll
-window.addEventListener("scroll", updateFunction);
+    // Update page table of contents selected heading on scroll
+    window.addEventListener("scroll", () => updatePageToc());
+}
