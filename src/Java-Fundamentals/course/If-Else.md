@@ -1,5 +1,5 @@
 # Java Branching: If, Else, Elif
-The statements inside your code are generally executed from top to bottom, in the order that they appear. Control flow statements, however, break up the flow of execution by employing decision-making, looping, and branching, enabling your program to conditionally execute particular blocks of code. This page describes the most important decision-making statements (if, else, elif). The [essential looping statements](./Loops.md) ([for](./Loops.md#for-loops), [while](./Loops.md#while-loops)) will be covered later. 
+This page is a continuation to the explanation of [control flow](./Control-Flow.md). `If` and `else` statements let your program conditionally execute particular blocks of code.
 
 ## If Statement
 
@@ -18,15 +18,15 @@ if (condition) {
 
 Here are some examples of if statements:
 ```java
-int x = 3
+int x = 3;
 if (x > 9) { // This code will not be executed since x is equal to 3 and 3 is less than 9 
     System.out.println("X is bigger than 9!");
 }
 ```
 Here's an example that includes the use of [operator shorthand](./Operators-And-Math.md#operator-shorthand) to subtract y by 2:
 ```java
-int y = 9
-y-=2
+int y = 9;
+y-=2;
 if (y < 8) { // This code will be executed because y = 9, 9 - 2 = 7 and 7 is less than 8.
     System.out.println("Y is smaller than 8!");
 }
@@ -34,8 +34,8 @@ if (y < 8) { // This code will be executed because y = 9, 9 - 2 = 7 and 7 is les
 
 Here's an example using the [or operator](./Boolean-And-Equality-Operators.md#the-or-operator):
 ```java
-int x = 1
-int y = 3
+int x = 1;
+int y = 3;
 if (x < 2 || y > 20) { // This code will be executed as even though y is not greater than 20, x is less than 2.
     System.out.println(" :) ");
 }
@@ -45,7 +45,7 @@ if (x < 2 || y > 20) { // This code will be executed as even though y is not gre
 
 The `else` statement is used in conjunction with the `if` statement to run code *only if* the above `if` statement is not run. Consider the following example:
 ```java
-int x = 1
+int x = 1;
 if (x > 3) {
     System.out.println("X is greater than 3!");
 } else {
@@ -58,4 +58,28 @@ We can also think of an if-else *chain* as testing the condition inside the `if`
 
 > You can only have one `else` statement for each `for` loop.
 
-## We're missing Elif Currently please come back later!
+
+## Else if
+While there can only ever be one ```else``` statement in Java, we can use ```else if``` statements. These can be chained together and together, and with this chaining, we can test multiple different statements, and not just only two. The last tested thing can be an else statement, after an else statement there can be no other ```else if```s or ```elses```
+```java
+int x = 7;
+
+if (x > 10) {
+    System.out.println("X is greater than 10!");
+} 
+else if (x > 5) {
+    System.out.println("X is greater than 5 but less than or equal to 10!");
+} 
+else if (x > 5) {
+   System.out.println("X is 5 or less.");
+}
+else {
+    ...
+}
+```
+>In a chain of `if`/ `else` statements, even if multiple conditions are true, only the top most truthful block will be executed, and the others are discarded. If there are multiple `if` statements *without* the `else` keyword, then each statement will be checked, regardless if the one above was true or false. 
+
+
+## Resources    
+
+[W3Schools Java Conditionals](https://www.w3schools.com/java/java_conditions.asp)

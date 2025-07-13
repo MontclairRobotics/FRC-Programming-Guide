@@ -1,6 +1,6 @@
 # Functions
 
-Functions are repeatable, modular blocks of code used to accomplish specific tasks. We can define our own functions that will optionally take input(s), do something with it, and optionally *return* an output. We first saw functions in the page on [Basic Syntax](./Basic-Syntax.md) where the function is called `main`.
+This page is a continuation to the explanation of [control flow](./Control-Flow.md). Functions are repeatable, modular blocks of code used to accomplish specific tasks. We can define our own functions that will optionally take input(s), do something with it, and optionally *return* an output. We first saw functions in the page on [Basic Syntax](./Basic-Syntax.md) where the function is called `main`.
 
 To better explain how to read & write functions, lets look at the following example:
 
@@ -113,28 +113,25 @@ There is no limit to how many parameters a function can have, but they need to b
 
 ### Function Overloading
 
-You can have multiple function with the same name in java, as long as they have different *function signatures*. This means that the parameters are different in some way. For example, both 
+You can have multiple function with the same name in java, as long as they have different *function signatures*. This means that the parameters are different in some way. 
+>For example, both 
+>```java
+>int addNumbers(int a, int b) { [...] }
+>```
+>and 
+>```java
+>int addNumbers(int a, int b, int c) { [...] }
+>```
+>are valid (but we'll want more clearly defined and differentiated functions for easier debugging).
 
-```java
-int addNumbers(int a, int b) { [...] }
-```
-and 
-```java
-int addNumbers(int a, int b, int c) { [...] }
-```
+>You can also vary the data types:
+>```java
+>String numString(String a, int b) { [...] }
+>```
+>and
+>```java
+>String numString(int a, String b) { [...] }
+>```
+>can both appear in the same file (class).
 
-Are valid.
-
-You can also vary the data types:
-
-```java
-String numString(String a, int b) { [...] }
-```
-and
-```java
-String numString(int a, String b) { [...] }
-```
-
-Can both appear in the same file (class).
-
->It is important to note that changing the names of parameters will just cause an error, unless the data types or order of parameters is also changed (The names are irrelevant).
+It is important to note that changing the names of parameters will just cause an error, unless the data types or order of parameters is also changed (The names are irrelevant).

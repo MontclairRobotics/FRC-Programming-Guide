@@ -1,44 +1,99 @@
-# Git & GitHub Usage
+# **Git & GitHub Usage**
 
-## Workflow
+## Standard Workflow
+
+- *Clone* or *fork* the *repository* (once) 
+- [Create a *branch*] (if necessary)
+- **Edit files locally**
+- [*Merge*] (if necessary)
+- ***Commit* changes**
+- ***Push* to GitHub**
+- [Create a *Pull Request*] (if necessary)
+- Repeat
+
 
 ## Terminology
 Keep in mind the following when working with Git:
 
-- **Repo/Codebase**: Short for *repository*; where our code is stored on GitHub. Also know as a project.
+- **Repo/Codebase**: Short for *repository*; A repository is where the code of a project is stored, and can exist locally or remotely. 
 
-- **Commit**: A singular *saved version* of the repository. When a programer is ready they can *commit* the code so it is saved within git. A snapshot of the project that records the changes that were made since the last commit. It is a permanently saved record in the projects history.
+- **Remote Repository**: A repository hosted on the web. Git can sync the repository across different devices and users. Our code is available on **GitHub** (https://github.com/MontclairRobotics), which is a *website that hosts Git repositories on the web*. Other websites include [GitLab](https://gitlab.com), [Bitbucket](https://bitbucket.org), and [Amazon's own Git offering](https://aws.amazon.com/codecommit/), but [GitHub](https://github.com/) is the de facto standard.
 
-- **Remote Repository**: (For our purposes) A repository hosted on the web so that Git can sync the repository across different devices and users. Our code is available on **GitHub** (https://github.com/MontclairRobotics), which is a *website that hosts Git Repositories on the web*.
+- **Commit**: A commit is a snapshot of your local repository that gets compared and evaluated to the remote repository in its current state (before your changes). The record of your modifications from the original is permanently saved to the project's history and stays accessible. The permanence of a commit is unimaginably helpful, but this means that each *character* of code must be written with meaning and signifigance. 
 
-- **Clone**: To start editing in a remote repository you must first *clone* it to you computer. This means you have Git on your computer with a copy of the repository and all of it's history that can now edit directly on your computer. This is referred to as the "**local**" repository.
+- **Push/Pull**: After a commit, you *push* your commits and other changes to the remote repository, and *pull* changes made to the remote onto your computer. Simply put, this syncs your local repository to the remote one. Pull gets changes from the remote repository and *merges* the changes in to your local repository. Pushing sends local changes to the remote repository.
 
-- **Push/Pull**: After you commit, you will wish to *push* your commits and other changes to the remote, and *Pull* changes made to the remote onto your computer. In other words to sync your Git with GitHub including all commits. Pulling is fetching changes from the remote repository and *merging* the changes into your local repository. Pushing is sending your local changes to the remote repository.
+- **Clone**: Cloning is the proccess of putting a remote repository on a local device, and allows the Git on your computer to have a copy of the repository and all its history. This can now be edited directly on your computer, and this instance of the repository is referred to as a "**local**" repository.
 
-- **Merge**: For example, if changes have been made to the code since you started editing it, you will need to *merge* the code you wrote with the new version of the code. Simply put you need to merge two different versions of the same code into a singe version. If the changes each version made do not interfere with each other, then Git will usually be able to merge automatically. However if you need to merge to versions with changes that do interfere with each other, that is called a **merge conflict**. You will need to manually select which lines from each version will be combined into the final version. *The action of taking two versions of code and combining them into one.* This can be done with two commits (often from different *branches*) or uncommitted changes.
+- **Fork**: Similar to cloning a repository, but the history of committed changes is no longer associated to the original repository. Most likely not using this feature. Your changes are not synced to *their* cloud repository, and their changes will not be shown to your repository. A fork is duplicating or backing up a repository at a given moment, and the two repositories can differ and are not associated after the split. 
 
-- **Branch**: 
+- **Merge**: If code has been written and pushed since you have started editting it, then you'll have to merge. The files you have on your computer just don't line up with the ones in the remote repository. If the changes each version made do not interfere with each other, then Git will be able to merge automatically. However, if you need to merge two versions with changes that *do* interfere with each other, that is a **merge conflict**. You'll manually select which lines from each file to be combined to the final version. This can be done with two commits (often from different *branches*) or uncommitted changes. 
 
-- **Pull Request**: 
+- **Branch**: A github branch is a way to work on the repository without modifying an existing version. Branches are released on the same level as each other, and existing "parallel-ly" to each other. Branches are useful for experimentation, when working on a bug fix or a new feature, testing the new solution in a new environment whilst keeping the existing version active in the chance that the new solution fails to be more effective, or multiple projects inside the same repository. Branches do not need to neccessarily have the same files, and do not neccessarily cross-reference each other, but they can have the same files, especially if they are different versions of the final project. In the GitHub GUI, it is easy to swtich branches, just change the "current branch" dropdown, and then fetch (this may overwrite your device's local copy of the repository so handle modified code properly.).
+<br> To switch in the CLI to a branch that already exists: <br>
+   ```git switch branch-name.```<br>
+If the branch doesn’t exist locally but exists on GitHub (remote), use:
+<br>
+    ```
+    git fetch
+    git switch branch-name
+    ```
+<br>
 
-- **Code Review**: 
 
-- **Stash**: (including **Pop**) 
+- **Pull Request**: A request to modify the main branch of the repository with your modifications. In the GitHub GUI, every modified file is marked, and a reviewer can see where you deleted, added, or modified files, and then decide accordingly if the modified code is effective or ineffective. Unlike a direct pull/push, a pull **request** allows for collaboration in independently-written code, in that someone else **must** read the code before it becomes part of the team's code. 
 
-- **Origin**: 
+- **Code Review**: The proccess of a single team member's code being read by another. Similar to peer review in tests, this ensures that the code is being seen by more eyes. Two heads are better than one. 
 
-- **Git States**: 
+- **Stash**: ```git stash``` tells Git to save your work in its current state, but only locally. By saving using stash, the programmer can proceed to work on another project or another branch, without having to sync to the cloud if the code is not complete or ready. ```git stash pop``` reads the last locally saved stash back. Currently, ```stash``` and ```pop``` are not accessible through the GitHub GUI, so you will need the CLI (and will probably use through VSCode terminal.)
 
-- **Stage Changes**: 
+- **Origin**: Refers to the remote repositiory in its existing state. 
 
-- **HEAD**: 
+- **Git States**: In Git, any file can be in any of four states. 
+    
+    Untracked - 
+    >Git does not care if this file is modified, or deleted. This state is sometimes assigned to new files that are not created in tracked directories. 
 
-- **Checkout**: 
+    Modified - 
+    > The file differs from the last origin fetch, but the file is not staged. 
 
-- **Detached Head**: 
+    >A modified file is marked in VSCode (and the GitHub GUI) with 
+    <br>
+    >><span style="color:goldenrod"><strong>Yellow</strong></span> for an existing file that was changed,  
+    >><span style="color:green"><strong>Green</strong></span> for no existing file, was an added file,  
+    >><span style="color:red"><strong>Red</strong></span> for an existing file that was deleted.
 
-- **Desktop Application**: 
+    Staged - 
+    >Planned to be uploaded to Git
+        >>In GitHub GUI, this is the checkbox to the left of the file. 
+    
+    Comitted -
+    >Saved to Git/GitHub history ```git status``` executed in the CLI will show files to the terminal in their state. 
 
-- **GitHub Issues**: 
+- **HEAD**: Head is where the user is at the current moment. Head moves as you move between branches. Head by default points to the latest commit of that branch. However, Head notation allows us to specify where we are. Where HEAD points to your current commit or branch, HEAD~1 is one commit before HEAD.
 
-- **GitHub Actions**: (do we need this)
+- **Checkout**: Can allow the programmer to change the working directory to be compared to match the latest commit of a branch, by passing ```git checkout (branch-name)```, allowing for an attached head, or the same can be applied to an existing commit hash, ```git checkout (commit_hash)```, working in a detached head state. ```git restore (filename)``` discards all modifications to file, going back to the latest version where you are. 
+
+- **Detached Head**: A Head that points to a commit and not a branch. Git History is checking your code to that commit in the past, and not a current live branch. Using checkout, the specific commit gets its own branch to the repository, with an attached head and can be pushed/pulled from origin.
+
+- **GitHub Issues**: Allows us to plan our progress, by planning, prioritizing, and designating different incomplete tasks to different programmers. We can use this to communicate to collaborators where we are in the project's timeline, and link code to a discussion space easily. 
+
+- **GitHub Actions**: Custom scripts that run automatically after an event such as pushes, pull requests, issue creation, or even on a schedule. These can be used for testing, building, deploying, or any automated task. A sample action, located in the ```.github/workflows``` as a YAML file
+    ```YAML
+    name: Run Tests
+
+    on: [push]
+
+    jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+        - name: Run tests
+            run: |
+            npm install
+            npm test
+    ```
+    This sample action runs after every push to the repository. It occurs on an ubuntu cloud computer, allocated to us for limited usage. It takes the steps of running npm install, and then it runs a sample test. In this way, if the automated action fails, then this push would be rejected. While this is a simple sample, GitHub actions can be so much more powerful. 
+

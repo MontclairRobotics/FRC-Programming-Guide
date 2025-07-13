@@ -1,6 +1,6 @@
 # Loops
 
-This page is a continuation to the explanation of control flow [here](./If-Else.md#java-branching-if-if-else). Loops are extremely useful control flow statements that save time programming and make our code easier to read and debug. We'll go over the multiple types of loops and their differences in this page.
+This page is a continuation to the explanation of [control flow](./Control-Flow.md). Loops are extremely useful control flow statements that save time programming and make our code easier to read and debug. We'll go over the multiple types of loops and their differences in this page.
 
 ## While Loops
 
@@ -68,7 +68,6 @@ while (i < 10) { // the condition that is evaluated
     // Last line of the loop body is the one right before the }
 }
 ```
-
 ______________________________________________________________________
 
 ## Resources    

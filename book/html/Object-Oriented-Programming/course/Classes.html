@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Classes - Montclair Robotics Programming</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/pagetoc.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Montclair Robotics Programming</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Object-Oriented-Programming/course/Classes.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="content-wrap">
+                            <h1 id="classes"><a class="header" href="#classes">Classes</a></h1>
+<p>A class is Java’s fundamental unit of storing code. Everything you write in Java will be inside of some kind of class (or similar structure).</p>
+<p>A class in java is used to represent <strong>something</strong>, similarly to how an <code>int</code> represents a number and a <code>String</code> represents a string of text. A class may be used to represent an animal, a game piece, or even a robot. Where <em>variables</em> represent just a single “thing”, <code>classes</code> represent collections of code.</p>
+<p>You’ve probably seen this line at least once, at the top of your main file:</p>
+<pre><code class="language-java">public class Main { [...] }
+</code></pre>
+<blockquote>
+<p>Don’t worry about what <code>public</code> means for now, we’ll cover it more in depth in the page on <a href="./Packages.html">packages</a>.</p>
+</blockquote>
+<p>The above statement defines a class called Main, with the code between the opening <code>{</code> and closing <code>}</code> parenthesis being considered <em>a part</em> of that class.</p>
+<blockquote>
+<p>Class names must be unique within a package (folder), and are typically capitalized.</p>
+</blockquote>
+<p>A class can contain three things:</p>
+<ul>
+<li>Methods (Functions).</li>
+<li>instance variables.</li>
+<li>Special methods called <strong>constructors</strong>.</li>
+</ul>
+<h2 id="instance-variables"><a class="header" href="#instance-variables">Instance Variables</a></h2>
+<p>Instance variables are <a href="../../Java-Fundamentals/course/Variables.html">variables</a> that are located <em>within</em> a given class. They differ from the type of variables that we have covered previously in that they are declared <em>outside</em> functions (unlike all the code we’ve seen before)</p>
+<p>You may or may not have learned the difference between a variable declaration and a variable initialization.</p>
+<p>Declaration is when you create a variable, but do not immediately assign it a value:</p>
+<pre><code class="language-java">int x;
+</code></pre>
+<p>Initialization is when you assign the variable a value. In Java you are not allowed to <a href="../../Java-Fundamentals/course/Variables.html#variables">access</a> or <a href="../../Java-Fundamentals/course/Operators-And-Math.html">change a variable</a> before <em>initializing</em> it</p>
+<p>Here’s an example of variable initialization:</p>
+<pre><code class="language-java">x = 10;
+</code></pre>
+<p>Instance variables are variables that are declared at the top of a class, right after the class declaration. For example:</p>
+<pre><code class="language-java">public class Animal {
+    public String name;
+    public int age;
+    public Animal child;
+    
+    ...
+}
+</code></pre>
+<blockquote>
+<p>Instance variables in java should almost always be <code>private</code>.</p>
+</blockquote>
+<p>Instance variables will be initialized later, in the constructor, which will be explained later.</p>
+<h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
+<p>Methods are the name given to functions in Java.</p>
+<blockquote>
+<p>Methods == Functions</p>
+</blockquote>
+<p>Any method within a class can access the instance variables of that class.</p>
+<p>We’ll talk more about methods later.</p>
+<h2 id="constructors"><a class="header" href="#constructors">Constructors</a></h2>
+<p>The Constructor of a class is what is used to create an instance of a class.</p>
+<blockquote>
+<p>If you don’t know what an instance is, don’t worry about it. It will be explained in the page on <a href="./Objects.html">Objects</a></p>
+</blockquote>
+<p>They have no return type, and instead of a name, they use the name of the class.</p>
+<p>Let’s look at an example of a constructor:</p>
+<pre><code class="language-java">public class Animal {
+    private String name;
+    private int age;
+    private Animal child;
+
+
+    public Animal(int a, String n) {
+        //initialize instance variables
+        age = a;
+        name = n;
+    }
+}
+
+</code></pre>
+<blockquote>
+<p>You can have multiple constructors with the same name in a class, as long as they have different <a href="../../Java-Fundamentals/course/Functions.html#function-overloading">signatures</a></p>
+</blockquote>
+<p>Let’s look at an example of a class that has multiple constructors</p>
+<pre><code class="language-java">public class Animal {
+    public String name;
+    public int age;
+    public Animal child;
+
+    public Animal(int a, String n) {
+        //initialize instance variables
+        age = a;
+        name = n;
+    }
+
+    public Animal(String n) {
+        age = 0;
+        name  = n;
+    }
+}
+</code></pre>
+<p>In the above example we can have multiple constructors due to the properties of <a href="../../Java-Fundamentals/course/Functions.html#function-overloading">Method Overloading</a></p>
+<p>This is often used when you would like some instance variables to contain certain default values. (for instance, an animal’s age starting at <code>0</code>)</p>
+<p>If you don’t need a constructor to do anything, you don’t have to write one. All classes in java have an implicit, or implied, constructor with no arguments which does nothing. We’ll cover how to call the constructors we make (or ones that are implied) <a href="./Objects.html">next</a></p>
+<h2 id="private-and-public"><a class="header" href="#private-and-public">Private and Public</a></h2>
+<p>You may have noticed two keywords before method or variable declarations: <code>private</code> and <code>public</code>. These are two of four <em>access modifiers</em> available in Java.</p>
+<blockquote>
+<p>This may make more sense of you read the next section about objects first.</p>
+</blockquote>
+<blockquote>
+<p>You will likely only use <code>public</code> and <code>private</code></p>
+</blockquote>
+<h3 id="syntax"><a class="header" href="#syntax">Syntax</a></h3>
+<p>Access modifiers are placed at the beginning of variable or method declarations like this:</p>
+<pre><code class="language-java">//Variable
+private int num;
+
+//Method
+public static void main(String[] args){}
+</code></pre>
+<blockquote>
+<p>In java, instance variables are typically private.</p>
+</blockquote>
+<h3 id="different-access-modifiers"><a class="header" href="#different-access-modifiers">Different Access Modifiers</a></h3>
+<ul>
+<li>
+<p><code>public</code></p>
+<ul>
+<li>a public method or field is directly accessible outside of the class it is defined in by any part of your program</li>
+</ul>
+</li>
+<li>
+<p><code>private</code></p>
+<ul>
+<li>a private method or field is <em>only</em> accessible within the class where it is defined.</li>
+</ul>
+</li>
+<li>
+<p><code>default</code></p>
+<ul>
+<li>a method or field with the default access modifier is <em>only</em> accessible within the package (often folder) of the class where it is defined.</li>
+</ul>
+</li>
+<li>
+<p><code>protected</code></p>
+<ul>
+<li>a protected method or field is accessible <em>only</em> within the package of the class where it is defined, or within any child class of the class where it is defined.</li>
+</ul>
+<blockquote>
+<p>Don’t worry if you don’t know what a child class or package is, it hasn’t been explained. You won’t really use default or protected in Robotics.</p>
+</blockquote>
+</li>
+</ul>
+
+                        </div>
+                        <div class="sidetoc">
+                            <nav class="pagetoc"></nav>
+                        </div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../Object-Oriented-Programming/Intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../Object-Oriented-Programming/course/Scope.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../Object-Oriented-Programming/Intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../Object-Oriented-Programming/course/Scope.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+        <script>
+            window.playground_line_numbers = true;
+        </script>
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../theme/pagetoc.js"></script>
+        <script src="../../theme/rn_qol.js"></script>
+
+
+    </div>
+    </body>
+</html>

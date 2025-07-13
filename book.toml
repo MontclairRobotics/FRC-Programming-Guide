@@ -1,5 +1,5 @@
 [book]
-authors = ["James 2539", "Abraham 555", "Connor 555"]
+authors = ["James 2539", "Abraham 555", "Connor 555", "Rayan N"]
 language = "en"
 multilingual = false
 src = "src"
@@ -14,7 +14,7 @@ default-theme = "navy"
 git-repository-url = "https://github.com/MontclairRobotics/FRC-Programming-Guide"
 git-repository-icon = "fa-github"
 additional-css = ["theme/pagetoc.css"]
-additional-js = ["theme/pagetoc.js"]
+additional-js = ["theme/pagetoc.js", "theme/rn_qol.js"]
 site-url = "/FRC-Programming-Guide/"
 edit-url-template = "https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/{path}"
 smart-punctuation = true

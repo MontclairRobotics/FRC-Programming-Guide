@@ -2,14 +2,14 @@
 
 A class is Java's fundamental unit of storing code. Everything you write in Java will be inside of some kind of class (or similar structure). 
 
-A class in java is used to represent **something**, similarly to how an ```int``` represents a number and a ```String``` represents a string of text. A class may be used to represent an animal, a game piece, or even a robot. 
+A class in java is used to represent **something**, similarly to how an ```int``` represents a number and a ```String``` represents a string of text. A class may be used to represent an animal, a game piece, or even a robot. Where *variables* represent just a single "thing", `classes` represent collections of code. 
 
 You've probably seen this line at least once, at the top of your main file:
 
 ```java
 public class Main { [...] }
 ```
->Don't worry about what `public`` means for now, we'll cover it more in depth in the page on [packages](./Packages.md).
+>Don't worry about what `public` means for now, we'll cover it more in depth in the page on [packages](./Packages.md).
 
 The above statement defines a class called Main, with the code between the opening `{` and closing `}` parenthesis being considered *a part* of that class.
 
@@ -152,7 +152,7 @@ public static void main(String[] args){}
 - `protected`
   - a protected method or field is accessible *only* within the package of the class where it is defined, or within any child class of the class where it is defined.
 
-  >Don't worry if you don't know what a child class or package is, it hasn't been explained. You won't really use default or protected in robotics.
+  >Don't worry if you don't know what a child class or package is, it hasn't been explained. You won't really use default or protected in Robotics. 
 
 
 
