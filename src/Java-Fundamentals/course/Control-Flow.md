@@ -5,7 +5,7 @@ Control flow is the way a program decides what to do and when. Generally, code i
 
 # Terminology
 
-**Functions** : Allow for repeated portions of code to be executed differently each time based on a paramater
+**Functions** : Allow for repeated portions of code to be executed differently each time based on a parameter
 >`System.out.println("HELLO")` is a function that changes its execution based on the parameter passed, the string. We'll cover these more in depth later. 
 
 **Loops** : Repeats a block of code several times, either in iteration, or while a condition is true. 

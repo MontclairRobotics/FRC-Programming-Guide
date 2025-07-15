@@ -1,0 +1,1 @@
+TODO: Yell at them to make their own branches and pull requests and code reviews and formatting and titling the commits good with descriptions and pull before push and always see if it simulates before pushing cause people need the simulator to function for their own reasons and so on and so forth

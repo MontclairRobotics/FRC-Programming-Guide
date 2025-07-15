@@ -30,7 +30,7 @@ Roadmap:
    3. Objects \[🚧\]
    4. Packages \[❌\]
 3. Git & GitHub \[🎉\]
-   1. Installing Git \[🎉\]
+   1. Installing Git \[🚧\]
    2. Basic Git & GitHub \[🎉\]
    3. How To Contribute Effectively \[❌\]
 4. FRC Programming \[🚧\]

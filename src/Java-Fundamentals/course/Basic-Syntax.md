@@ -40,7 +40,7 @@ There are 2 ways to create comments in Java:
    - ```java
      // Hello! This is a single-line comment and is great for short explanations of code.
      ```
-2. Using `/* ... */` for multi-line comments
+2. Using `/* [[...] */` for multi-line comments
    - ```java
      /* Hi! This is a comment that spans across
        multiple lines
@@ -49,3 +49,7 @@ There are 2 ways to create comments in Java:
 
 **Code snippets throughout this guide may use comments to provide further context or explain what's going on.**
 
+```java
+     // TODO: In most IDEs (integrated development environment) a comment with "TODO:" will mark it down for later 
+     // eg. using "// TODO: fix this" will mark it as a problem for later.
+```

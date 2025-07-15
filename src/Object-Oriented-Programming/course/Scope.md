@@ -42,7 +42,7 @@ public class Test {
 In the above snippet, `publicNum` is accessible through `Test.publicNum` throughout the codebase, but `Test.num` is inaccessible *outside* of the `Test` class, only within it. 
 
 Then, another `num` is defined, it is the num of the *method*, `returnGreater()`. 
->This `num` is different from the private `num` in the class. If the `num` of the method had any other name to declare it by, the class variable `num` would remain accessible within the method, but because they both share the <i>same</i> variable name, the <u><b>one closest in scope</b> is referrenced</u> when inside of the method (which is the parameter `num`).
+>This `num` is different from the private `num` in the class. If the `num` of the method had any other name to declare it by, the class variable `num` would remain accessible within the method, but because they both share the <i>same</i> variable name, the <u><b>one closest in scope</b> is referenced</u> when inside of the method (which is the parameter `num`).
 >>So, to avoid confusion, if we ever wanted to reference the `num` of the class, we just access *this*.`num`, `this` inside of a class refers to `itself`. 
 
 And finally, the `num` of the *method* is not accessible in the *class*, only within the *method*. 
