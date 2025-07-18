@@ -89,9 +89,7 @@ Verify your gitkraken installation with
 <hr>
 
 # **Installing Git CLI** 
-Real alphas don't need continent things like applications. 
-(just kidding)
-But seriously though, it is useful to know the commands and understand Git from the CLI perspective, but this setup could be a time waster long term, especially for a beginner. Any of the standard installation procedures will *automatically* install Git anyway. 
+Real alphas don't need convenient things like applications. (Just kidding!) But seriously though, it is useful to know the commands and understand Git from the CLI perspective, but this setup could be a time waster long term, especially for a beginner. Any of the standard installation procedures will *automatically* install Git anyway. 
 
 >Installing the GitHub GUI automatically installs Git, because Git is a dependency of GitHub. However, if you would like to install the CLI manually, below are the steps. 
 
@@ -179,3 +177,5 @@ Verify installation (all devices):
 ```bash
 git --version
 ```
+
+> You can learn about all the Git commands [here](https://git-scm.com/)

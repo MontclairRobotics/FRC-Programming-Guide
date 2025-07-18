@@ -96,7 +96,7 @@ Let's look at a few examples of equality operators in action:
 int x = 3;
 double y = 4.1;
 boolean z = x > y; // False, 4.1 > 3
-boolean = (y - 3) > 1; // True, 1.1 > 1 
+boolean result = (y - 3) > 1; // True, 1.1 > 1 
 ```
 
 ```java

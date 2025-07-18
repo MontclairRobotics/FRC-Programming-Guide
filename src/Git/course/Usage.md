@@ -1,18 +1,18 @@
 # **Git & GitHub Usage**
 
 ## Standard Workflow
-> 'Workflow' in our definition is the chronological order we change code in before they are a part of the overall project. Reading the terminology below will help you understand what the workflow means, if it is not immediately clear.
+> 'Workflow' in our definition is the chronological order we change code in before they are a part of the overall project. Reading the terminology below will help you understand what the workflow means.
 
-- *Clone* or *fork* the *repository* (once) 
-- Create a *[branch](https://montclairrobotics.github.io/FRC-Programming-Guide/Git/course/Usage.html#terminology)* (if necessary)
+- *Clone* or *fork* the *repository* (Once, in our case you will clone.) 
+- Create a *branch* (If necessary)
 - **Edit files locally**
-- *Merge* (if necessary)
+- *Merge* (After pulling, If necessary)
 - ***Stage* changes**
-- ***Commit* changes** (with a description of what you changed)
+- ***Commit* changes** (With a description of what you changed)
 - ***Push* to GitHub**
-- Create a *Pull Request* (if necessary)
-  - Have your code reviewed 
-  - Have your code merged into the the main branch
+- Create a *Pull Request* (If necessary)
+  - Have your code *reviewed* 
+  - Have your code *merged* into the the main branch
 - Repeat
 
 
@@ -84,7 +84,7 @@ If the branch doesn’t exist locally but exists on GitHub (remote), use:
 
 - **GitHub Issues**: Allows us to plan our progress, by planning, prioritizing, and designating different incomplete tasks to different programmers. We can use this to communicate to collaborators where we are in the project's timeline, and link code to a discussion space easily. 
 
-- **GitHub Actions**: This won't be nessasary for working on the robot. Custom scripts that run automatically after an event such as pushes, pull requests, issue creation, or even on a schedule. These can be used for testing, building, deploying, or any automated task. A sample action, located in the ```.github/workflows``` as a YAML file
+- **GitHub Actions**: *This won't be nessasary for working on the robot*. Custom scripts that run automatically after an event such as pushes, pull requests, issue creation, or even on a schedule. These can be used for testing, building, deploying, or any automated task. A sample action, located in the ```.github/workflows``` as a YAML file
     ```YAML
     name: Run Tests
 
