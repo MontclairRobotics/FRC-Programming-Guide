@@ -131,12 +131,18 @@
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu" style="z-index:20000 !important; ">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinLatte">C. Latte</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="new2025">Modern</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinFrappe">C. Frappe</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinMacchiato">C. Macchiato</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinMocha">C. Mocha</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="emo">Emo</button></li>
                         </ul>
                         {{#if search_enabled}}
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
@@ -301,6 +307,56 @@
         <script src="{{ path_to_root }}clipboard.min.js"></script>
         <script src="{{ path_to_root }}highlight.js"></script>
         <script src="{{ path_to_root }}book.js"></script>
+
+        <!-- Inline theme‑toggle wiring -->
+        <script>
+            (function() {
+            const btn  = document.getElementById('theme-toggle');
+            const menu = document.getElementById('theme-list');
+            const html = document.documentElement;
+            function removeAllThemes() {
+                const themeButtons = document.querySelectorAll('#theme-list .theme');
+                themeButtons.forEach(btn => {
+                    const themeClass = btn.id;
+                    document.documentElement.classList.remove(themeClass);
+                });
+            }
+            function setTheme(name) {
+                // remove existing theme classes (adjust to your theme names)
+                removeAllThemes();
+                html.classList.add(name);
+                localStorage.setItem('mdbook-theme', name);
+                btn.setAttribute('aria-expanded', 'false');
+                menu.style.display = 'none';
+                document.querySelectorAll('.theme-selected').forEach(item => {
+                    item.classList.remove('theme-selected');
+                });
+                document.getElementById(name).classList.add('theme-selected')
+            }
+
+            // toggle popup on button click
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                const open = (menu.style.display === 'block');
+                menu.style.display = open ? 'none' : 'block';
+                btn.setAttribute('aria-expanded', (!open).toString());
+            });
+
+            // pick a theme when you click a menu item
+            menu.addEventListener('click', e => {
+                let tgt = e.target;
+                while (tgt && !tgt.classList.contains('theme')) tgt = tgt.parentElement;
+                if (tgt) setTheme(tgt.id);
+            });
+
+            // clicking outside closes the menu
+            document.addEventListener('click', () => {
+                menu.style.display = 'none';
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            })();
+        </script>
+
 
         <!-- Custom JS scripts -->
         {{#each additional_js}}

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>A Special Thanks - Montclair Robotics Programming</title>
+        <title>Installing WPILib - Montclair Robotics Programming</title>
 
 
         <!-- Custom HTML head -->
@@ -12,31 +12,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href="../../theme/pagetoc.css">
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../";
+            var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -88,7 +88,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -131,7 +131,7 @@
                         <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Appendix/Special-Thanks.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/FRC/course/Install.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -161,16 +161,89 @@
                 <div id="content" class="content">
                     <main>
                         <div class="content-wrap">
-                            <ul>
-<li><a href="https://github.com/dragonblade316" target="_blank" rel="noopener noreferrer">Teddy, 5461</a> for content on loops.</li>
-<li><a href="https://github.com/falon-dev" target="_blank" rel="noopener noreferrer">Falon, 2537</a> for inspiration regarding teaching WPILib.</li>
-<li><a href="https://github.com/witherslayer67"  target="_blank" rel="noopener noreferrer">Jimmy, 9496</a> for working on the Lynx Library Of Knowledge, a great resource for this project.</li>
-</ul>
-<!-- - <a href="https://github.com/usrr961" target="_blank" rel="noopener noreferrer">Rayan N, 555</a> for writing lots of custom code for problems with this book.  -->
+                            <h1 id="wpilib"><a class="header" href="#wpilib">WPILib</a></h1>
+<p>WPILib is the library provided to every team by FRC to make programming the robot easier. While there are versions of WPILib available for C++, python, and NI LabView, our team uses Java because we didn’t want to do memory management (rules out C++), the Python version is too new in our opinion, and we dislike LabView.</p>
+<h2 id="wpilib-is-open-source-software-and-can-be-found-here"><a class="header" href="#wpilib-is-open-source-software-and-can-be-found-here">WPILib is open source software, and can be found <a href="https://github.com/wpilibsuite/allwpilib">here</a>.</a></h2>
+<p>In addition to the main java library which much of this chapter will cover, WPILib comes with:</p>
 <ul>
-<li>All the authors who organized this guide including:<br> James <del>555</del> 2539, Abraham 555, Connor 555, Rayan 555</li>
+<li><strong>Shuffleboard and SmartDashboard</strong>
+<ul>
+<li>Display Debug information</li>
+<li>Show camera feeds and sensor readings to drivers</li>
+<li>Allow drivers to change pre-programmed settings</li>
 </ul>
-<p>And you! The reader! For having the willingness to learn. :)</p>
+</li>
+<li>SysId
+<ul>
+<li>Used to tune feedforward control for subsystems</li>
+</ul>
+</li>
+<li><strong>Glass</strong>
+<ul>
+<li>Used to debug the robot</li>
+<li>Can be used to view networktables data, or data being exchanged between different systems on the robot with each other and the driver station</li>
+</ul>
+</li>
+<li>And a few other tools that we don’t use.</li>
+</ul>
+<p>Of these tools, glass and shuffleboard are the ones that we use the most.</p>
+<hr />
+<p>To install the latest version of WPILib on your computer, go <a href="https://github.com/wpilibsuite/allwpilib">here</a>, then click on “Releases” on the right. Then, scroll down to where you see the different files available for download. Be sure that you don’t scroll to the previous release. Download the file corresponding to your OS.</p>
+<p>Windows:</p>
+<ul>
+<li>Download the .iso file</li>
+<li>When it’s done, right click it and hit “mount”</li>
+<li>Run the WPILib installer</li>
+<li>Select “Everything”, then choose who you want to install it for</li>
+<li>Selected “Download for this computer only”</li>
+<li>Finish the installation</li>
+</ul>
+<p>Macos:</p>
+<ul>
+<li>Download the .dmg file (Intel or Arm64 depending on your computer)</li>
+<li>Run the installer</li>
+<li>Select “Everything” and click “Install for this user”</li>
+<li>Select “Download for this computer only”</li>
+<li>Finish the installation</li>
+</ul>
+<p>Linux (Ubuntu):</p>
+<ul>
+<li>Download .tar.gz file</li>
+<li>Extract it</li>
+<li>Run WPILibInstaller</li>
+<li>(if you got this far, you already know what you’re doing on Linux, but since this guide is for beginners, it will not be further elaborated)</li>
+</ul>
+<hr />
+<p>After you have installed WPILib, if you are on Windows you may also want to install the FRC game tools from <a href="https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/frc-game-tools.html">this</a> guide.</p>
+<hr />
+<p>After you have installed WPILib, you will notice that you now have two separate versions of VSCode on your computer: the one you installed regularly, and the one that has been installed with WPILib. You should program for robotics on the one installed with WPILib called “WPILib VS Code” as it has the latest version of WPILib available and will allow you to compile your code to test it.</p>
+<p>Within the WPILib version of VSCode, click on the extensions button on the left. You should install:</p>
+<ul>
+<li>TODO Tree - creates a list of //TODO comments in the code that you can jump to</li>
+<li>Extension Pack for Java - if after installation it tells you to install a JDK ignore it. WPILib comes with one.</li>
+<li>Live Share - lets two people collaborate on code like Google Docs</li>
+<li>Better Comments - allows you to color and highlight comments</li>
+<li>Polacode - OPTIONAL - lets you take nice screenshots of your code</li>
+<li>Vscode-pets - 100% Necessary - lets you put fun little bets in the bottom left corner of your VSCode window. Install this or leave.</li>
+</ul>
+<hr />
+<p>You should also install PathPlanner, which is a piece of software written by another team that lets us draw paths onto the field, and play them during the autonomous period with a bit of tuning.</p>
+<p>Windows:</p>
+<ul>
+<li>Install from the Microsoft Store <a href="https://www.microsoft.com/en-us/p/frc-pathplanner/9nqbkb5dw909?cid=storebadge&amp;ocid=badge&amp;rtc=1&amp;activetab=pivot:overviewtab">here</a></li>
+<li>Or download manually <a href="https://github.com/mjansen4857/pathplanner/releases">here</a></li>
+</ul>
+<p>MacOS:</p>
+<ul>
+<li>Install from the App Store <a href="https://apps.apple.com/us/app/frc-pathplanner/id1593046876">here</a></li>
+<li>Or download manually <a href="https://github.com/mjansen4857/pathplanner/releases">here</a></li>
+</ul>
+<p>Linux:</p>
+<ul>
+<li>Download manually <a href="https://github.com/mjansen4857/pathplanner/releases">here</a></li>
+<li>Continue as standard Linux installations go.</li>
+</ul>
+<hr />
 
                         </div>
                         <div id="sidetoc">
@@ -180,10 +253,13 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../Appendix/Intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../FRC/course/Terminology.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../../FRC/course/ElectricalPrimer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -191,10 +267,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../Appendix/Intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../FRC/course/Terminology.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../../FRC/course/ElectricalPrimer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -209,19 +288,19 @@
             window.playground_copyable = true;
         </script>
 
-        <script src="../ace.js"></script>
-        <script src="../editor.js"></script>
-        <script src="../mode-rust.js"></script>
-        <script src="../theme-dawn.js"></script>
-        <script src="../theme-tomorrow_night.js"></script>
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Inline theme‑toggle wiring -->
         <script>
@@ -274,8 +353,8 @@
 
 
         <!-- Custom JS scripts -->
-        <script src="../theme/pagetoc.js"></script>
-        <script src="../theme/rn_qol.js"></script>
+        <script src="../../theme/pagetoc.js"></script>
+        <script src="../../theme/rn_qol.js"></script>
 
 
     </div>

@@ -21,7 +21,7 @@
   - [Effectively Contributing]()
 - [FRC](FRC/Intro.md)
   - [Important Terminology](FRC/course/Terminology.md)
-  - [Installing WPILib]()
+  - [Installing WPILib](FRC/course/Install.md)
   - [An adventure Into Electronics](FRC/course/ElectricalPrimer.md)
   - [PID](FRC/course/PID.md)
   - [Vision](FRC/course/Vision.md)

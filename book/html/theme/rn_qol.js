@@ -75,13 +75,14 @@
   const container = document.createElement('div');
   Object.assign(container.style, {
     position: 'fixed',
-    bottom: '20px',
-    right: '20px',
+    bottom: '10px',
+    right: '10px',
     zIndex: '9999',
     fontFamily: 'sans-serif',
-    width: '160px',
+    width: '140px',
     background: "rgba(0, 0, 0, 0.8)",
-    borderRadius:"10px"
+    borderRadius:"10px",
+    minHeight:"40px"
   });
 
   // Settings button
@@ -230,6 +231,7 @@
   container.append(button, selectLabel, select, sliderLabel, slider, lineNumsBtn);
   document.body.appendChild(container);
 })();
+
 
 //Introducing Notes, a way to annotate pages. 
 (function(){
@@ -483,3 +485,23 @@
 
   renderNotes();
 })();
+
+const content = document.getElementById('content');
+if (content) {
+    content.style.paddingLeft = "30px";
+    content.style.paddingRight = "10px";
+    content.style.paddingBottom = "90px";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.theme-selected').forEach(item => {
+    item.classList.remove('theme-selected');
+  });
+  const theme = localStorage.getItem('mdbook-theme');
+  if (theme) {
+    const el = document.getElementById(theme);
+    if (el) {
+      el.classList.add('theme-selected');
+    }
+  }
+});

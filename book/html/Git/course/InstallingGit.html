@@ -22,42 +22,29 @@
         <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../../theme/pagetoc.css">
 
 
-        <!-- Provide site root and default themes to javascript -->
+        <!-- Provide site root to javascript -->
         <script>
-            const path_to_root = "../../";
-            const default_light_theme = "navy";
-            const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex.js";
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
     </head>
     <body>
-    <div id="mdbook-help-container">
-        <div id="mdbook-help-popup">
-            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
-            <div>
-                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
-                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
-                <p>Press <kbd>?</kbd> to show this help</p>
-                <p>Press <kbd>Esc</kbd> to hide this help</p>
-            </div>
-        </div>
-    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                let theme = localStorage.getItem('mdbook-theme');
-                let sidebar = localStorage.getItem('mdbook-sidebar');
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -71,8 +58,7 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
-            let theme;
+            var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -85,20 +71,17 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
-                sidebar_toggle.checked = false;
             }
-            if (sidebar === 'visible') {
-                sidebar_toggle.checked = true;
-            } else {
-                html.classList.remove('sidebar-visible');
-            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -124,15 +107,20 @@
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu" style="z-index:20000 !important; ">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinLatte">C. Latte</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="new2025">Modern</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinFrappe">C. Frappe</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinMacchiato">C. Macchiato</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinMocha">C. Mocha</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="emo">Emo</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -152,12 +140,7 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
-                            <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
-                            </div>
-                        </div>
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -178,13 +161,16 @@
                 <div id="content" class="content">
                     <main>
                         <div class="content-wrap">
-                            <h1 id="installing-github-desktop"><a class="header" href="#installing-github-desktop"><strong>Installing</strong> <strong>GitHub</strong> <strong>Desktop</strong></a></h1>
+                            <h1 id="installing-github-desktop"><a class="header" href="#installing-github-desktop"><strong>Installing GitHub Desktop</strong></a></h1>
 <h2 id="what-is-github"><a class="header" href="#what-is-github">What is GitHub?</a></h2>
 <blockquote>
-<p>Git is the de facto code version control system. It tracks changes to code as we are editing, allowing us more complicated ways of saving and managing our code. GitHub provides a fancy GUI (graphical user interface) to access the tools of Git without needing CLI (command line interface), and also allows our code to be stored in the cloud, so that one member’s changes are visible to everyone. We can track everyone’s contributions from their device, see where mistakes or bugs may have occured, and revert as neccessary.</p>
+<p>Git is the de facto code version control system. It tracks changes to code as we are editing, allowing us more complicated ways of saving and managing our code. GitHub is a website that provides a fancy GUI (graphical user interface) to access the tools of Git without needing CLI (command line interface), and also allows our code to be stored in the cloud, so that one member’s changes are visible to everyone. We can track everyone’s contributions from their device, see where mistakes or bugs may have occurred, and revert as necessary. <a href="https://montclairrobotics.github.io/FRC-Programming-Guide/Git/course/Usage.html#terminology">read more on GIT and Github</a> GitHub Desktop is an application used to interface between the two of them.</p>
 </blockquote>
 <hr />
-<h2 id="downloading--installation"><a class="header" href="#downloading--installation"><strong>Downloading &amp; Installation</strong></a></h2>
+<h2 id="standard-installation"><a class="header" href="#standard-installation"><strong>Standard Installation</strong></a></h2>
+<blockquote>
+<p><strong>GitHub does not support GitHub desktop for Linux, but there are alternatives or ported versions</strong></p>
+</blockquote>
 <h3 id="download"><a class="header" href="#download">Download</a></h3>
 <blockquote>
 <ol>
@@ -223,7 +209,7 @@
 </blockquote>
 <blockquote>
 <ol start="6">
-<li>Run executable in downloads folder (and move to applications folder if neccessary)</li>
+<li>Run executable in downloads folder (and move to applications folder if necessary)</li>
 </ol>
 <p>   <img src="./installGitAssets/0mcfyig5.png" style="width:5.75039in;height:4.25in" /></p>
 </blockquote>
@@ -231,7 +217,7 @@
 <p>Voila! Installed.</p>
 </blockquote>
 <blockquote>
-<p>On either device, log in to your GitHub account. Await further instruction to receive invitation to our <strong><a href="https://github.com/MontclairRobotics/" target="_blank" rel="noopener noreferrer">organization</a></strong>. Then, add the repositiory to your device either through the GitHub Desktop app, or on the GitHub repositiory website.</p>
+<p>On either device, log in to your GitHub account. Await further instruction to receive invitation to our <strong><a href="https://github.com/MontclairRobotics/" target="_blank" rel="noopener noreferrer">organization</a></strong>. Then, add the repository to your device either through the GitHub Desktop app, or on the GitHub repository website.</p>
 </blockquote>
 <hr />
 <h3 id="windows"><a class="header" href="#windows">Windows</a></h3>
@@ -246,12 +232,138 @@
 <p>   <img src="./installGitAssets/nznc32td.png" style="width:4.97835in;height:3.5in" /></p>
 </blockquote>
 <blockquote>
-<p>On either device, log in to your GitHub account. Await further instruction to receive invitation to our <strong><a href="https://github.com/MontclairRobotics/" target="_blank" rel="noopener noreferrer">organization</a></strong>. Then, add the repositiory to your device either through the GitHub Desktop app, or on the GitHub repositiory website.</p>
+<p>On either device, log in to your GitHub account. Await further instruction to receive invitation to our <strong><a href="https://github.com/MontclairRobotics/" target="_blank" rel="noopener noreferrer">organization</a></strong>. Then, add the repository to your device either through the GitHub Desktop app, or on the GitHub repository website.</p>
 </blockquote>
+<hr>
+<h1 id="installing-gitkraken-alt"><a class="header" href="#installing-gitkraken-alt"><strong>Installing GitKraken</strong> (Alt)</a></h1>
+<p>To maintain consistency, use GitKraken only if GitHub GUI failed to install or you are on an unsupported device such as a Linux operating system.</p>
+<h2 id="windows--mac"><a class="header" href="#windows--mac">Windows &amp; Mac</a></h2>
+<p>The process is as self explanatory as installing GitHub GUI, just using a different installation URL. Please use the <em>standard</em> GitHub GUI installation unless this is required as per your individual setup.</p>
+<blockquote>
+<p>Go to <a href="https://www.gitkraken.com/download">https://www.gitkraken.com/download</a> and select for your operating system, and run the installation proccess following the directions on screen.</p>
+</blockquote>
+<h2 id="linux"><a class="header" href="#linux">Linux</a></h2>
+<p>Depending on your distro, download the according file, whether that be a <code>.rpm</code> / <code>.deb</code> / <code>.tar.gz</code>  (or use Snap Package Manager, depending on your support and prior installation of it). This proccess should be familiar to you if you are already familar with Linux.</p>
+<p><strong>.deb File</strong></p>
+<blockquote>
+<p>Run (in the same directory as the downloaded file)</p>
+<pre><code class="language-bash">sudo dpkg -i gitkraken-amd64.deb
+sudo apt-get install -f  # f is to fix dependencies if needed
+</code></pre>
+</blockquote>
+<p><strong>.rpm File</strong></p>
+<blockquote>
+<p>Install with (in same directory)
+<code>sudo rpm -i gitkraken-amd64.rpm</code></p>
+</blockquote>
+<p><strong>.tar.gz File</strong></p>
+<blockquote>
+<p>If you’re here, you already know how to execute the steps necessary to properly use a <code>.tar.gz</code> archive; otherwise, it’s more hassle than it’s worth to get started as a beginner here.</p>
+</blockquote>
+<p>Verify your gitkraken installation with
+<code>gitkraken --version</code> (&amp; verify your <code>Git</code> too, this will come with <code>GitKraken</code>) <code>git --version</code></p>
+<hr>
+<h1 id="installing-git-cli"><a class="header" href="#installing-git-cli"><strong>Installing Git CLI</strong></a></h1>
+<p>Real alphas don’t need continent things like applications.
+(just kidding)
+But seriously though, it is useful to know the commands and understand Git from the CLI perspective, but this setup could be a time waster long term, especially for a beginner. Any of the standard installation procedures will <em>automatically</em> install Git anyway.</p>
+<blockquote>
+<p>Installing the GitHub GUI automatically installs Git, because Git is a dependency of GitHub. However, if you would like to install the CLI manually, below are the steps.</p>
+</blockquote>
+<h2 id="windows-1"><a class="header" href="#windows-1">Windows:</a></h2>
+<blockquote>
+<p>Launch Powershell (using the start menu or <code>Win</code>+<code>R</code>)</p>
+</blockquote>
+<blockquote>
+<p>Run</p>
+<pre><code class="language-bash">winget install --id Git.Git -e --source winget
+</code></pre>
+</blockquote>
+<p>Breakdown of this Powershell line:
+We are telling <code>winget</code>, the preinstalled package manager on windows, to search for Git from Microsoft offical records and to then install it (and to also verify that it is indeed the only Git in the Microsoft record)</p>
+<blockquote>
+<p>On either device, run <code>git --version</code> to verify successful installation of Git.
+To see the exact file location on Windows, type <code>where git</code>, and on Mac &amp; Linux, <code>which git</code></p>
+</blockquote>
+<h2 id="macos-1"><a class="header" href="#macos-1">MacOS:</a></h2>
+<p>Install HomeBrew first.
+It is a package manager essential to using MacOS CLI Commands. (Its technically possible to install Git without HomeBrew, but there’s no reason to not have Brew installed anyway, its essential for every MacOS developer.)</p>
+<blockquote>
+<p>Open Spotlight, and search for <code>Terminal.app</code></p>
+</blockquote>
+<blockquote>
+<p>Type this in.</p>
+<pre><code class="language-bash">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+</code></pre>
+</blockquote>
+<p>Explanation of command:
+<code>/bin/bash</code> tells the pre-existing shell to run the following, which is to <code>cURL</code>, <code>fetch</code> from the web, the <code>Homebrew</code> installation script, <code>install.sh</code>, over <code>ssl</code>, which is secure way to fetch files. The file can be verified to be authentic or not by navigating to the URL in the script and ensuring it isn’t malicious.</p>
+<p>Homebrew may prompt you along the installation. Follow and accept.</p>
+<p>To confirm successful Brew installation, run</p>
+<blockquote>
+<pre><code class="language-bash">brew --version
+</code></pre>
+</blockquote>
+<p>Something should show on screen thats not an error. (homebrew will install to <code>/opt/homebrew</code>, but running <code>which brew</code> will show you specifically if the directory differs.)</p>
+<p>Now, we can proceed to install Git.
+In the same terminal window, run</p>
+<blockquote>
+<pre><code class="language-bash">brew install git
+</code></pre>
+</blockquote>
+<p>This tells <code>Brew</code> (not <code>bin\bash</code> like earlier) to install Git from its records.</p>
+<blockquote>
+<p>On either device, run <code>git --version</code> to verify successful installation of Git.
+To see the exact file location on Windows, type <code>where git</code>, and on Mac &amp; Linux, <code>which git</code></p>
+</blockquote>
+<h2 id="linux-1"><a class="header" href="#linux-1">Linux:</a></h2>
+<blockquote>
+<p>This can really depend on your distribution. If you already have gotten Linux, you will know how to determine your distribution.</p>
+</blockquote>
+<p>In your terminal, execute based on your distribution:</p>
+<blockquote>
+<p>Ubuntu / Debian-based: (most common)</p>
+<blockquote>
+<pre><code class="language-bash">sudo apt update
+sudo apt install git
+</code></pre>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Fedora:</p>
+<blockquote>
+<pre><code class="language-bash">sudo dnf install git
+</code></pre>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Arch / Manjaro:</p>
+<blockquote>
+<pre><code class="language-bash">sudo pacman -S git
+</code></pre>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>openSUSE:</p>
+<blockquote>
+<pre><code class="language-bash">sudo zypper install git
+</code></pre>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>In each of these commands, all we are telling the computer to do is to act as the administrator with full rights, to reference the operating system’s package manager (like <code>winget</code> or <code>brew</code>) to install <code>Git</code> from their records.</p>
+</blockquote>
+<p>To check where Git is installed in Linux, run</p>
+<pre><code class="language-bash">which git
+</code></pre>
+<hr>
+<p>Verify installation (all devices):</p>
+<pre><code class="language-bash">git --version
+</code></pre>
 
                         </div>
-                        <div class="sidetoc">
-                            <nav class="pagetoc"></nav>
+                        <div id="sidetoc">
+                            <nav id="pagetoc"></nav>
                         </div>
                     </main>
 
@@ -293,8 +405,8 @@
         </script>
 
         <script src="../../ace.js"></script>
-        <script src="../../mode-rust.js"></script>
         <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
         <script src="../../theme-dawn.js"></script>
         <script src="../../theme-tomorrow_night.js"></script>
 
@@ -305,6 +417,56 @@
         <script src="../../clipboard.min.js"></script>
         <script src="../../highlight.js"></script>
         <script src="../../book.js"></script>
+
+        <!-- Inline theme‑toggle wiring -->
+        <script>
+            (function() {
+            const btn  = document.getElementById('theme-toggle');
+            const menu = document.getElementById('theme-list');
+            const html = document.documentElement;
+            function removeAllThemes() {
+                const themeButtons = document.querySelectorAll('#theme-list .theme');
+                themeButtons.forEach(btn => {
+                    const themeClass = btn.id;
+                    document.documentElement.classList.remove(themeClass);
+                });
+            }
+            function setTheme(name) {
+                // remove existing theme classes (adjust to your theme names)
+                removeAllThemes();
+                html.classList.add(name);
+                localStorage.setItem('mdbook-theme', name);
+                btn.setAttribute('aria-expanded', 'false');
+                menu.style.display = 'none';
+                document.querySelectorAll('.theme-selected').forEach(item => {
+                    item.classList.remove('theme-selected');
+                });
+                document.getElementById(name).classList.add('theme-selected')
+            }
+
+            // toggle popup on button click
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                const open = (menu.style.display === 'block');
+                menu.style.display = open ? 'none' : 'block';
+                btn.setAttribute('aria-expanded', (!open).toString());
+            });
+
+            // pick a theme when you click a menu item
+            menu.addEventListener('click', e => {
+                let tgt = e.target;
+                while (tgt && !tgt.classList.contains('theme')) tgt = tgt.parentElement;
+                if (tgt) setTheme(tgt.id);
+            });
+
+            // clicking outside closes the menu
+            document.addEventListener('click', () => {
+                menu.style.display = 'none';
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            })();
+        </script>
+
 
         <!-- Custom JS scripts -->
         <script src="../../theme/pagetoc.js"></script>

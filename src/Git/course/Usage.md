@@ -1,7 +1,7 @@
 # **Git & GitHub Usage**
 
 ## Standard Workflow
-> Don't worry, I promise these words will make sense after reading the terminology section.
+> 'Workflow' in our definition is the chronological order we change code in before they are a part of the overall project. Reading the terminology below will help you understand what the workflow means, if it is not immediately clear.
 
 - *Clone* or *fork* the *repository* (once) 
 - Create a *[branch](https://montclairrobotics.github.io/FRC-Programming-Guide/Git/course/Usage.html#terminology)* (if necessary)
