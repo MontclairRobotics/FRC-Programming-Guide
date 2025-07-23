@@ -29,7 +29,6 @@ Roadmap:
    2. Scope \[🎉\]
    3. Objects \[🚧\]
    4. Packages \[❌\]
-   5. Style Guide \[❌\]
 3. Git & GitHub \[🎉\]
    1. Installing Git \[🎉\]
    2. Basic Git & GitHub \[🎉\]
@@ -41,14 +40,13 @@ Roadmap:
    4. Vision \[🚧\]
    5. PID \[✔️\]
    6. Swerve \[❌\]
-5. Advanced Java \[❌\] (could we consider spreading it through fundamentals of java rather than declaring an entirely new section? This puts less of a barrier of entry and 'fear' to the topic)
+5. Advanced Java \[❌\]
    1. Inheritance \[❌\]
    2. Advanced String Usage \[❌\]
    3. Arraylist \[❌\]
    4. Hashmap & Hashset \[❌\]
-   5. Lambdas (covered in JF/functions.md, needs refining) \[✔️\]
+   5. Lambdas (covered in JF/functions.md, needs refining) \[🚧\]
+   6. Style Guide \[❌\]
 6. Appendix
    1. Special Thanks \[🎉\]
    2. What Next? \[❌\]
-   
-
