@@ -25,7 +25,7 @@ Animal fido;
 
 ### The ```new``` Operator
 
-The ```new``` operator is used to create an instance of, or instantiate, a class.
+The ```new``` operator is used to create an instance of (aka. instantiate) a class.
 
 This is how you would create an instance of class ```Animal``` using the constructor created in the previous lesson:
 
@@ -45,6 +45,40 @@ fido = new Animal(5, "Fido");
 
 There are two types of methods in a class: static and non-static methods (regular methods).
 
+### Non-Static Methods
+
+To access a non-static field or method, you *cannot* use the class name. Instead, you must call them on a specific *instance* of a class (an object).
+
+Let's go back to the ```Animal``` example:
+
+```java
+public class Animal {
+    //non-static instance variables
+    private String name;
+    private int age;
+    
+    //constructor:
+    public Animal(int a, String n) {
+        //initialize instance variables
+        age = a;
+        name = n;
+    }
+
+    //non-static method
+    public String getNameAndAge() {
+        return name + age;
+    }
+}
+
+//Outside of the animal class
+Animal fido = new Animal(10, "Fido");
+
+//you call the method on the object
+
+System.out.println(fido.getNameAndAge());
+//Prints "Fido10"
+```
+
 ### Static Methods
 
 Static methods use a new keyword, the ```static``` keyword. You may have noticed its inclusion in the method header for the ```main``` method. 
@@ -52,34 +86,44 @@ Static methods use a new keyword, the ```static``` keyword. You may have noticed
 You declare a static method like this:
 
 ```java
-static type name() {}
+static type name() { [...] }
 ```
 
 >Instance variables can also be static, and are declared like this: ```static int num;```.
 
+<div class="warning">
+
+What does static mean?
+
 The main difference between static and non-static methods is that static methods are associated with the class, and non-static methods are associated with the instance.
+
+</div>
 
 That means that static methods can only access information that is *not* associated with a particular instance. Essentially, they can't access non-static instance variables.
 
-To access a static field (instance variable) or method, you need to use the class name, and the *dot operator*:
+To access a static field (instance variable) or method, you need to use the **class name**, and the *dot operator*:
 
 ```java
-Test.method();
+ClassName.methodName(); //This runs a static function that is created in the class
+ClassName.variableName; //This returns a static variable that is created in the class
 ```
 
-As you can see, the dot operator is used to access a field (instance/class variable), or to perform a method call on a class or object. //TODO CHECK
+The dot operator is used to access things contained by the object or class. This can be a variable or a function. When what you are trying to access is static you use the class. When it is not you use an object of that class.
 
 One possible use of a static method is to count the number of created instances of a class like this:
 
 ```java
-public class Test {
+public class Test { //creating a class named "Test"
 
+    //static instance variable
     private static int count = 0;
 
-    public Test() {
-        count++; //same as count +=1;
+    //constructor:
+    public Test() { //as previously mentioned a constructor is called when a new object is created
+        count++; //same as "count +=1;" or "count = count + 1"
     }
 
+    //static method
     private static void resetCount() {
         count = 0;
     }
@@ -95,52 +139,20 @@ To call the static method ```resetCount()```, you would write:
 Test.resetCount();
 ```
 
-### Non-Static Methods
-
-To access a non-static field or method, you *cannot* use the class name. Instead, you must call them on a specific *instance* of a class (an object).
-
-Let's go back to the ```Animal``` example:
-
-```java
-public class Animal {
-    //non-static instance variables
-    private String name;
-    private int age;
-    
-    public Animal(int a, String n) {
-        //initialize instance variables
-        age = a;
-        name = n;
-    }
-
-    public String getNameAndAge() {
-        return name + age;
-    }
-}
-
-//Outside of the animal class
-Animal fido = new Animal(10, "Fido");
-
-//you call the method on the object
-
-System.out.println(fido.getNameAndAge());
-//Prints "Fido10"
-```
-
 
 ## The `this` Keyword
 
 `this` is a keyword used inside of classes to refer to the current object inside of a method or constructor.
 
-The only time that you will likely use the `this` keyword is when you have created a local variable with the same name as an instance variable.
+The only time that you will likely use the `this` keyword is when you have created a local variable with the same name as an instance variable. **Because "this" refers to the instance, "this.variableName" is used to access an instance variable**
 
 ```java
 public class Test {
-    private int num;
+    private int num; //instance variable called "num"
 
-    public Test(int num) {
-        //Without "this", this line would set the parameter num equal to itself.
-        this.num = num;
+    public Test(int num /*parameter for creating the class called "num"*/) {
+        //without this "this" keyword, this line would set the parameter "num" equal to itself.
+        this.num = num; //this line takes the instance variable called "num" and sets it equal to the parameter called "num" that is only relevant to this constructor method. You will see this often when you want to create a class that is able to use/hold the parameters used to make it.
     }
 }
 ```

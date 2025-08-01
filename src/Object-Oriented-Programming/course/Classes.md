@@ -2,7 +2,7 @@
 
 A class is Java's fundamental unit of storing code. Everything you write in Java will be inside of some kind of class (or similar structure). 
 
-A class in java is used to represent **something**, similarly to how an ```int``` represents a number and a ```String``` represents a string of text. A class may be used to represent an animal, a game piece, or even a robot. Where *variables* represent just a single "thing", `classes` represent collections of code. 
+A class in java is used to represent **something**, similarly to how an ```int``` represents a number and a ```String``` represents a string of text. A class may be used to represent an animal, a game piece, or even a robot. Where *variables* represent just a single "thing", `classes` represent a "thing" by using collections of code and data (data is stored using objects and primitives and code is stored mainly in functions within your class).
 
 You've probably seen this line at least once, at the top of your main file:
 
@@ -43,11 +43,9 @@ Instance variables are variables that are declared at the top of a class, right 
 
 ```java
 public class Animal {
-    public String name;
-    public int age;
-    public Animal child;
-    
-    ...
+    private String name;
+    private int age;
+    [...]
 }
 ```
 
@@ -67,21 +65,21 @@ We'll talk more about methods later.
 
 ## Constructors ##
 
-The Constructor of a class is what is used to create an instance of a class.
+The Constructor of a class is the method that is used to create an instance of the class.
 
 > If you don't know what an instance is, don't worry about it. It will be explained in the page on [Objects](./Objects.md)
 
-They have no return type, and instead of a name, they use the name of the class.
+They have no return type, and instead of a name, they use the name of the class. (The convention is that the name of the class is capitalized but Methods are not. Because constructors use the name of the class, they are the only methods that should be capitalized.)
 
 Let's look at an example of a constructor:
 
 ```java
 public class Animal {
+    //instance variables:
     private String name;
     private int age;
-    private Animal child;
 
-
+    //constructor:
     public Animal(int a, String n) {
         //initialize instance variables
         age = a;
@@ -98,14 +96,15 @@ Let's look at an example of a class that has multiple constructors
 public class Animal {
     public String name;
     public int age;
-    public Animal child;
 
+    //constructor for when creating an object of "Animal" with an int and a String representing the age and name.
     public Animal(int a, String n) {
         //initialize instance variables
         age = a;
         name = n;
     }
 
+    //constructor for when creating an object of "Animal" with only a String representing the name.
     public Animal(String n) {
         age = 0;
         name  = n;
@@ -115,10 +114,14 @@ public class Animal {
 
 In the above example we can have multiple constructors due to the properties of [Method Overloading](../../Java-Fundamentals/course/Functions.md#function-overloading)
 
-This is often used when you would like some instance variables to contain certain default values. (for instance, an animal's age starting at `0`)
+This is often used when you would like some instance variables to contain certain default values. (for instance, creating a new animal with an age starting at `0`)
 
-If you don't need a constructor to do anything, you don't have to write one. All classes in java have an implicit, or implied, constructor with no arguments which does nothing. We'll cover how to call the constructors we make (or ones that are implied) [next](./Objects.md)
-
+If you don't need a constructor to do anything, you don't have to write one. All classes in java have an implicit, or implied, constructor with no arguments which does nothing. We'll cover how to call the constructors we make (or ones that are implied) [next](./Objects.md), but here is what creating objects of animal using each of these constructors would look like if you already know:
+```Java
+variable1 = new Animal(3, "name1"); //creates and animal of age 3 and name "name1"
+variable2 = new Animal("name2"); //creates and animal of age 0 and name "name2"
+//If you don't understand this, it gets explained on the next page!
+```
 
 ## Private and Public
 
@@ -153,10 +156,3 @@ public static void main(String[] args){}
   - a protected method or field is accessible *only* within the package of the class where it is defined, or within any child class of the class where it is defined.
 
   >Don't worry if you don't know what a child class or package is, it hasn't been explained. You won't really use default or protected in Robotics. 
-
-
-
-
-
-
-

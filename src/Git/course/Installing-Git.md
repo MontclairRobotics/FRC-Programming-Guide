@@ -59,15 +59,15 @@
 
 <hr>
 
-# **Installing GitKraken** (Alt)
-To maintain consistency, use GitKraken only if GitHub GUI failed to install or you are on an unsupported device such as a Linux operating system.
-## Windows & Mac
-The process is as self explanatory as installing GitHub GUI, just using a different installation URL. Please use the *standard* GitHub GUI installation unless this is required as per your individual setup. 
+# **Installing GitKraken** (Alternative to GitHub Desktop)
 
->Go to [https://www.gitkraken.com/download](https://www.gitkraken.com/download) and select for your operating system, and run the installation proccess following the directions on screen. 
+## Windows & Mac
+The process is as self explanatory as installing GitHub GUI, just using a different installation URL.
+
+>Go to [https://www.gitkraken.com/download](https://www.gitkraken.com/download) and select for your operating system, and run the installation process following the directions on screen. 
 
 ## Linux
-Depending on your distro, download the according file, whether that be a `.rpm` / `.deb` / `.tar.gz`  (or use Snap Package Manager, depending on your support and prior installation of it). This proccess should be familiar to you if you are already familar with Linux.
+Depending on your distro, download the according file, whether that be a `.rpm` / `.deb` / `.tar.gz`  (or use Snap Package Manager, depending on your support and prior installation of it). This process should be familiar to you if you are already familiar with Linux.
 
 **.deb File**
 >Run (in the same directory as the downloaded file)
@@ -102,7 +102,7 @@ Real alphas don't need convenient things like applications. (Just kidding!) But 
 >```
 
 Breakdown of this Powershell line:
-We are telling `winget`, the preinstalled package manager on windows, to search for Git from Microsoft offical records and to then install it (and to also verify that it is indeed the only Git in the Microsoft record)
+We are telling `winget`, the preinstalled package manager on windows, to search for Git from Microsoft official records and to then install it (and to also verify that it is indeed the only Git in the Microsoft record)
 
 >On either device, run `git --version` to verify successful installation of Git. 
 To see the exact file location on Windows, type ```where git```, and on Mac & Linux, ```which git```
