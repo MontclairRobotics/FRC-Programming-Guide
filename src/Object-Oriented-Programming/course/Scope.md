@@ -14,7 +14,7 @@ public class Test {
     public int publicNum;
     
     // In scope throughout the class, only in this class, instance variable
-    private int num;
+    private int num = 7;
 
 
     public void returnGreater(int num) {
@@ -23,12 +23,12 @@ public class Test {
 
         if (this.num > num) { // The "this" keyword is used to access *instance variables* in the event of a conflict
 
-            //this.num is defined, instance var
+            //this.num is the instance var
             return this.num;
 
         } else if (num > this.num) {
 
-            //num is defined, method var
+            //num is the method var
             return num;
 
         }

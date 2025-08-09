@@ -95,7 +95,7 @@ static type name() { [...] }
 
 What does static mean?
 
-The main difference between static and non-static methods is that static methods are associated with the class, and non-static methods are associated with the instance.
+The main difference between static and non-static methods is that static methods are associated with the class, and non-static methods are associated with the instance/object.
 
 </div>
 
@@ -104,8 +104,15 @@ That means that static methods can only access information that is *not* associa
 To access a static field (instance variable) or method, you need to use the **class name**, and the *dot operator*:
 
 ```java
-ClassName.methodName(); //This runs a static function that is created in the class
-ClassName.variableName; //This returns a static variable that is created in the class
+ClassName.staticMethodName(); //This runs a static function that is created in the class
+ClassName.staticVariableName; //This returns a static variable that is created in the class
+```
+
+To access a regular non-static field or method, you need to use the **object variable's name** instead:
+
+```java
+objectName.methodName();
+objectName.variableName;
 ```
 
 The dot operator is used to access things contained by the object or class. This can be a variable or a function. When what you are trying to access is static you use the class. When it is not you use an object of that class.
@@ -187,3 +194,4 @@ public boolean equals(Object obj) {
 
 To compare two objects, you can implement `.compareTo()` in a similar way.
 
+> This is because a variable that stores an object is just the memory location of that object!
