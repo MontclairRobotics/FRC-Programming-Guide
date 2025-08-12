@@ -69,6 +69,14 @@
     --overlay-bg: rgba(33, 40, 48, 0.4);
 }
 
+body.ayu #sidebar,
+body.ayu #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
+
 .coal {
     --bg: hsl(200, 7%, 8%);
     --fg: #98a3ad;
@@ -121,6 +129,14 @@
 
     --overlay-bg: rgba(33, 40, 48, 0.4);
 }
+
+body.coal #sidebar,
+body.coal #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
 
 .light, html:not(.js) {
     --bg: hsl(0, 0%, 100%);
@@ -175,6 +191,14 @@
     --overlay-bg: rgba(200, 200, 205, 0.4);
 }
 
+/* body.light #sidebar,
+body.light #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+ */
+
 .navy {
     --bg: hsl(226, 23%, 11%);
     --fg: #bcbdd0;
@@ -228,6 +252,14 @@
     --overlay-bg: rgba(33, 40, 48, 0.4);
 }
 
+body.navy #sidebar,
+body.navy #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
+
 .rust {
     --bg: hsl(60, 9%, 87%);
     --fg: #262625;
@@ -278,6 +310,14 @@
 
     --overlay-bg: rgba(150, 150, 150, 0.25);
 }
+
+body.rust #sidebar,
+body.rust #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
 
 @media (prefers-color-scheme: dark) {
     html:not(.js) {
@@ -383,6 +423,14 @@
     --overlay-bg: rgba(30, 40, 65, 0.45);
 }
 
+body.new2025 #sidebar,
+body.new2025 #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
+
 .catppuccinLatte {
     --bg: #eff1f5;
     --fg: #4c4f69;
@@ -432,6 +480,13 @@
 
     --overlay-bg: rgba(230, 233, 239, 0.5);
 }
+
+/* body.catppuccinLatte #sidebar,
+body.catppuccinLatte #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+} */
 
 .catppuccinFrappe {
     --bg: #303446;
@@ -483,6 +538,14 @@
     --overlay-bg: rgba(48, 52, 70, 0.5);
 }
 
+body.catppuccinFrappe #sidebar,
+body.catppuccinFrappe #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
+
 .catppuccinMacchiato {
     --bg: #24273a;
     --fg: #cad3f5;
@@ -532,6 +595,14 @@
 
     --overlay-bg: rgba(36, 39, 58, 0.5);
 }
+
+body.catppuccinMacchiato #sidebar,
+body.catppuccinMacchiato #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
 
 .catppuccinMocha {
     --bg: #1e1e2e;
@@ -583,6 +654,14 @@
 
     --overlay-bg: rgba(30, 30, 46, 0.5);
 }
+
+body.catppuccinMocha #sidebar,
+body.catppuccinMocha #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
+}
+
 
 html.emo {
     /* Base colors */
@@ -656,4 +735,11 @@ html.emo body {
     font-family: -apple-system, BlinkMacSystemFont, "San Francisco", sans-serif;
     margin: 0;
     padding: 0;
+}
+
+body.emo #sidebar,
+body.emo #contentPanel {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  border-color: var(--sidebar-spacer);
 }

@@ -46,6 +46,7 @@ html.sidebar-visible #menu-bar {
     position: -webkit-sticky;
     position: sticky;
     top: 0 !important;
+    z-index:99999 !important;
 }
 #menu-bar-hover-placeholder {
     position: sticky;

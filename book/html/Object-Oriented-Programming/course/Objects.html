@@ -179,7 +179,7 @@
 <p>Even though class names are capitalized, variable names are still typically lowercase or camelCase.</p>
 </blockquote>
 <h3 id="the-new-operator"><a class="header" href="#the-new-operator">The <code>new</code> Operator</a></h3>
-<p>The <code>new</code> operator is used to create an instance of, or instantiate, a class.</p>
+<p>The <code>new</code> operator is used to create an instance of (aka. instantiate) a class.</p>
 <p>This is how you would create an instance of class <code>Animal</code> using the constructor created in the previous lesson:</p>
 <blockquote>
 <p>To use a specific constructor, pass in arguments corresponding to the parameters of the desired constructor.</p>
@@ -191,41 +191,6 @@
 </code></pre>
 <h2 id="objects-and-methods"><a class="header" href="#objects-and-methods">Objects and Methods</a></h2>
 <p>There are two types of methods in a class: static and non-static methods (regular methods).</p>
-<h3 id="static-methods"><a class="header" href="#static-methods">Static Methods</a></h3>
-<p>Static methods use a new keyword, the <code>static</code> keyword. You may have noticed its inclusion in the method header for the <code>main</code> method.</p>
-<p>You declare a static method like this:</p>
-<pre><code class="language-java">static type name() {}
-</code></pre>
-<blockquote>
-<p>Instance variables can also be static, and are declared like this: <code>static int num;</code>.</p>
-</blockquote>
-<p>The main difference between static and non-static methods is that static methods are associated with the class, and non-static methods are associated with the instance.</p>
-<p>That means that static methods can only access information that is <em>not</em> associated with a particular instance. Essentially, they can’t access non-static instance variables.</p>
-<p>To access a static field (instance variable) or method, you need to use the class name, and the <em>dot operator</em>:</p>
-<pre><code class="language-java">Test.method();
-</code></pre>
-<p>As you can see, the dot operator is used to access a field (instance/class variable), or to perform a method call on a class or object. //TODO CHECK</p>
-<p>One possible use of a static method is to count the number of created instances of a class like this:</p>
-<pre><code class="language-java">public class Test {
-
-    private static int count = 0;
-
-    public Test() {
-        count++; //same as count +=1;
-    }
-
-    private static void resetCount() {
-        count = 0;
-    }
-}
-</code></pre>
-<p>Each time an instance of <code>Test</code> is created, the constructor is called and the variable <code>count</code> is increased by one.</p>
-<blockquote>
-<p>Non-static methods <em>can</em> access static variables.</p>
-</blockquote>
-<p>To call the static method <code>resetCount()</code>, you would write:</p>
-<pre><code class="language-java">Test.resetCount();
-</code></pre>
 <h3 id="non-static-methods"><a class="header" href="#non-static-methods">Non-Static Methods</a></h3>
 <p>To access a non-static field or method, you <em>cannot</em> use the class name. Instead, you must call them on a specific <em>instance</em> of a class (an object).</p>
 <p>Let’s go back to the <code>Animal</code> example:</p>
@@ -234,12 +199,14 @@
     private String name;
     private int age;
     
+    //constructor:
     public Animal(int a, String n) {
         //initialize instance variables
         age = a;
         name = n;
     }
 
+    //non-static method
     public String getNameAndAge() {
         return name + age;
     }
@@ -253,15 +220,61 @@ Animal fido = new Animal(10, "Fido");
 System.out.println(fido.getNameAndAge());
 //Prints "Fido10"
 </code></pre>
+<h3 id="static-methods"><a class="header" href="#static-methods">Static Methods</a></h3>
+<p>Static methods use a new keyword, the <code>static</code> keyword. You may have noticed its inclusion in the method header for the <code>main</code> method.</p>
+<p>You declare a static method like this:</p>
+<pre><code class="language-java">static type name() { [...] }
+</code></pre>
+<blockquote>
+<p>Instance variables can also be static, and are declared like this: <code>static int num;</code>.</p>
+</blockquote>
+<div class="warning">
+<p>What does static mean?</p>
+<p>The main difference between static and non-static methods is that static methods are associated with the class, and non-static methods are associated with the instance/object.</p>
+</div>
+<p>That means that static methods can only access information that is <em>not</em> associated with a particular instance. Essentially, they can’t access non-static instance variables.</p>
+<p>To access a static field (instance variable) or method, you need to use the <strong>class name</strong>, and the <em>dot operator</em>:</p>
+<pre><code class="language-java">ClassName.staticMethodName(); //This runs a static function that is created in the class
+ClassName.staticVariableName; //This returns a static variable that is created in the class
+</code></pre>
+<p>To access a regular non-static field or method, you need to use the <strong>object variable’s name</strong> instead:</p>
+<pre><code class="language-java">objectName.methodName();
+objectName.variableName;
+</code></pre>
+<p>The dot operator is used to access things contained by the object or class. This can be a variable or a function. When what you are trying to access is static you use the class. When it is not you use an object of that class.</p>
+<p>One possible use of a static method is to count the number of created instances of a class like this:</p>
+<pre><code class="language-java">public class Test { //creating a class named "Test"
+
+    //static instance variable
+    private static int count = 0;
+
+    //constructor:
+    public Test() { //as previously mentioned a constructor is called when a new object is created
+        count++; //same as "count +=1;" or "count = count + 1"
+    }
+
+    //static method
+    private static void resetCount() {
+        count = 0;
+    }
+}
+</code></pre>
+<p>Each time an instance of <code>Test</code> is created, the constructor is called and the variable <code>count</code> is increased by one.</p>
+<blockquote>
+<p>Non-static methods <em>can</em> access static variables.</p>
+</blockquote>
+<p>To call the static method <code>resetCount()</code>, you would write:</p>
+<pre><code class="language-java">Test.resetCount();
+</code></pre>
 <h2 id="the-this-keyword"><a class="header" href="#the-this-keyword">The <code>this</code> Keyword</a></h2>
 <p><code>this</code> is a keyword used inside of classes to refer to the current object inside of a method or constructor.</p>
-<p>The only time that you will likely use the <code>this</code> keyword is when you have created a local variable with the same name as an instance variable.</p>
+<p>The only time that you will likely use the <code>this</code> keyword is when you have created a local variable with the same name as an instance variable. <strong>Because “this” refers to the instance, “this.variableName” is used to access an instance variable</strong></p>
 <pre><code class="language-java">public class Test {
-    private int num;
+    private int num; //instance variable called "num"
 
-    public Test(int num) {
-        //Without "this", this line would set the parameter num equal to itself.
-        this.num = num;
+    public Test(int num /*parameter for creating the class called "num"*/) {
+        //without this "this" keyword, this line would set the parameter "num" equal to itself.
+        this.num = num; //this line takes the instance variable called "num" and sets it equal to the parameter called "num" that is only relevant to this constructor method. You will see this often when you want to create a class that is able to use/hold the parameters used to make it.
     }
 }
 </code></pre>
@@ -287,6 +300,9 @@ str1.equals(str2);
 }
 </code></pre>
 <p>To compare two objects, you can implement <code>.compareTo()</code> in a similar way.</p>
+<blockquote>
+<p>This is because a variable that stores an object is just the memory location of that object!</p>
+</blockquote>
 
                         </div>
                         <div id="sidetoc">

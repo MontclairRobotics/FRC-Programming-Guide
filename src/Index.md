@@ -4,4 +4,4 @@ This book was built by the programming leads of [Team 555 Montclair Robotics](ht
 
 Like a notebook, feel free to annotate across the book, for your notes. On each line can be annotated with notes for later based on in-person instruction or your outside research. 
 
-Until reaching the sections on [Git](./Git/Intro.md) & [FRC](./FRC/Intro.md) any code examples in the book can be run in [this](https://dev.java/playground/) online java playground. Feel free to mess around with any provided examples, they're built to be easy to experiment with.
+Until reaching the sections on [Git](./Git/Intro.md) & [FRC](./FRC/Intro.md) any code examples in the book can be run in [this](https://dev.java/playground/) online java playground (or feel free to use the floating ide, will refresh on page refresh). Feel free to mess around with any provided examples, they're built to be easy to experiment with.

@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Effectively Contributing - Montclair Robotics Programming</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/pagetoc.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu" style="z-index:20000 !important; ">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinLatte">C. Latte</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="new2025">Modern</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinFrappe">C. Frappe</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinMacchiato">C. Macchiato</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="catppuccinMocha">C. Mocha</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="emo">Emo</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Montclair Robotics Programming</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Git/course/Effective-Contributing.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="content-wrap">
+                            <h1 id="effective-contributing"><a class="header" href="#effective-contributing">Effective Contributing</a></h1>
+<p><strong>To contribute in the most efficient and helpful way for the team, you must use Git in an organized manner that makes it easy for other members of the team.</strong></p>
+<blockquote>
+<p><strong>Please do not be afraid to contribute!</strong> It’s okay to make mistakes. Were here to help and part reason we use Git is because we can always undo mistakes. It’s really important to us that you feel brave enough to contribute so that you can learn how to do things even better. This is a guide on how to contribute so read this over but it is okay if you do it wrong. It is our job to help you though every step of the way and I promise we will never be mad at you for trying!</p>
+</blockquote>
+<h2 id="commits"><a class="header" href="#commits">Commits</a></h2>
+<p>Commits should be code you want to share. It is okay to commit something that isn’t done yet. However it is a good idea to clean up messy code before committing. This is because when you commit the code can be viewed by other people and it should be easy to understand so that other programers can work with it. If you have other very unfinished changes that are not relevant to your commit then make sure to not stage such files or code chunks(if your Git application allows that). This will help to keep your commit relevant, on task, and working for others to view.</p>
+<p>Especially on main (although it is good practice elsewhere too) you should never commit something that does not compile/simulate. This is because others might be doing something that requires a 3d simulation of the robot. While you are on a branch specific to the development of the broken feature it is likely ok, especially if you want others to be able to view, reference, or contribute to said code. Please always be mindful of what others are working on.</p>
+<div class="warning">
+<p>Commit Descriptions</p>
+<p>Remember to always write a descriptive title and description of each commit for organizational purposes. It is much easier for others and yourself to work with git when all the changes are listed as a part of the commit.</p>
+</div>
+<p>Before you Commit make sure you pull any new changes from Github and merge your changes (in case of a merge conflict). This is because if you push first and then pull it will practically create two different branches and they will have to be merged together. This can create a confusing mess so it is always better to make sure you are pulling first.</p>
+<h2 id="branches--pull-requests"><a class="header" href="#branches--pull-requests">Branches &amp; Pull Requests</a></h2>
+<p>When ever you are working on a feature, it is always good practice to <strong>open a new branch just for this feature</strong>. This way work on this part of the robots code does not interfere with work others are doing. Since you are new to coding, it might be less scary to be able to know your code will not affect anything until someone looks over it and merges it in. That being said nobody will be mad at you for making mistakes and in previous years we hardly used branches at all and things were a mess but it worked. I hope branches will encourage more people to contribute instead of scare them away.</p>
+<blockquote>
+<p>Even though you opened a specific branch for a specific feature, others are welcome to contribute to it as long as they are in communication with each other.</p>
+</blockquote>
+<p>You can add as many commits to this branch as you might want. You will also want to open a <em>pull request</em> as mentioned in the previous article about Git usage. You can do this through your local git and push it e.g. using GitHub Desktop, or through the GitHub website. If you are not ready for your code to be reviewed you can mark it as a draft until you have finished writing.</p>
+<blockquote>
+<p>You may even wish to make changes that relates to code that has not been merged yet. It may help you to make a branch off of the other branch and maybe even open a pull request from branch 2 to branch 1 and once that is merged, from branch 1 to main. It is important to note that that might help for organizational purposes but don’t get carried away or confused and overcomplicate things for yourself.</p>
+</blockquote>
+<p>Branches and to some extent pull requests can even be helpful even when working by your self, but are especially helpful in a team. Not everything needs it though. Sometimes things are just quick fixes that can be singular commits to the main branch.</p>
+<h3 id="code-reviews"><a class="header" href="#code-reviews">Code Reviews</a></h3>
+<p>Once you are ready you can mark the pull request as such and add a reviewer. This might be someone who knows what they are doing and is experienced but I want even new members to review each other’s code. You might still want to make sure a code lead sees it as well (or not!) but it is always good for more members to be familiar with the code before it goes into use and it is good practice for understanding and critiquing robot code.</p>
+<blockquote>
+<p><strong>Thank you</strong> so much for trying to write code. Getting the experience of how to do it even if you make a mistake is the most important part! As said before we won’t get angry at you for doing something wrong and will always appreciate your commits. (Yes, even if they are terrible and we tell you to rewrite the whole thing, because you are getting hands-on experience.)</p>
+</blockquote>
+
+                        </div>
+                        <div id="sidetoc">
+                            <nav id="pagetoc"></nav>
+                        </div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../Git/course/Usage.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../FRC/Intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../Git/course/Usage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../FRC/Intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+        <script>
+            window.playground_line_numbers = true;
+        </script>
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Inline theme‑toggle wiring -->
+        <script>
+            (function() {
+            const btn  = document.getElementById('theme-toggle');
+            const menu = document.getElementById('theme-list');
+            const html = document.documentElement;
+            function removeAllThemes() {
+                const themeButtons = document.querySelectorAll('#theme-list .theme');
+                themeButtons.forEach(btn => {
+                    const themeClass = btn.id;
+                    document.documentElement.classList.remove(themeClass);
+                });
+            }
+            function setTheme(name) {
+                // remove existing theme classes (adjust to your theme names)
+                removeAllThemes();
+                html.classList.add(name);
+                localStorage.setItem('mdbook-theme', name);
+                btn.setAttribute('aria-expanded', 'false');
+                menu.style.display = 'none';
+                document.querySelectorAll('.theme-selected').forEach(item => {
+                    item.classList.remove('theme-selected');
+                });
+                document.getElementById(name).classList.add('theme-selected')
+            }
+
+            // toggle popup on button click
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                const open = (menu.style.display === 'block');
+                menu.style.display = open ? 'none' : 'block';
+                btn.setAttribute('aria-expanded', (!open).toString());
+            });
+
+            // pick a theme when you click a menu item
+            menu.addEventListener('click', e => {
+                let tgt = e.target;
+                while (tgt && !tgt.classList.contains('theme')) tgt = tgt.parentElement;
+                if (tgt) setTheme(tgt.id);
+            });
+
+            // clicking outside closes the menu
+            document.addEventListener('click', () => {
+                menu.style.display = 'none';
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            })();
+        </script>
+
+
+        <!-- Custom JS scripts -->
+        <script src="../../theme/pagetoc.js"></script>
+        <script src="../../theme/rn_qol.js"></script>
+
+
+    </div>
+    </body>
+</html>

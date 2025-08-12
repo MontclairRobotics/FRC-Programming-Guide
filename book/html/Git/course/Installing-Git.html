@@ -131,7 +131,7 @@
                         <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Git/course/InstallingGit.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Git/course/Installing-Git.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -235,15 +235,14 @@
 <p>On either device, log in to your GitHub account. Await further instruction to receive invitation to our <strong><a href="https://github.com/MontclairRobotics/" target="_blank" rel="noopener noreferrer">organization</a></strong>. Then, add the repository to your device either through the GitHub Desktop app, or on the GitHub repository website.</p>
 </blockquote>
 <hr>
-<h1 id="installing-gitkraken-alt"><a class="header" href="#installing-gitkraken-alt"><strong>Installing GitKraken</strong> (Alt)</a></h1>
-<p>To maintain consistency, use GitKraken only if GitHub GUI failed to install or you are on an unsupported device such as a Linux operating system.</p>
+<h1 id="installing-gitkraken-alternative-to-github-desktop"><a class="header" href="#installing-gitkraken-alternative-to-github-desktop"><strong>Installing GitKraken</strong> (Alternative to GitHub Desktop)</a></h1>
 <h2 id="windows--mac"><a class="header" href="#windows--mac">Windows &amp; Mac</a></h2>
-<p>The process is as self explanatory as installing GitHub GUI, just using a different installation URL. Please use the <em>standard</em> GitHub GUI installation unless this is required as per your individual setup.</p>
+<p>The process is as self explanatory as installing GitHub GUI, just using a different installation URL.</p>
 <blockquote>
-<p>Go to <a href="https://www.gitkraken.com/download">https://www.gitkraken.com/download</a> and select for your operating system, and run the installation proccess following the directions on screen.</p>
+<p>Go to <a href="https://www.gitkraken.com/download">https://www.gitkraken.com/download</a> and select for your operating system, and run the installation process following the directions on screen.</p>
 </blockquote>
 <h2 id="linux"><a class="header" href="#linux">Linux</a></h2>
-<p>Depending on your distro, download the according file, whether that be a <code>.rpm</code> / <code>.deb</code> / <code>.tar.gz</code>  (or use Snap Package Manager, depending on your support and prior installation of it). This proccess should be familiar to you if you are already familar with Linux.</p>
+<p>Depending on your distro, download the according file, whether that be a <code>.rpm</code> / <code>.deb</code> / <code>.tar.gz</code>  (or use Snap Package Manager, depending on your support and prior installation of it). This process should be familiar to you if you are already familiar with Linux.</p>
 <p><strong>.deb File</strong></p>
 <blockquote>
 <p>Run (in the same directory as the downloaded file)</p>
@@ -264,9 +263,7 @@ sudo apt-get install -f  # f is to fix dependencies if needed
 <code>gitkraken --version</code> (&amp; verify your <code>Git</code> too, this will come with <code>GitKraken</code>) <code>git --version</code></p>
 <hr>
 <h1 id="installing-git-cli"><a class="header" href="#installing-git-cli"><strong>Installing Git CLI</strong></a></h1>
-<p>Real alphas don’t need continent things like applications.
-(just kidding)
-But seriously though, it is useful to know the commands and understand Git from the CLI perspective, but this setup could be a time waster long term, especially for a beginner. Any of the standard installation procedures will <em>automatically</em> install Git anyway.</p>
+<p>Real alphas don’t need convenient things like applications. (Just kidding!) But seriously though, it is useful to know the commands and understand Git from the CLI perspective, but this setup could be a time waster long term, especially for a beginner. Any of the standard installation procedures will <em>automatically</em> install Git anyway.</p>
 <blockquote>
 <p>Installing the GitHub GUI automatically installs Git, because Git is a dependency of GitHub. However, if you would like to install the CLI manually, below are the steps.</p>
 </blockquote>
@@ -280,7 +277,7 @@ But seriously though, it is useful to know the commands and understand Git from 
 </code></pre>
 </blockquote>
 <p>Breakdown of this Powershell line:
-We are telling <code>winget</code>, the preinstalled package manager on windows, to search for Git from Microsoft offical records and to then install it (and to also verify that it is indeed the only Git in the Microsoft record)</p>
+We are telling <code>winget</code>, the preinstalled package manager on windows, to search for Git from Microsoft official records and to then install it (and to also verify that it is indeed the only Git in the Microsoft record)</p>
 <blockquote>
 <p>On either device, run <code>git --version</code> to verify successful installation of Git.
 To see the exact file location on Windows, type <code>where git</code>, and on Mac &amp; Linux, <code>which git</code></p>
@@ -360,6 +357,9 @@ sudo apt install git
 <p>Verify installation (all devices):</p>
 <pre><code class="language-bash">git --version
 </code></pre>
+<blockquote>
+<p>You can learn about all the Git commands <a href="https://git-scm.com/">here</a></p>
+</blockquote>
 
                         </div>
                         <div id="sidetoc">

@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<meta charset="utf-8" />
+<link rel="shortcut icon" href="/favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Code Guidebook - Notes</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="/FontAwesome/css/font-awesome.css">
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/chrome.css">
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#071018; --muted:#94a3b8; --accent:#9b7cff;
+    --sidebar:#071024; --sidebar-contrast:#021018; --text:#e6eef8; --card-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    --border: rgba(255,255,255,0.04);
+  }
+  body { margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); height:100vh; display:flex; flex-direction:column; }
+  /* header */
+  .menu-bar{ display:flex; align-items:center; justify-content:space-between; padding:10px 16px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); border-bottom:1px solid var(--border); }
+  .menu-title{ margin:0; font-weight:600; font-size:1.05rem; }
+  .left-controls, .right-controls{ display:flex; gap:8px; align-items:center; }
+
+  .icon-button{ background:transparent; border:0; color:var(--text); cursor:pointer; padding:6px; border-radius:6px; }
+  .icon-button:focus{ outline:2px solid rgba(155,124,255,0.16); }
+
+  /* main layout */
+  .main { display:flex; gap:16px; padding:16px; flex:1; min-height:0; }
+  /* sidebar */
+  #sidebar { width:340px; background:var(--sidebar); border-radius:10px; padding:12px; box-shadow:var(--card-shadow); overflow:auto; border:1px solid var(--border); }
+  #sidebar .header { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px; }
+  #sidebar .title { font-weight:700; }
+  #sidebar .controls { display:flex; gap:8px; align-items:center; }
+
+  .tree { font-size:0.95rem; line-height:1.4; }
+  .tree ul { list-style:none; margin:0; padding-left:0; }
+  .tree li { margin:4px 0; }
+  .node-row { display:flex; align-items:center; gap:8px; }
+  .expand-btn { width:22px; height:22px; display:inline-grid; place-items:center; border-radius:6px; background:transparent; color:var(--muted); border:0; cursor:pointer; }
+  .expand-btn:focus{ outline:2px solid rgba(155,124,255,0.12); }
+
+  .page-item { display:flex; align-items:center; justify-content:space-between; padding:6px 8px; border-radius:8px; color:var(--text); cursor:pointer; }
+  .page-item .left { display:flex; flex-direction:column; gap:2px; width:100%; }
+  .page-item .title { font-weight:600; font-size:0.95rem; }
+  .page-item .meta { font-size:0.82rem; color:var(--muted); }
+  .page-item:hover { background: rgba(255,255,255,0.02); }
+  .page-item.disabled { opacity:0.45; pointer-events:none; }
+
+  .badge { background: rgba(255,255,255,0.05); padding:3px 8px; border-radius:999px; font-size:0.8rem; color:var(--text); border:1px solid rgba(255,255,255,0.02); margin-left:8px; }
+
+  /* content */
+  #contentPanel { flex:1; min-width:0; background:var(--panel); border-radius:10px; padding:18px; box-shadow:var(--card-shadow); border:1px solid var(--border); overflow:auto; }
+  #pageHeader{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+  #pageHeader h2 { margin:0; font-size:1.12rem; }
+  .muted { color:var(--muted); font-size:0.95rem; }
+
+  #notesArea { overflow:auto; min-height:200px; padding-top:8px; }
+  .block { background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border-radius:8px; padding:12px; margin-bottom:12px; border:1px solid var(--border); }
+  .block .head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+  .snippet { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; color:var(--accent); font-size:0.92rem; white-space:pre-wrap; margin-bottom:8px; }
+  .note { background: rgba(255,255,255,0.02); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.02); color:var(--text); margin-top:6px; }
+
+  .actions { display:flex; gap:8px; align-items:center; }
+  button.btn { padding:8px 12px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text); cursor:pointer; }
+  button.btn.primary { background:var(--accent); color:#071018; border:0; }
+
+  /* modal styles (new: custom prompt & confirm) */
+  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:1200; }
+  .modal { background:var(--panel); border:1px solid var(--border); padding:16px; border-radius:10px; width:720px; max-width:96%; box-shadow: 0 10px 50px rgba(0,0,0,0.6); color:var(--text); }
+  .modal h3 { margin:0 0 8px 0; font-size:1.05rem; }
+  .modal .muted { font-size:0.9rem; color:var(--muted); margin-bottom:8px; }
+  .modal textarea { width:100%; min-height:140px; padding:10px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text); resize:vertical; font-family:inherit; font-size:1rem; }
+  .modal .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+  .btn-danger { background: #c2410c; color: white; border:0; padding:8px 12px; border-radius:8px; cursor:pointer; }
+
+  /*html, body {overflow-x: hidden;max-width:99%;}*/
+
+  /* small responsive */
+  @media (max-width:920px){
+    #sidebar { width:260px; }
+  }
+  @media (max-width:700px){
+    .main { flex-direction:column; padding:10px; }
+    #sidebar { width:100%; }
+    #contentPanel{width:100%}
+    html, body {overflow-x: hidden;max-width:99%;}
+  }
+  .hidden{
+    visibility:none;
+    position:absolute;
+    display:none; 
+  }
+</style>
+</head>
+<body>
+  <div class="menu-bar">
+    <div class="left-controls">
+      <button id="theme-toggle" class="icon-button" title="Toggle theme" aria-label="Toggle theme"><i class="fa fa-paint-brush"></i></button>
+    </div>
+    <h1 class="menu-title">Montclair Robotics Programming</h1>
+    <div class="right-controls">
+      <a class="icon-button" href="https://github.com/MontclairRobotics/FRC-Programming-Guide" target="_blank" title="Git repo"><i class="fa fa-github"></i></a>
+    </div>
+  </div>
+
+  <div class="main">
+    <aside id="sidebar" aria-label="Pages sidebar">
+      <div class="header">
+        <div>
+          <div class="title">Pages</div>
+        </div>
+        <div class="controls">
+          <button id="filterNotes" class="icon-button" title="Show only pages with notes">★ only notes</button>
+        </div>
+      </div>
+
+      <nav class="tree" id="treeRoot" role="tree" tabindex="0"></nav>
+    </aside>
+
+    <main id="contentPanel" aria-live="polite">
+      <div id="pageHeader">
+        <div>
+          <h2 id="pageTitle">Select a page</h2>
+          <div id="pagePath" class="muted">No page selected</div>
+        </div>
+        <div class="actions">
+          <button id="openPage" class="btn" title="Open page in new tab" disabled>Open</button>
+          <button id="addBlockNote" class="btn primary hidden" title="Add note to selected block" disabled>Add note</button>
+        </div>
+      </div>
+
+      <div id="notesArea"><p class="muted">No page selected. Click a page from the left to load its blocks.</p></div>
+    </main>
+  </div>
+
+  <!-- Edit/Add modal (hidden by default) -->
+  <div id="editModalBackdrop" class="modal-backdrop" style="display:none;" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+      <h3 id="editModalTitle">Edit Note</h3>
+      <div id="editModalSub" class="muted">Editing note for block <span id="editModalBlockNum"></span> — <span id="editModalPage"></span></div>
+      <textarea id="editModalTextarea" placeholder="Enter note..."></textarea>
+      <div class="modal-actions">
+        <button id="editModalCancel" class="btn">Cancel</button>
+        <button id="editModalSave" class="btn primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete modal -->
+  <div id="confirmModalBackdrop" class="modal-backdrop" style="display:none;" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+      <h3 id="confirmModalTitle">Delete Note?</h3>
+      <div id="confirmModalSub" class="muted">Are you sure you want to delete note for block <span id="confirmModalBlockNum"></span> on page <span id="confirmModalPage"></span>?</div>
+      <div class="modal-actions">
+        <button id="confirmModalCancel" class="btn">Cancel</button>
+        <button id="confirmModalDelete" class="btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const LS = localStorage;
+const NOTE_PREFIX = 'inlineNotes_';
+function parseMap(){
+  try { return JSON.parse(LS.getItem('map') || '[]'); } catch(e){ console.error('Bad map', e); return []; }
+}
+(function(){
+
+
+  // (unchanged helpers from your file)
+
+  function normalizeToAbsHtmlPath(link){
+    if(!link) return '';
+    const html = link.replace(/\.md$/i, '.html');
+    try {
+      const resolved = new URL(html, location.origin + '/').pathname;
+      return resolved;
+    } catch(e){
+      return '/' + html.replace(/^\/*/,'');
+    }
+  }
+  function findExistingNoteKeyForAbsPath(absPath){
+    for(let i=0;i<LS.length;i++){
+      const k = LS.key(i);
+      if(!k || !k.startsWith(NOTE_PREFIX)) continue;
+      const suffix = k.slice(NOTE_PREFIX.length);
+      if(suffix === absPath) return k;
+      if('/' + suffix === absPath) return k;
+      const replaced = suffix.replace(/_/g, '/');
+      try {
+        const resolved = new URL(replaced, location.origin + '/').pathname;
+        if(resolved === absPath) return k;
+      } catch(e){}
+      try {
+        const resolved2 = new URL(suffix, location.origin + '/').pathname;
+        if(resolved2 === absPath) return k;
+      } catch(e){}
+    }
+    return null;
+  }
+  function canonicalKeyForAbsPath(absPath){ return NOTE_PREFIX + absPath; }
+
+  function readNotesForLink(rawLink){
+    const abs = normalizeToAbsHtmlPath(rawLink);
+    const existingKey = findExistingNoteKeyForAbsPath(abs);
+    if(existingKey){
+      try { return { key: existingKey, data: JSON.parse(LS.getItem(existingKey) || '{}') }; } catch(e){ return { key: existingKey, data: {} }; }
+    }
+    return { key: canonicalKeyForAbsPath(abs), data: {} };
+  }
+
+  function saveNotesForLink(rawLink, notesObj){
+    const abs = normalizeToAbsHtmlPath(rawLink);
+    const canonical = canonicalKeyForAbsPath(abs);
+    const existingKey = findExistingNoteKeyForAbsPath(abs);
+    LS.setItem(canonical, JSON.stringify(notesObj));
+    if(existingKey && existingKey !== canonical){ LS.removeItem(existingKey); }
+    return canonical;
+  }
+
+  function deleteNotesForLinkIfEmpty(rawLink, notesObj){
+    const abs = normalizeToAbsHtmlPath(rawLink);
+    const canonical = canonicalKeyForAbsPath(abs);
+    // if notesObj has no own keys, remove any existing key(s)
+    if(Object.keys(notesObj).length === 0){
+      // remove canonical and any other variant
+      const existingKey = findExistingNoteKeyForAbsPath(abs);
+      if(existingKey) LS.removeItem(existingKey);
+      LS.removeItem(canonical);
+      return true;
+    } else {
+      // otherwise write canonical
+      saveNotesForLink(rawLink, notesObj);
+      return false;
+    }
+  }
+
+  /* ---------- Sidebar / tree (unchanged) ---------- */
+  //const mapData = parseMap();
+  //const treeRoot = document.getElementById('treeRoot');
+  const filterNotesBtn = document.getElementById('filterNotes');
+  let filterOnlyWithNotes = false;
+
+  function pageHasNotes(rawLink){
+    const abs = normalizeToAbsHtmlPath(rawLink);
+    const k = findExistingNoteKeyForAbsPath(abs);
+    if(!k) return false;
+    try { const obj = JSON.parse(LS.getItem(k) || '{}'); return Object.keys(obj).length > 0; } catch { return false; }
+  }
+
+  function makePageItem(node){
+    const li = document.createElement('li');
+    const row = document.createElement('div'); row.className = 'node-row';
+    const spacer = document.createElement('span'); spacer.style.width = '22px';
+    row.appendChild(spacer);
+
+    const pageItem = document.createElement('div'); pageItem.className = 'page-item'; pageItem.tabIndex = 0;
+    const left = document.createElement('div'); left.className = 'left';
+    const title = document.createElement('span'); title.className = 'title'; title.textContent = node.title || '(untitled)';
+    left.appendChild(title);
+    if(node.link){
+      const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = node.link.replace(/^\/*/,'');
+      left.appendChild(meta);
+    }
+    pageItem.appendChild(left);
+
+    const right = document.createElement('div'); right.className = 'right';
+    if(node.link && pageHasNotes(node.link)){
+      const star = document.createElement('span'); star.className = 'badge'; star.textContent = '★';
+      right.appendChild(star);
+    }
+    pageItem.appendChild(right);
+
+    if(node.link && node.link.trim()){
+      pageItem.addEventListener('click', (e) => { e.stopPropagation(); loadPage(node.link, node.title); highlightByLink(node.link); });
+    } else { pageItem.classList.add('disabled'); }
+    pageItem.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pageItem.click(); } });
+
+    row.appendChild(pageItem);
+    li.appendChild(row);
+    return li;
+  }
+
+  function renderTree(nodes, parentContainer){
+    for(const node of nodes){
+      if(filterOnlyWithNotes){
+        function subtreeHasNotes(n){
+          if(n.link && pageHasNotes(n.link)) return true;
+          if(n.children) return n.children.some(c => subtreeHasNotes(c));
+          return false;
+        }
+        if(!subtreeHasNotes(node)) continue;
+      }
+
+      const li = document.createElement('li');
+
+      if(node.children && node.children.length){
+        const row = document.createElement('div'); row.className = 'node-row';
+        const expandBtn = document.createElement('button');
+        expandBtn.className = 'expand-btn';
+        expandBtn.innerHTML = '<i class="fa fa-chevron-down"></i>';
+        expandBtn.title = 'Expand / collapse';
+        expandBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const expanded = expandBtn.dataset.expanded === '1';
+          expandBtn.dataset.expanded = expanded ? '0' : '1';
+          expandBtn.querySelector('i').classList.toggle('fa-rotate-270', !expanded);
+          if(expanded) childUL.style.display = 'none'; else childUL.style.display = 'block';
+        });
+        row.appendChild(expandBtn);
+
+        const titleSpan = document.createElement('div'); titleSpan.style.flex = '1';
+        titleSpan.className = 'page-item'; titleSpan.tabIndex = 0;
+        const left = document.createElement('div'); left.className='left';
+        const title = document.createElement('span'); title.className='title'; title.textContent = node.title;
+        left.appendChild(title);
+        if(node.link){
+          const meta = document.createElement('span'); meta.className='meta'; meta.textContent = node.link.replace(/^\/*/,'');
+          left.appendChild(meta);
+        }
+        titleSpan.appendChild(left);
+        if(node.link && pageHasNotes(node.link)){
+          const star = document.createElement('span'); star.className='badge'; star.textContent = '★';
+          titleSpan.appendChild(star);
+        }
+        if(node.link && node.link.trim()){
+          titleSpan.addEventListener('click', (e)=>{ e.stopPropagation(); loadPage(node.link, node.title); highlightByLink(node.link); });
+        } else {
+          titleSpan.classList.add('disabled');
+        }
+        row.appendChild(titleSpan);
+        li.appendChild(row);
+
+        const childUL = document.createElement('ul');
+        childUL.style.margin = '6px 0 6px 26px'; childUL.style.padding = '0'; childUL.style.display = 'none';
+        renderTree(node.children, childUL);
+        li.appendChild(childUL);
+
+      } else {
+        const p = makePageItem(node);
+        li.appendChild(p);
+      }
+      parentContainer.appendChild(li);
+    }
+  }
+
+  const mapData = parseMap();
+  const treeRoot = document.getElementById('treeRoot');
+  function clearTree(){ treeRoot.innerHTML = ''; }
+  function buildSidebar(){ clearTree(); const ul = document.createElement('ul'); ul.style.padding = '0'; renderTree(mapData, ul); treeRoot.appendChild(ul); }
+
+  function highlightByLink(link){
+    const abs = normalizeToAbsHtmlPath(link);
+    document.querySelectorAll('.page-item').forEach(el=>{
+      const meta = el.querySelector('.meta');
+      const text = meta ? meta.textContent.replace(/^\//,'') : '';
+      if( normalizeToAbsHtmlPath(text) === abs ){ el.classList.add('active'); } else { el.classList.remove('active'); }
+    });
+  }
+
+  // fetch helpers + loadPage (unchanged behavior, but block buttons differ now)
+  const pageTitle = document.getElementById('pageTitle');
+  const pagePath = document.getElementById('pagePath');
+  const notesArea = document.getElementById('notesArea');
+  const openPageBtn = document.getElementById('openPage');
+  const addBlockNoteBtn = document.getElementById('addBlockNote');
+  let currentPageLink = null;
+  let currentPageTitle = null;
+  let currentChildren = [];
+
+  async function fetchPageHtml(absPath){
+    try {
+      const res = await fetch(absPath, {cache:'no-store'});
+      if(!res.ok) throw new Error('Not ok: ' + res.status);
+      const text = await res.text();
+      return text;
+    } catch(e){
+      console.warn('Fetch failed for', absPath, e);
+      return null;
+    }
+  }
+
+  async function loadPage(rawLink, title){
+    currentPageLink = rawLink;
+    currentPageTitle = title;
+    pageTitle.textContent = title || '(untitled)';
+    pagePath.textContent = rawLink || '';
+    notesArea.innerHTML = '<p class="muted">Loading page content...</p>';
+    openPageBtn.disabled = true;
+    addBlockNoteBtn.disabled = true;
+
+    const abs = normalizeToAbsHtmlPath(rawLink);
+    const htmlText = await fetchPageHtml(abs);
+    if(!htmlText){
+      markPageDisabledInSidebar(rawLink);
+      notesArea.innerHTML = `<p class="muted">Failed to fetch page: ${abs}</p>`;
+      return;
+    }
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlText, 'text/html');
+    const contentWrap = doc.querySelector('main .content-wrap');
+    if(!contentWrap){
+      notesArea.innerHTML = '<p class="muted">No <code>main .content-wrap</code> found in the page.</p>';
+      return;
+    }
+    const children = Array.from(contentWrap.children);
+    currentChildren = children;
+
+    const { key: noteKey, data: notesObj } = readNotesForLink(rawLink);
+
+    notesArea.innerHTML = '';
+    children.forEach((child, idx) => {
+      const blockNum = idx + 1;
+      const blockDiv = document.createElement('div'); blockDiv.className = 'block';
+      const head = document.createElement('div'); head.className = 'head';
+      const left = document.createElement('div');
+      left.innerHTML = `<strong>Block ${blockNum}</strong> <div class="muted" style="font-size:0.88rem; margin-top:4px;">${truncateText(child.textContent.trim(), 240)}</div>`;
+      head.appendChild(left);
+      const actions = document.createElement('div'); actions.className = 'actions';
+
+      // NEW: Add/Edit/Delete buttons per-block depending on note existence.
+      if(notesObj[blockNum]){
+        // Edit button
+        const editBtn = document.createElement('button'); editBtn.className = 'btn'; editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', () => openEditModal(blockNum, notesObj[blockNum]));
+        actions.appendChild(editBtn);
+
+        // Delete button
+        const delBtn = document.createElement('button'); delBtn.className = 'btn'; delBtn.textContent = 'Delete';
+        delBtn.addEventListener('click', () => openConfirmDeleteModal(blockNum));
+        actions.appendChild(delBtn);
+      } else {
+        // Add button
+        const addBtn = document.createElement('button'); addBtn.className = 'btn'; addBtn.textContent = 'Add';
+        addBtn.addEventListener('click', () => openEditModal(blockNum, ''));
+        actions.appendChild(addBtn);
+      }
+
+      head.appendChild(actions);
+      blockDiv.appendChild(head);
+
+      // existing note display
+      if(notesObj[blockNum]){
+        const noteEl = document.createElement('div'); noteEl.className = 'note';
+        noteEl.textContent = notesObj[blockNum];
+        blockDiv.appendChild(noteEl);
+      }
+
+      notesArea.appendChild(blockDiv);
+    });
+
+    openPageBtn.disabled = false;
+    addBlockNoteBtn.disabled = false;
+    openPageBtn.onclick = () => { window.open(abs, '_blank'); };
+
+    // addBlockNote now opens a tiny chooser prompt for which block to add (kept minimal)
+    addBlockNoteBtn.onclick = () => {
+      const blockNum = prompt(`Enter block number to add/edit note (1..${currentChildren.length}):`, `${currentChildren.length}`);
+      const n = parseInt(blockNum,10);
+      if(!n || n < 1 || n > currentChildren.length) { alert('Invalid block number'); return; }
+      openEditModal(n, '');
+    };
+  }
+
+  function truncateText(s, n){ if(!s) return ''; return s.length > n ? s.slice(0,n-1) + '…' : s; }
+  function markPageDisabledInSidebar(rawLink){ const abs = normalizeToAbsHtmlPath(rawLink); document.querySelectorAll('.page-item').forEach(el=>{ const meta = el.querySelector('.meta'); if(!meta) return; if(normalizeToAbsHtmlPath(meta.textContent.trim()) === abs) { el.classList.add('disabled'); } }); }
+
+  // REPLACED: openEditPrompt now uses custom modal
+  // openEditModal: opens the modal, prefills text, handles Save to storage
+  const editModalBackdrop = document.getElementById('editModalBackdrop');
+  const editModalTextarea = document.getElementById('editModalTextarea');
+  const editModalBlockNumSpan = document.getElementById('editModalBlockNum');
+  const editModalPageSpan = document.getElementById('editModalPage');
+  const editModalSave = document.getElementById('editModalSave');
+  const editModalCancel = document.getElementById('editModalCancel');
+
+  // Confirm modal elements
+  const confirmModalBackdrop = document.getElementById('confirmModalBackdrop');
+  const confirmModalBlockNumSpan = document.getElementById('confirmModalBlockNum');
+  const confirmModalPageSpan = document.getElementById('confirmModalPage');
+  const confirmModalDelete = document.getElementById('confirmModalDelete');
+  const confirmModalCancel = document.getElementById('confirmModalCancel');
+
+  // track current editing state
+  let modalEditingBlock = null;
+
+  function openEditModal(blockNum, currentText){
+    modalEditingBlock = blockNum;
+    editModalBlockNumSpan.textContent = blockNum;
+    editModalPageSpan.textContent = currentPageTitle || '';
+    editModalTextarea.value = currentText || '';
+    editModalBackdrop.style.display = 'flex';
+    editModalBackdrop.setAttribute('aria-hidden','false');
+    editModalTextarea.focus();
+  }
+
+  editModalCancel.addEventListener('click', () => {
+    editModalBackdrop.style.display = 'none';
+    editModalBackdrop.setAttribute('aria-hidden','true');
+    modalEditingBlock = null;
+  });
+
+  editModalSave.addEventListener('click', () => {
+    if(modalEditingBlock == null) return;
+    const newText = editModalTextarea.value;
+    const { key: existingKey, data: existingNotes } = readNotesForLink(currentPageLink);
+    // set or update
+    existingNotes[modalEditingBlock] = newText;
+    saveNotesForLink(currentPageLink, existingNotes);
+    // close modal and refresh
+    editModalBackdrop.style.display = 'none';
+    editModalBackdrop.setAttribute('aria-hidden','true');
+    modalEditingBlock = null;
+    loadPage(currentPageLink, currentPageTitle);
+    buildSidebar();
+  });
+
+  // Delete flow
+  let modalDeletingBlock = null;
+  function openConfirmDeleteModal(blockNum){
+    modalDeletingBlock = blockNum;
+    confirmModalBlockNumSpan.textContent = blockNum;
+    confirmModalPageSpan.textContent = currentPageTitle || '';
+    confirmModalBackdrop.style.display = 'flex';
+    confirmModalBackdrop.setAttribute('aria-hidden','false');
+  }
+  confirmModalCancel.addEventListener('click', () => {
+    confirmModalBackdrop.style.display = 'none';
+    confirmModalBackdrop.setAttribute('aria-hidden','true');
+    modalDeletingBlock = null;
+  });
+  confirmModalDelete.addEventListener('click', () => {
+    if(modalDeletingBlock == null) return;
+    const { key: existingKey, data: existingNotes } = readNotesForLink(currentPageLink);
+    delete existingNotes[modalDeletingBlock];
+    // remove key if empty, otherwise save
+    deleteNotesForLinkIfEmpty(currentPageLink, existingNotes);
+    confirmModalBackdrop.style.display = 'none';
+    confirmModalBackdrop.setAttribute('aria-hidden','true');
+    modalDeletingBlock = null;
+    loadPage(currentPageLink, currentPageTitle);
+    buildSidebar();
+  });
+
+  // Sidebar & initial state
+  buildSidebar();
+  (function autoSelect(){
+    function findFirstWithNotes(nodes){
+      for(const n of nodes){
+        if(n.link && pageHasNotes(n.link)) return n;
+        if(n.children){ const c = findFirstWithNotes(n.children); if(c) return c; }
+      }
+      return null;
+    }
+    const withNotes = findFirstWithNotes(mapData);
+    if(withNotes) { loadPage(withNotes.link, withNotes.title); highlightByLink(withNotes.link); return; }
+    function findFirstLeaf(nodes){
+      for(const n of nodes){
+        if(n.children && n.children.length){ const c = findFirstLeaf(n.children); if(c) return c; }
+        else if(n.link) return n;
+      }
+      return null;
+    }
+    const leaf = findFirstLeaf(mapData);
+    if(leaf) { loadPage(leaf.link, leaf.title); highlightByLink(leaf.link); }
+  })();
+
+  // filter toggle
+  filterNotesBtn.addEventListener('click', () => { filterOnlyWithNotes = !filterOnlyWithNotes; filterNotesBtn.classList.toggle('active', filterOnlyWithNotes); buildSidebar(); });
+
+  // // theme toggle (unchanged)
+  // const themeToggle = document.getElementById('theme-toggle');
+  // const darkFlag = LS.getItem('notes-admin-dark');
+  // if(darkFlag === '1') { /* dark default */ }
+  // themeToggle.addEventListener('click', () => {
+  //   const current = LS.getItem('notes-admin-dark') === '1';
+  //   LS.setItem('notes-admin-dark', current ? '0' : '1');
+  //   document.body.classList.toggle('light');
+  // });
+
+})();
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const theme = localStorage.getItem('mdbook-theme');
+    if (theme) {
+      document.body.classList.add(theme); // apply actual theme name
+    }
+  });
+
+  (() => {
+      // Create the popup
+      const popup = document.createElement("ul");
+      popup.id = "theme-list";
+      popup.className = "theme-popup";
+      popup.setAttribute("aria-label", "Themes");
+      popup.setAttribute("role", "menu");
+      popup.style.cssText = "position:absolute; top:40px; right:10px; background:#222; color:white; padding:10px; border-radius:6px; list-style:none; display:none; z-index:20000;max-width:15%;";
+
+      const themes = JSON.parse(localStorage.getItem('themes'));
+      themes.forEach(theme => {
+          const li = document.createElement("li");
+          li.setAttribute("role", "none");
+          const btn = document.createElement("button");
+          btn.setAttribute("role", "menuitem");
+          btn.className = "theme";
+          btn.id = theme;
+          btn.textContent = theme.replace(/catppuccin/, "C. "); // pretty label
+          btn.style.cssText = "background:none; border:none; color:white; cursor:pointer; display:block; text-align:left; padding:4px 8px;";
+          btn.addEventListener("click", () => {
+              document.body.className = theme;
+              localStorage.setItem("mdbook-theme", theme);
+              popup.style.display = "none";
+          });
+          li.appendChild(btn);
+          popup.appendChild(li);
+      });
+
+      document.body.appendChild(popup);
+
+      // Attach to toggle button
+      const toggleBtn = document.querySelector("#theme-toggle, .theme-toggle");
+      if (toggleBtn) {
+          toggleBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              popup.style.display = popup.style.display === "block" ? "none" : "block";
+          });
+      }
+
+      // Close on outside click
+      document.addEventListener("click", (e) => {
+          if (!popup.contains(e.target)) {
+              popup.style.display = "none";
+          }
+      });
+    })();
+
+    (() => {
+      const el = document.getElementById('theme-list');
+      if (!el) return;
+      Object.assign(el.style, {
+        position: 'absolute',
+        display: 'hidden',
+        height: '318.828px',
+        left: '10px',
+        marginBottom: '0px',
+        marginLeft: '0px',
+        marginRight: '0px',
+        marginTop: '0px',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        paddingBottom: '0px',
+        paddingLeft: '0px',
+        paddingRight: '0px',
+        paddingTop: '0px',
+        top: '50px',
+        width: '105.365px',
+        zIndex: '20000',
+        textSizeAdjust: '100%',
+        fontFamily: 'Arial',
+        fontSize: '11.2px',
+        color: 'rgb(152, 163, 173)',
+        backgroundAttachment: 'scroll',
+        backgroundClip: 'border-box',
+        backgroundColor: 'rgb(20, 22, 23)',
+        backgroundImage: 'none',
+        backgroundOrigin: 'padding-box',
+        backgroundPositionX: '0%',
+        backgroundPositionY: '0%',
+        backgroundRepeat: 'repeat',
+        backgroundSize: 'auto',
+        borderBottomColor: 'rgb(67, 72, 77)',
+        borderBottomStyle: 'solid',
+        borderBottomWidth: '0.833333px',
+        borderImageOutset: '0',
+        borderImageRepeat: 'stretch',
+        borderImageSlice: '100%',
+        borderImageSource: 'none',
+        borderImageWidth: '1',
+        borderLeftColor: 'rgb(67, 72, 77)',
+        borderLeftStyle: 'solid',
+        borderLeftWidth: '0.833333px',
+        borderRightColor: 'rgb(67, 72, 77)',
+        borderRightStyle: 'solid',
+        borderRightWidth: '0.833333px',
+        borderTopColor: 'rgb(67, 72, 77)',
+        borderTopStyle: 'solid',
+        borderTopWidth: '0.833333px',
+        colorScheme: 'dark',
+        borderBottomLeftRadius: '4px',
+        borderBottomRightRadius: '4px',
+        borderTopLeftRadius: '4px',
+        borderTopRightRadius: '4px',
+        listStyleImage: 'none',
+        listStylePosition: 'outside',
+        listStyleType: 'none',
+        marginBlockEnd: '0px',
+        marginBlockStart: '0px',
+        paddingInlineStart: '0px',
+        scrollbarColor: 'rgb(161, 173, 184) rgb(19, 21, 22)',
+        unicodeBidi: 'isolate',
+      });
+    })();
+</script>
+
+<script>
+const insertEditButton = () => {
+  try {
+    const rightControls = document.querySelector('.menu-bar .right-controls');
+    if(!rightControls) return;
+    // avoid duplicating if already inserted
+    if(document.getElementById('git-edit-button')) return;
+
+    const a = document.createElement('a');
+    a.href = "https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/notes.html";
+    a.title = "Suggest an edit";
+    a.setAttribute('aria-label','Suggest an edit');
+    a.target = "_blank";
+    a.className = 'icon-button';
+    a.style.marginLeft = '6px';
+    a.innerHTML = '<i id="git-edit-button" class="fa fa-edit"></i>';
+
+    // insert the edit button before the existing GitHub button (if present) so it sits next to it
+    const githubAnchor = rightControls.querySelector('a[title="Git repo"], a[href*="github.com"]');
+    if(githubAnchor) rightControls.insertBefore(a, githubAnchor.nextSibling);
+    else rightControls.appendChild(a);
+  } catch(e){ console.error('insertEditButton failed', e); }
+};
+
+const keyboardArrowNav = () => {
+  // normalize a meta string to absolute path (convert .md -> .html)
+  const normalizePath = (raw) => {
+    if(!raw) return null;
+    try {
+      // convert .md to .html (sitemap entries come back as .md)
+      raw = raw.replace(/\.md$/i, '.html');
+      // raw may be "path/to/page.html" or "/path/to/page.html" or full URL
+      const u = new URL(raw, location.origin + '/');
+      // return pathname + hash+search if present? we want just pathname
+      return u.pathname + (u.search || '') + (u.hash || '');
+    } catch(e){
+      // fallback: ensure .md -> .html and return with leading slash
+      try { raw = (raw || '').replace(/\.md$/i, '.html'); } catch(err){}
+      return '/' + (raw || '').replace(/^\/*/, '/').replace(/^\//, '');
+    }
+  };
+
+  // build linear index of sidebar pages (only elements with .meta text)
+  const buildIndex = () => {
+    const items = Array.from(document.querySelectorAll('.page-item'));
+    const list = items.map(el => {
+      const meta = el.querySelector('.meta');
+      const pathTxt = meta ? meta.textContent.trim() : '';
+      return { el, pathTxt: pathTxt, norm: normalizePath(pathTxt) };
+    }).filter(i => i.norm && i.norm.length > 0);
+    return list;
+  };
+
+  // find active index
+  const findActiveIndex = (list) => {
+    // prefer .active
+    const activeEl = document.querySelector('.page-item.active');
+    if(activeEl){
+      const idx = list.findIndex(i => i.el === activeEl);
+      if(idx !== -1) return idx;
+    }
+    // fallback: try matching pagePath visible in UI
+    const pagePathEl = document.getElementById('pagePath');
+    if(pagePathEl && pagePathEl.textContent.trim()){
+      const cur = normalizePath(pagePathEl.textContent.trim());
+      const idx = list.findIndex(i => i.norm === cur || i.norm === (cur.startsWith('/')? cur.slice(1) : '/' + cur));
+      if(idx !== -1) return idx;
+    }
+    // fallback: match location.pathname
+    const idx = list.findIndex(i => {
+      const p = i.norm;
+      return p === location.pathname || p === (location.pathname + location.search) || p === ('/' + location.pathname.replace(/^\//,''));
+    });
+    if(idx !== -1) return idx;
+    return 0;
+  };
+
+  // attempt to navigate to list[idx], but if that page isn't fetchable, keep moving in the same direction
+  const tryNavigate = async (list, startIdx, direction) => {
+    if(!list || list.length === 0) return;
+    let i = startIdx + direction;
+    const max = list.length;
+    for(let attempts = 0; attempts < max; attempts++){
+      if(i < 0) i = 0;
+      if(i >= max) i = max - 1;
+      const target = list[i];
+      if(!target || !target.norm){ i += direction; continue; }
+      // try HEAD first; fall back to GET if HEAD fails
+      try {
+        const url = target.norm.replace(/\.md$/i, '.html'); // ensure .md -> .html
+        let ok = false;
+        try {
+          const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+          ok = res && res.ok;
+        } catch(headErr){
+          // HEAD may be blocked; try GET
+          try {
+            const res2 = await fetch(url, { method: 'GET', cache: 'no-store' });
+            ok = res2 && res2.ok;
+          } catch(getErr){
+            ok = false;
+          }
+        }
+        if(ok){
+          // click the page-item element (it has the click handler that calls loadPage)
+          try { target.el.click(); } catch(e){ console.warn('click failed, falling back to location assign', e); location.href = target.norm; }
+          return;
+        } else {
+          // not fetchable — keep going
+          i += direction;
+          // loop might get stuck at boundaries, so break if we've hit end and can't navigate further
+          if(i < 0 || i >= max) break;
+        }
+      } catch(e){
+        console.warn('tryNavigate error', e);
+        i += direction;
+      }
+    }
+    // nothing navigable found
+    console.info('No navigable page found in that direction.');
+  };
+
+  // attach keyboard listener
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+      // avoid triggering while typing in inputs or textareas or modal
+      const tag = (e.target && e.target.tagName) || '';
+      if(tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+      e.preventDefault();
+      const list = buildIndex();
+      if(!list.length) return;
+      const curIdx = findActiveIndex(list);
+      const dir = e.key === 'ArrowLeft' ? -1 : 1;
+      tryNavigate(list, curIdx, dir);
+    }
+  }, { passive: true });
+};
+
+const addOnscreenNavButtons = () => {
+  try {
+    // don't create duplicates
+    if(document.getElementById('onscreen-nav')) return;
+
+    const container = document.createElement('div');
+    container.id = 'onscreen-nav';
+    Object.assign(container.style, {
+      position: 'fixed',
+      right: '20px',
+      bottom: '20px',
+      zIndex: '20010',
+      display: 'flex',
+      gap: '8px',
+      alignItems: 'center',
+      pointerEvents: 'auto',
+    });
+
+    const btnCommonStyle = {
+      width: '44px',
+      height: '44px',
+      borderRadius: '8px',
+      border: '1px solid rgba(255,255,255,0.06)',
+      background: 'rgba(0,0,0,0.35)',
+      color: 'var(--text)',
+      display: 'grid',
+      placeItems: 'center',
+      cursor: 'pointer',
+      boxShadow: '0 6px 18px rgba(0,0,0,0.5)'
+    };
+
+    const createBtn = (iconClass, title, onClick) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.title = title;
+      b.innerHTML = `<i class="${iconClass}"></i>`;
+      Object.assign(b.style, btnCommonStyle);
+      b.addEventListener('click', onClick);
+      return b;
+    };
+
+    // simulate key press by dispatching KeyboardEvent or call navigate function by triggering document keydown
+    const clickLeft = () => { const ev = new KeyboardEvent('keydown', { key: 'ArrowLeft' }); document.dispatchEvent(ev); };
+    const clickRight = () => { const ev = new KeyboardEvent('keydown', { key: 'ArrowRight' }); document.dispatchEvent(ev); };
+
+    const leftBtn = createBtn('fa fa-chevron-left', 'Previous page', clickLeft);
+    const rightBtn = createBtn('fa fa-chevron-right', 'Next page', clickRight);
+
+    container.appendChild(leftBtn);
+    container.appendChild(rightBtn);
+    document.body.appendChild(container);
+  } catch(e){ console.error('addOnscreenNavButtons failed', e); }
+};
+
+const insertSearchFeature = () => {
+  try {
+    // create search button next to theme-toggle
+    const themeToggle = document.querySelector('#theme-toggle, .theme-toggle');
+    if(!themeToggle) return;
+    // avoid duplicates
+    if(document.getElementById('notes-search-button')) return;
+
+    const searchBtn = document.createElement('button');
+    searchBtn.id = 'notes-search-button';
+    searchBtn.className = 'icon-button';
+    searchBtn.title = 'Search notes / page';
+    searchBtn.setAttribute('aria-label','Search notes and page content');
+    searchBtn.innerHTML = '<i class="fa fa-search"></i>';
+    searchBtn.style.marginLeft = '6px';
+    themeToggle.parentNode.insertBefore(searchBtn, themeToggle.nextSibling);
+
+    // Modal markup
+    const modalBackdrop = document.createElement('div');
+    modalBackdrop.className = 'modal-backdrop';
+    modalBackdrop.style.display = 'none';
+    modalBackdrop.style.zIndex = '20100';
+    modalBackdrop.id = 'notes-search-backdrop';
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    Object.assign(modal.style, { width: '720px', maxWidth: '96%' });
+    modal.innerHTML = `
+      <h3>Search Notes / Page</h3>
+      <div class="muted" style="margin-bottom:8px;">Type to search saved notes or the currently loaded page's blocks. </div>
+      <input id="notes-search-input" placeholder="Search..." style="width:100%; padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text); font-size:1rem;">
+      <div id="notes-search-results" style="max-height:360px; overflow:auto; margin-top:10px;"></div>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+        <button id="notes-search-close" class="btn">Close</button>
+      </div>
+    `;
+    modalBackdrop.appendChild(modal);
+    document.body.appendChild(modalBackdrop);
+
+    // open/close
+    searchBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden','false');
+      const input = document.getElementById('notes-search-input');
+      setTimeout(()=> input && input.focus(), 50);
+    });
+    document.getElementById('notes-search-close').addEventListener('click', () => {
+      modalBackdrop.style.display = 'none';
+      modalBackdrop.setAttribute('aria-hidden','true');
+      clearResults();
+    });
+    modalBackdrop.addEventListener('click', (e) => { if(e.target === modalBackdrop){ modalBackdrop.style.display = 'none'; modalBackdrop.setAttribute('aria-hidden','true'); clearResults(); } });
+
+    const resultsEl = document.getElementById('notes-search-results');
+    const inputEl = document.getElementById('notes-search-input');
+
+    // helpers: list saved notes from localStorage
+    const NOTE_PREFIX = 'inlineNotes_';
+    const getAllSavedNotes = () => {
+      const out = []; // {pageKey, pagePath, notesObj}
+      for(let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if(!k || !k.startsWith(NOTE_PREFIX)) continue;
+        try {
+          const data = JSON.parse(localStorage.getItem(k) || '{}');
+          // key suffix may be '/path' etc.
+          const suffix = k.slice(NOTE_PREFIX.length);
+          // transform '_' -> '/' fallback
+          let pagePath = suffix;
+          if(!pagePath.startsWith('/')) pagePath = '/' + pagePath;
+          out.push({ key: k, pagePath, data });
+        } catch(e){}
+      }
+      return out;
+    };
+
+    // search within notesObj and currently loaded page blocks (notesArea DOM)
+    const debounce = (fn, wait=180) => {
+      let t;
+      return (...args) => { clearTimeout(t); t = setTimeout(()=> fn(...args), wait); };
+    };
+
+    const clearResults = () => { resultsEl.innerHTML = ''; };
+
+    // scroll to block after navigation: we will click the matching page-item to load page, then watch notesArea
+    const navigateToPageAndBlock = (pagePath, blockNum) => {
+      // find matching .page-item by comparing meta text
+      const allItems = Array.from(document.querySelectorAll('.page-item'));
+      const target = allItems.find(pi => {
+        const m = pi.querySelector('.meta');
+        if(!m) return false;
+        // compare normalized
+        const a = (m.textContent || '').trim().replace(/^\//,'');
+        const b = pagePath.replace(/^\//,'');
+        return a === b || ('/' + a) === pagePath || a === pagePath;
+      });
+      if(!target){
+        alert('Could not find page in sidebar to navigate to.');
+        return;
+      }
+
+      // click it to trigger existing loadPage handler
+      target.click();
+
+      // wait until notesArea populates and then scroll to the block
+      const notesArea = document.getElementById('notesArea');
+      if(!notesArea) return;
+      const mo = new MutationObserver((mut) => {
+        // try to find block element for blockNum
+        const blockEl = Array.from(notesArea.querySelectorAll('.block')).find(b => {
+          const head = b.querySelector('.head strong');
+          if(!head) return false;
+          return head.textContent.trim().startsWith('Block ' + blockNum);
+        });
+        if(blockEl){
+          blockEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // add a quick highlight
+          blockEl.animate([{ boxShadow: '0 0 0px rgba(0,0,0,0)' }, { boxShadow: '0 0 18px rgba(155,124,255,0.18)' }], { duration: 700, iterations: 1 });
+          mo.disconnect();
+        }
+      });
+      mo.observe(notesArea, { childList: true, subtree: true });
+      // also try immediately (if already loaded)
+      setTimeout(()=> {
+        const blockElImmediate = Array.from(notesArea.querySelectorAll('.block')).find(b => {
+          const head = b.querySelector('.head strong');
+          if(!head) return false;
+          return head.textContent.trim().startsWith('Block ' + blockNum);
+        });
+        if(blockElImmediate){
+          blockElImmediate.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          mo.disconnect();
+        }
+      }, 200);
+    };
+
+    // perform search
+    const doSearch = async (q) => {
+      resultsEl.innerHTML = '';
+      if(!q || q.trim().length < 1) return;
+      const qlc = q.toLowerCase();
+
+      // 1) search saved notes
+      const saved = getAllSavedNotes();
+      for(const s of saved){
+        // s.data is object mapping blockNum -> text
+        for(const key of Object.keys(s.data || {})){
+          const text = (s.data[key] || '') + '';
+          if(text.toLowerCase().includes(qlc)){
+            const entry = document.createElement('div');
+            entry.style.padding = '8px';
+            entry.style.borderBottom = '1px solid rgba(255,255,255,0.02)';
+            entry.innerHTML = `<div style="font-weight:600">${s.pagePath} — Block ${key}</div>
+                               <div style="font-size:0.9rem; color:var(--muted); margin-top:4px;">${text.split('\n').join(' ').replace(/(<([^>]+)>)/ig,'').slice(0,240)}</div>
+                               <div style="margin-top:6px;"><button class="btn" data-page="${s.pagePath}" data-block="${key}">Open</button></div>`;
+            const btn = entry.querySelector('button');
+            btn.addEventListener('click', () => navigateToPageAndBlock(s.pagePath, key));
+            resultsEl.appendChild(entry);
+          }
+        }
+      }
+
+      // 2) search currently loaded notes blocks (in notesArea)
+      const notesArea = document.getElementById('notesArea');
+      if(notesArea){
+        const blocks = Array.from(notesArea.querySelectorAll('.block'));
+        blocks.forEach(b => {
+          const headMuted = b.querySelector('.head .muted');
+          const headText = headMuted ? headMuted.textContent : '';
+          const note = b.querySelector('.note') ? b.querySelector('.note').textContent : '';
+          const combined = ((headText || '') + ' ' + (note || '')).toLowerCase();
+          if(combined.includes(qlc)){
+            const blockHeader = b.querySelector('.head strong');
+            let blockNum = '1';
+            if(blockHeader){
+              const m = blockHeader.textContent.match(/Block\s+(\d+)/i);
+              if(m) blockNum = m[1];
+            }
+            // determine which page is currently loaded (use #pagePath)
+            const pagePathEl = document.getElementById('pagePath');
+            const pagePath = pagePathEl ? pagePathEl.textContent.trim() : '';
+            const entry = document.createElement('div');
+            entry.style.padding = '8px';
+            entry.style.borderBottom = '1px solid rgba(255,255,255,0.02)';
+            entry.innerHTML = `<div style="font-weight:600">${pagePath || '(current page)'} — Block ${blockNum}</div>
+                               <div style="font-size:0.9rem; color:var(--muted); margin-top:4px;">${(headText||'').slice(0,240)}</div>
+                               <div style="margin-top:6px;"><button class="btn" data-page="${pagePath}" data-block="${blockNum}">Open</button></div>`;
+            const btn = entry.querySelector('button');
+            btn.addEventListener('click', () => {
+              // scroll into view directly (page already loaded)
+              b.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              b.animate([{ boxShadow: '0 0 0px rgba(0,0,0,0)' }, { boxShadow: '0 0 18px rgba(155,124,255,0.18)' }], { duration: 700, iterations: 1 });
+            });
+            resultsEl.appendChild(entry);
+          }
+        });
+      }
+
+      if(resultsEl.children.length === 0){
+        const n = document.createElement('div');
+        n.className = 'muted';
+        n.style.padding = '8px';
+        n.textContent = 'No matches found';
+        resultsEl.appendChild(n);
+      }
+    };
+
+    inputEl.addEventListener('input', debounce((e) => {
+      doSearch(e.target.value);
+    }, 180));
+  } catch(e){ console.error('insertSearchFeature failed', e); }
+};
+
+
+(() => {
+  setTimeout(() => {
+    insertEditButton();
+    keyboardArrowNav();
+    addOnscreenNavButtons();
+    insertSearchFeature();
+  }, 120);
+})();
+</script>
+
+
+</body>
+</html>
