@@ -176,9 +176,7 @@ function parseMap(){
   function getBasePath() {
     const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
     console.log(location.hostname)
-    if(location.hostname === 'localhost') {
-      return location.origin + '/'; 
-    } else if(location.hostname === 'montclairrobotics.github.io') {
+     if(location.hostname == 'montclairrobotics.github.io') {
       return prodBase; 
     } else {
       return location.origin + '/';
@@ -755,9 +753,7 @@ const keyboardArrowNav = () => {
   const getBasePathLocal = () => {
     const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
     console.log(location.hostname)
-    if(location.hostname === 'localhost') {
-      return location.origin + '/';
-    } else if(location.hostname === 'montclairrobotics.github.io') {
+     if(location.hostname == 'montclairrobotics.github.io') {
       return prodBase;
     } else {
       return location.origin + '/';
