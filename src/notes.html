@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="/FontAwesome/css/font-awesome.css">
 <link rel="stylesheet" href="/css/variables.css">
 <link rel="stylesheet" href="/css/chrome.css">
+
+<link rel="stylesheet" href="/FRC-Programming-Guide/css/font-awesome.css">
+<link rel="stylesheet" href="/FRC-Programming-Guide/css/chrome.css">
+<link rel="stylesheet" href="/FRC-Programming-Guide/css/variables.css">
 <style>
   :root{
     --bg:#0b0f14; --panel:#071018; --muted:#94a3b8; --accent:#9b7cff;
@@ -194,6 +198,7 @@ function parseMap(){
   }
 
   function findExistingNoteKeyForAbsPath(absPath){
+    const base = getBasePath();
     for(let i=0;i<LS.length;i++){
       const k = LS.key(i);
       if(!k || !k.startsWith(NOTE_PREFIX)) continue;
@@ -202,11 +207,11 @@ function parseMap(){
       if('/' + suffix === absPath) return k;
       const replaced = suffix.replace(/_/g, '/');
       try {
-        const resolved = new URL(replaced, location.origin + '/').pathname;
+        const resolved = new URL(replaced, base).pathname;
         if(resolved === absPath) return k;
       } catch(e){}
       try {
-        const resolved2 = new URL(suffix, location.origin + '/').pathname;
+        const resolved2 = new URL(suffix, base).pathname;
         if(resolved2 === absPath) return k;
       } catch(e){}
     }
@@ -273,7 +278,7 @@ function parseMap(){
     const title = document.createElement('span'); title.className = 'title'; title.textContent = node.title || '(untitled)';
     left.appendChild(title);
     if(node.link){
-      const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = node.link.replace(/^\/*/,'');
+      const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = node.link.replace(/^\/*/,'' );
       left.appendChild(meta);
     }
     pageItem.appendChild(left);
@@ -329,7 +334,7 @@ function parseMap(){
         const title = document.createElement('span'); title.className='title'; title.textContent = node.title;
         left.appendChild(title);
         if(node.link){
-          const meta = document.createElement('span'); meta.className='meta'; meta.textContent = node.link.replace(/^\/*/,'');
+          const meta = document.createElement('span'); meta.className='meta'; meta.textContent = node.link.replace(/^\/*/,'' );
           left.appendChild(meta);
         }
         titleSpan.appendChild(left);
@@ -595,6 +600,7 @@ function parseMap(){
 
 })();
 </script>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
