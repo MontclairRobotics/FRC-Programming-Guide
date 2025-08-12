@@ -175,14 +175,15 @@ function parseMap(){
 
   function getBasePath() {
     const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
-    
-    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    console.log(location.hostname)
+    if(location.hostname === 'localhost') {
       return location.origin + '/'; 
     } else if(location.hostname === 'montclairrobotics.github.io') {
       return prodBase; 
     } else {
       return location.origin + '/';
     }
+    
   }
 
   function normalizeToAbsHtmlPath(link){
@@ -191,6 +192,7 @@ function parseMap(){
     try {
       const base = getBasePath();
       const resolved = new URL(html, base).pathname;
+      console.log(resolved)
       return resolved;
     } catch(e){
       return '/' + html.replace(/^\/*/, '');
@@ -752,13 +754,15 @@ const insertEditButton = () => {
 const keyboardArrowNav = () => {
   const getBasePathLocal = () => {
     const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
-    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    console.log(location.hostname)
+    if(location.hostname === 'localhost') {
       return location.origin + '/';
     } else if(location.hostname === 'montclairrobotics.github.io') {
       return prodBase;
     } else {
       return location.origin + '/';
     }
+   
   };
 
   // Convert any incoming link-like string to an absolute site pathname
