@@ -750,20 +750,61 @@ const insertEditButton = () => {
 };
 
 const keyboardArrowNav = () => {
+  const getBasePathLocal = () => {
+    const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
+    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      return location.origin + '/';
+    } else if(location.hostname === 'montclairrobotics.github.io') {
+      return prodBase;
+    } else {
+      return location.origin + '/';
+    }
+  };
+
+  // Convert any incoming link-like string to an absolute site pathname
+  // - converts .md -> .html
+  // - accepts "page.html", "/repo/page.html", "https://host/repo/page.html"
+  // - returns a pathname that includes repo base when relevant (leading slash)
+  const normalizeToAbsHtmlPathLocal = (link) => {
+    if(!link) return '';
+    let html = (link || '').replace(/\.md$/i, '.html').trim();
+    // try if link is already a full URL
+    try {
+      const u = new URL(html);
+      // preserve pathname+search+hash
+      return (u.pathname || '') + (u.search || '') + (u.hash || '');
+    } catch(e) {
+      // not a full URL -> resolve against site base
+      try {
+        const base = getBasePathLocal();
+        const u2 = new URL(html, base);
+        return (u2.pathname || '') + (u2.search || '') + (u2.hash || '');
+      } catch(err){
+        // last-resort ensure leading slash and .html
+        html = html.replace(/^\/*/, '');
+        return '/' + html;
+      }
+    }
+  };
+
   // normalize a meta string to absolute path (convert .md -> .html)
   const normalizePath = (raw) => {
     if(!raw) return null;
     try {
-      // convert .md to .html (sitemap entries come back as .md)
-      raw = raw.replace(/\.md$/i, '.html');
-      // raw may be "path/to/page.html" or "/path/to/page.html" or full URL
-      const u = new URL(raw, location.origin + '/');
-      // return pathname + hash+search if present? we want just pathname
-      return u.pathname + (u.search || '') + (u.hash || '');
+      // Try full URL first (handles if meta already contains full url)
+      const trimmed = raw.trim();
+      try {
+        const u = new URL(trimmed);
+        return (u.pathname || '') + (u.search || '') + (u.hash || '');
+      } catch(_) {
+        // Not a full URL, use site base resolution which accounts for repo-subpath
+        return normalizeToAbsHtmlPathLocal(trimmed);
+      }
     } catch(e){
-      // fallback: ensure .md -> .html and return with leading slash
-      try { raw = (raw || '').replace(/\.md$/i, '.html'); } catch(err){}
-      return '/' + (raw || '').replace(/^\/*/, '/').replace(/^\//, '');
+      // fallback
+      try { raw = (raw || '').replace(/\.md$/i, '.html'); } catch(_) {}
+      const cleaned = (raw || '').replace(/^\/*/, '');
+      return '/' + cleaned;
     }
   };
 
@@ -780,7 +821,7 @@ const keyboardArrowNav = () => {
 
   // find active index
   const findActiveIndex = (list) => {
-    // prefer .active
+    // prefer .active element
     const activeEl = document.querySelector('.page-item.active');
     if(activeEl){
       const idx = list.findIndex(i => i.el === activeEl);
@@ -790,16 +831,31 @@ const keyboardArrowNav = () => {
     const pagePathEl = document.getElementById('pagePath');
     if(pagePathEl && pagePathEl.textContent.trim()){
       const cur = normalizePath(pagePathEl.textContent.trim());
-      const idx = list.findIndex(i => i.norm === cur || i.norm === (cur.startsWith('/')? cur.slice(1) : '/' + cur));
+      const idx = list.findIndex(i => i.norm === cur || i.norm === (cur.startsWith('/') ? cur.slice(1) : '/' + cur));
       if(idx !== -1) return idx;
     }
-    // fallback: match location.pathname
-    const idx = list.findIndex(i => {
-      const p = i.norm;
-      return p === location.pathname || p === (location.pathname + location.search) || p === ('/' + location.pathname.replace(/^\//,''));
-    });
+    // fallback: match location.pathname (+search/hash) — location.pathname already includes repo subpath
+    const locCandidates = [
+      location.pathname + (location.search || '') + (location.hash || ''),
+      location.pathname,
+      (location.pathname + location.search) || ''
+    ].filter(Boolean);
+    const idx = list.findIndex(i => locCandidates.includes(i.norm));
     if(idx !== -1) return idx;
     return 0;
+  };
+
+  // helper to build an absolute fetch URL from a pathname (i.e. "/repo/x.html" -> full URL)
+  const makeFetchUrl = (pathname) => {
+    // if pathname already looks like a full URL, return as-is
+    try {
+      const u = new URL(pathname);
+      return u.href;
+    } catch(_) {
+      // ensure leading slash
+      const p = pathname.startsWith('/') ? pathname : '/' + pathname;
+      return location.origin.replace(/\/$/, '') + p;
+    }
   };
 
   // attempt to navigate to list[idx], but if that page isn't fetchable, keep moving in the same direction
@@ -812,17 +868,18 @@ const keyboardArrowNav = () => {
       if(i >= max) i = max - 1;
       const target = list[i];
       if(!target || !target.norm){ i += direction; continue; }
-      // try HEAD first; fall back to GET if HEAD fails
       try {
-        const url = target.norm.replace(/\.md$/i, '.html'); // ensure .md -> .html
+        // ensure .md -> .html and build a full url to fetch
+        const pathHtml = target.norm.replace(/\.md$/i, '.html');
+        const fetchUrl = makeFetchUrl(pathHtml);
         let ok = false;
         try {
-          const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+          const res = await fetch(fetchUrl, { method: 'HEAD', cache: 'no-store' });
           ok = res && res.ok;
         } catch(headErr){
           // HEAD may be blocked; try GET
           try {
-            const res2 = await fetch(url, { method: 'GET', cache: 'no-store' });
+            const res2 = await fetch(fetchUrl, { method: 'GET', cache: 'no-store' });
             ok = res2 && res2.ok;
           } catch(getErr){
             ok = false;
@@ -830,12 +887,18 @@ const keyboardArrowNav = () => {
         }
         if(ok){
           // click the page-item element (it has the click handler that calls loadPage)
-          try { target.el.click(); } catch(e){ console.warn('click failed, falling back to location assign', e); location.href = target.norm; }
+          try {
+            target.el.click();
+          } catch(e){
+            console.warn('click failed, falling back to location assign', e);
+            // navigate to the resolved path relative to site base
+            // if target.norm is already a pathname (e.g. /repo/page.html) set location.href to full URL
+            location.href = fetchUrl;
+          }
           return;
         } else {
           // not fetchable — keep going
           i += direction;
-          // loop might get stuck at boundaries, so break if we've hit end and can't navigate further
           if(i < 0 || i >= max) break;
         }
       } catch(e){
@@ -862,6 +925,7 @@ const keyboardArrowNav = () => {
     }
   }, { passive: true });
 };
+
 
 const addOnscreenNavButtons = () => {
   try {

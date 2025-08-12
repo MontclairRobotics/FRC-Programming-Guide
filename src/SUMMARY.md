@@ -29,9 +29,10 @@
 - [💫 Advanced Java]()
   - [Inheritance](Advanced-Java/Inheritance.md)
   - [Advanced String Usage]()
-  - [Arraylists]()
-  - [Hashmaps & Hashsets]()
-  - [Lambdas]()
+  - [Arraylists](Advanced-Java/Arraylists.md)
+  - [Hashmaps](Advanced-Java/Hashmaps.md)
+  - [Hashsets](Advanced-Java/Hashsets.md)
+  - [Lambdas](Advanced-Java/Lambdas.md)
   - [Style Guide]()
 
 -----------

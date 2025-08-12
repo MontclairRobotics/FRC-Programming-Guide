@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Functions - Montclair Robotics Programming</title>
+        <title>Hashmaps - Montclair Robotics Programming</title>
 
 
         <!-- Custom HTML head -->
@@ -12,31 +12,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="shortcut icon" href="../../favicon.png">
-        <link rel="stylesheet" href="../../css/variables.css">
-        <link rel="stylesheet" href="../../css/general.css">
-        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../../highlight.css">
-        <link rel="stylesheet" href="../../tomorrow-night.css">
-        <link rel="stylesheet" href="../../ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../../theme/pagetoc.css">
+        <link rel="stylesheet" href="../theme/pagetoc.css">
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../../";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -88,7 +88,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -131,7 +131,7 @@
                         <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Java-Fundamentals/course/Functions.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/MontclairRobotics/FRC-Programming-Guide/edit/main/src/Advanced-Java/Hashmaps.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -161,147 +161,56 @@
                 <div id="content" class="content">
                     <main>
                         <div class="content-wrap">
-                            <h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
-<p>This page is a continuation to the explanation of <a href="./Control-Flow.html">control flow</a>. Functions are repeatable, modular blocks of code used to accomplish specific tasks. We can define our own functions that will optionally take input(s), do something with it, and optionally <em>return</em> an output. We first saw functions in the page on <a href="./Basic-Syntax.html">Basic Syntax</a> where the function is called <code>main</code>.</p>
-<p>To better explain how to read &amp; write functions, lets look at the following example:</p>
-<pre><code class="language-java">int returnThree() {
-    return 3;
-}
+                            <h2 id="hashmaps"><a class="header" href="#hashmaps">HashMaps</a></h2>
+<p>You’ve just learned that you can store a list of items as an ArrayList and access the values using their indexes.</p>
+<p>HashMaps allow you to do the same thing, except the index can be <strong>any unique value</strong>.</p>
+<p>For hashmaps and maps, the index is called the key, and the element corresponding to that key is called the value.</p>
+<p>Both the key and value can be any type accepted by a type parameter.</p>
+<p>Keys that are equal to one another are not allowed, but different keys can have the same value.</p>
+<p>HashMap is also contained in <code>java.util</code>.</p>
+<h3 id="general-syntax-for-creating-a-hashmap"><a class="header" href="#general-syntax-for-creating-a-hashmap">General Syntax for Creating a HashMap</a></h3>
+<pre><code class="language-java">import java.util.HashMap;
+HashMap&lt;KeyType, ValueType&gt; name = new HashMap&lt;KeyType, ValueType&gt;();
+</code></pre>
+<p>To add items to a HashMap, use the method <code>.put(K key, V value)</code> where <code>K</code> is the key type parameter and <code>V</code> is the value type parameter.</p>
+<p>Here is an example of a map that uses String names as keys and Integer ages as values:</p>
+<pre><code class="language-java">import java.util.HashMap;
 
-int x = returnThree(); // 3
+public class Program {  
+    public static void main(String[] args) {
 
-</code></pre>
-<p>There’s a lot to dissect here. Let’s focus on just the first line for now:</p>
-<pre><code class="language-java">int returnThree() { [...] }
-</code></pre>
-<blockquote>
-<p>This first line is known as a <strong>function declaration</strong>.</p>
-</blockquote>
-<ul>
-<li><code>int</code>
-<ul>
-<li>A function declaration starts with a <a href="./Variables.html#data-types">data type</a> that specifies what type of value the function will <em>return</em> back to us.</li>
-</ul>
-</li>
-<li><code>returnThree</code>
-<ul>
-<li>This is the name of the function, which we’ll use to refer to it in our code later.</li>
-</ul>
-</li>
-<li><code>() { [...] }</code>
-<ul>
-<li>Inside the <code>()</code> is where we would specify any inputs to the function, we’ll go over this more in a bit.</li>
-</ul>
-</li>
-</ul>
-<p>Next we’ll cover the code <em>inside</em> the <code>returnThree</code> function.</p>
-<h2 id="return-statement"><a class="header" href="#return-statement">Return Statement</a></h2>
-<p>In Java, every function is declared with a return type such as <code>int</code>, <code>float</code>, <code>double</code>, <code>string</code>, etc. These return types required a return statement at the end of the function. The <code>return</code> keyword is used for returning the value.</p>
-<blockquote>
-<p>If the beginning of a function declaration has to be a data type, then how can we have a function that returns nothing? Good question. If we want to specify that the function returns <em>no</em> data, then we use the keyword <code>void</code> <em>instead</em> of a data type such as <code>int</code> or <code>boolean</code> (The void return type doesn’t require any return statement. If we try to return a value from a void function, the code will fail.)</p>
-</blockquote>
-<p>There are 3 main use cases for using the <code>return</code> keyword:</p>
-<ul>
-<li>Returning a value:
-<ul>
-<li>
-<pre><code class="language-java">int returnThree() {
-  return 3;
-}
-</code></pre>
-</li>
-<li>
-<pre><code class="language-java">double aNumber() { // return type is double since -1.3 is a decimal.
-  return -1.3;
-}
-return -1.3;
-</code></pre>
-</li>
-<li>
-<pre><code class="language-java">String sayHi() { // Remember, String is capitalized.
-  return "Hello!";
-}
-</code></pre>
-</li>
-</ul>
-</li>
-<li>Returning a variable:
-<ul>
-<li>
-<pre><code class="language-java">int myNumber() {
-  int x = 7;
-  return x; // 7
-}
-</code></pre>
-</li>
-<li>
-<pre><code class="language-java">String message() {
-  String hello = "Hello" + "World!";
-  return hello;
-}
-</code></pre>
-</li>
-</ul>
-</li>
-<li>Returning <em>another</em> function:
-<ul>
-<li>
-<pre><code class="language-java">int four() {
-  return 4;
-}
-int five() {
-  return four() + 1;
-}
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="accepting-input"><a class="header" href="#accepting-input">Accepting Input</a></h2>
-<h3 id="one-input"><a class="header" href="#one-input">One Input</a></h3>
-<p>Information can be passed to functions as a <strong>parameter</strong>. Parameters act as <a href="./Variables.html">variables</a> inside the function. Parameters are specified after the function name, <em>inside</em> the parentheses. You can add as many parameters/inputs as you want, but they have to be separated by a comma</p>
-<p>The following example has a function that takes a variable of type <code>String</code> called <code>name</code> as a parameter. When the function is called, we pass alongside a string, which is used inside the function in a print statement:</p>
-<blockquote>
-<p>The variables that we pass <em>through</em> the function when we call it are known as <strong>arguments</strong></p>
-</blockquote>
-<pre><code class="language-java">void printName(String name) { // Remember, void means no value is returned from the function.
+        HashMap&lt;String, Integer&gt; ages = new HashMap&lt;String, Integer&gt;();
 
-  /* will print whatever string is passed into the function, regardless of if what we pass in is a variable, a call to another function, a normal string, etc. */
-  System.out.println(name); 
-}
+        ages.put("Johnny", 3);  
+        ages.put("Carl", 16);  
+        ages.put("Grandpa", 72);  
+        ages.put("Someone very old", 241);
 
-printName("Baebraham"); // Will call the function printName with the argument "Baebraham"
-</code></pre>
-<h3 id="multiple-inputs"><a class="header" href="#multiple-inputs">Multiple Inputs</a></h3>
-<p>A function with multiple parameters is structured the same way as seen above, except the second parameter is followed by a comma. Consider the following function that adds 2 numbers named <code>a</code> and <code>b</code></p>
-<pre><code class="language-java">int addNumbers(int a, int b) {
-  return a + b;
+        System.out.println(ages);  
+        // prints: {Johnny=3, Carl=16, Grandpa=72, Someone very old=241}  
+    }  
 }
 </code></pre>
-<p>This function has 2 inputs, <code>a</code> and <code>b</code>. Each input has a data type (<code>int</code>) followed by a name (<code>a</code>/<code>b</code>). The main difference here is that the 2 inputs are separated by a comma, which tells the compiler that these are 2 separate inputs.</p>
-<p>There is no limit to how many parameters a function can have, but they need to be separated by commas such as in the example above.</p>
-<h3 id="function-overloading"><a class="header" href="#function-overloading">Function Overloading</a></h3>
-<p>You can have multiple function with the same name in java, as long as they have different <em>function signatures</em>. This means that the parameters are different in some way.</p>
+<h3 id="more-methods"><a class="header" href="#more-methods">More Methods</a></h3>
+<p>To access a value, use <code>.get(K key)</code> and refer to its key:</p>
+<pre><code class="language-java">ages.get("Johnny"); // 3
+</code></pre>
+<p>To remove a value, use <code>.remove(K key)</code> and refer to its key:</p>
+<pre><code class="language-java">ages.remove("Johnny"); // Johnny is no longer in the HashMap
+</code></pre>
+<p>To get the number of items, use <code>.size():</code></p>
+<pre><code class="language-java">ages.size();
+</code></pre>
+<p>To see if the map contains a key, use <code>.containsKey(K key):</code></p>
+<pre><code class="language-java">ages.containsKey("Carl");  // true  
+ages.containsKey("Billy"); // false
+</code></pre>
 <blockquote>
-<p>For example, both</p>
-<pre><code class="language-java">int addNumbers(int a, int b) { [...] }
-</code></pre>
-<p>and</p>
-<pre><code class="language-java">int addNumbers(int a, int b, int c) { [...] }
-</code></pre>
-<p>are valid (but we’ll want more clearly defined and differentiated functions for easier debugging).</p>
+<p>For more information, check out <a href="https://www.w3schools.com/java/java_hashmap.asp">w3schools</a></p>
 </blockquote>
-<blockquote>
-<p>You can also vary the data types:</p>
-<pre><code class="language-java">String numString(String a, int b) { [...] }
-</code></pre>
-<p>and</p>
-<pre><code class="language-java">String numString(int a, String b) { [...] }
-</code></pre>
-<p>can both appear in the same file (class).</p>
-</blockquote>
-<p>It is important to note that changing the names of parameters will just cause an error, unless the data types or order of parameters is also changed (The names are irrelevant).</p>
-<hr>
+<hr />
+<h2 id="task"><a class="header" href="#task">Task</a></h2>
+<p>Create a map with keys that are products (String) mapped to prices (Integer or Double). Print out some of the prices of products using <code>.get</code>.</p>
 
                         </div>
                         <div id="sidetoc">
@@ -311,11 +220,11 @@ printName("Baebraham"); // Will call the function printName with the argument "B
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../Java-Fundamentals/course/Loops.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../Advanced-Java/Arraylists.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../Object-Oriented-Programming/Intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../Advanced-Java/Hashsets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -325,11 +234,11 @@ printName("Baebraham"); // Will call the function printName with the argument "B
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../Java-Fundamentals/course/Loops.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../Advanced-Java/Arraylists.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../Object-Oriented-Programming/Intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../Advanced-Java/Hashsets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -346,19 +255,19 @@ printName("Baebraham"); // Will call the function printName with the argument "B
             window.playground_copyable = true;
         </script>
 
-        <script src="../../ace.js"></script>
-        <script src="../../editor.js"></script>
-        <script src="../../mode-rust.js"></script>
-        <script src="../../theme-dawn.js"></script>
-        <script src="../../theme-tomorrow_night.js"></script>
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
 
-        <script src="../../elasticlunr.min.js"></script>
-        <script src="../../mark.min.js"></script>
-        <script src="../../searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../../clipboard.min.js"></script>
-        <script src="../../highlight.js"></script>
-        <script src="../../book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Inline theme‑toggle wiring -->
         <script>
@@ -411,8 +320,8 @@ printName("Baebraham"); // Will call the function printName with the argument "B
 
 
         <!-- Custom JS scripts -->
-        <script src="../../theme/pagetoc.js"></script>
-        <script src="../../theme/rn_qol.js"></script>
+        <script src="../theme/pagetoc.js"></script>
+        <script src="../theme/rn_qol.js"></script>
 
 
     </div>
