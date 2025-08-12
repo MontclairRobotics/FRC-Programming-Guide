@@ -588,8 +588,11 @@ window.addEventListener('load', () => {
   })();
 
   const path = window.location.pathname;
-  if (path === basePath || path === '') {
+  if (path === basePath || path === '' || path === '/' ) {
     window.location.href = basePath + 'Index.html';
+  }
+  else if(location.href=="https://montclairrobotics.github.io/FRC-Programming-Guide/" || location.href=="https://montclairrobotics.github.io/FRC-Programming-Guide"){
+    window.location.href = "https://montclairrobotics.github.io/FRC-Programming-Guide/Index.html";
   }
   else if (path.toLowerCase() === basePath + 'notes') {
     window.location.href = basePath + 'notes.html';
