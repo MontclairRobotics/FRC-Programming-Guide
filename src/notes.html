@@ -168,18 +168,31 @@ function parseMap(){
 (function(){
 
 
-  // (unchanged helpers from your file)
+
+  function getBasePath() {
+    const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
+    
+    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      return location.origin + '/'; 
+    } else if(location.hostname === 'montclairrobotics.github.io') {
+      return prodBase; 
+    } else {
+      return location.origin + '/';
+    }
+  }
 
   function normalizeToAbsHtmlPath(link){
     if(!link) return '';
     const html = link.replace(/\.md$/i, '.html');
     try {
-      const resolved = new URL(html, location.origin + '/').pathname;
+      const base = getBasePath();
+      const resolved = new URL(html, base).pathname;
       return resolved;
     } catch(e){
-      return '/' + html.replace(/^\/*/,'');
+      return '/' + html.replace(/^\/*/, '');
     }
   }
+
   function findExistingNoteKeyForAbsPath(absPath){
     for(let i=0;i<LS.length;i++){
       const k = LS.key(i);

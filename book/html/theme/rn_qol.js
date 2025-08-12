@@ -249,7 +249,7 @@ const fixedTextColor = 'rgb(152, 163, 173)';
 })();
 
 
-//Introducing Notes, a way to annotate pages. 
+//Notes, a way to annotate pages. 
 (function(){
   const NOTES_KEY = 'inlineNotes_' + location.pathname;
   const NOTE_ICON_DEFAULT = '💬';
@@ -577,15 +577,25 @@ window.onload = function() {
 //For clarity in multiple ways to get to a URL, without this, /Index.html, /, [the url itself], 
 //and /Welcome.html all correspond to the same page but can have different notes. 
 window.addEventListener('load', () => {
+  const basePath = (() => {
+    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      return '/';
+    } else if(location.hostname === 'montclairrobotics.github.io') {
+      return '/FRC-Programming-Guide/';
+    } else {
+      return '/';
+    }
+  })();
+
   const path = window.location.pathname;
-  if (path === '/' || path === '') {
-    window.location.href = '/Index.html';
+  if (path === basePath || path === '') {
+    window.location.href = basePath + 'Index.html';
   }
-  else if (path.toLowerCase() === '/notes') { //lets going to notes page convient
-    window.location.href = '/notes.html';
+  else if (path.toLowerCase() === basePath + 'notes') {
+    window.location.href = basePath + 'notes.html';
   }
   
-  if(path.toLowerCase() != '/notes'){
+  if(path.toLowerCase() !== basePath + 'notes'){
     const bindNavArrows = () => {
       const nav = document.querySelector('.nav-wrapper');
       if(!nav) return;
@@ -600,6 +610,7 @@ window.addEventListener('load', () => {
     bindNavArrows()
   }
 });
+
 
 
 //Theming
