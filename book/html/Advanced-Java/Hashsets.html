@@ -162,17 +162,17 @@
                     <main>
                         <div class="content-wrap">
                             <h2 id="hashsets"><a class="header" href="#hashsets">HashSets</a></h2>
-<p>You’ve just learned that a HashMap stores key–value pairs, with each key being unique.</p>
-<p>A <code>HashSet</code> is similar, except it stores only the values, and each value must be unique.
+<p>You’ve just learned that a <code>HashMap</code> stores key–value pairs, with each key being unique.</p>
+<p>A <code>HashSet</code> is similar, except it stores only the values, and each value must be unique.<br />
 There are no keys — you just add elements, and the set makes sure no duplicates are allowed.</p>
 <p>Like <code>HashMap</code>, <code>HashSet</code> is contained in <code>java.util</code>.</p>
-<p>General Syntax for Creating a HashSet</p>
+<h3 id="general-syntax-for-creating-a-hashset"><a class="header" href="#general-syntax-for-creating-a-hashset">General Syntax for Creating a HashSet</a></h3>
 <pre><code class="language-java">import java.util.HashSet;
 
 HashSet&lt;ElementType&gt; name = new HashSet&lt;ElementType&gt;();
 </code></pre>
-<p>To add items to a HashSet, use the method .add(E element) where E is the element type parameter.</p>
-<p>Here is an example of a set that stores String names:</p>
+<p>To add items to a <code>HashSet</code>, use the method <code>.add(E element)</code> where <code>E</code> is the element type parameter.</p>
+<p>Here is an example of a set that stores <code>String</code> names:</p>
 <pre><code class="language-java">public class Program {
     public static void main(String[] args) {
 
@@ -189,22 +189,36 @@ HashSet&lt;ElementType&gt; name = new HashSet&lt;ElementType&gt;();
     }
 }
 </code></pre>
-<p>More Methods
-To check if the set contains an element, use .contains(E element)</p>
-<p><b><code>names.contains("Carl"); // true</code></b>
-<b><code>names.contains("Billy"); // false</code></b></p>
-<p>To remove an element, use .remove(E element)</p>
-<p><b><code>names.remove("Johnny"); // Johnny is no longer in the set</code></b></p>
-<p>To get the number of items, use <code>.size()</code></p>
-<p><b><code>names.size();</code></b></p>
-<p>To remove all elements, use <code>.clear()</code></p>
-<p><b><code>names.clear();</code></b></p>
+<h3 id="more-methods"><a class="header" href="#more-methods">More Methods</a></h3>
+<ul>
+<li>
+<p>To check if the set contains an element, use <code>.contains(E element)</code>:</p>
+<pre><code class="language-java">names.contains("Carl"); // true
+names.contains("Billy"); // false
+</code></pre>
+</li>
+<li>
+<p>To remove an element, use <code>.remove(E element)</code>:</p>
+<pre><code class="language-java">names.remove("Johnny"); // Johnny is no longer in the set
+</code></pre>
+</li>
+<li>
+<p>To get the number of items, use <code>.size()</code>:</p>
+<pre><code class="language-java">names.size();
+</code></pre>
+</li>
+<li>
+<p>To remove all elements, use <code>.clear()</code>:</p>
+<pre><code class="language-java">names.clear();
+</code></pre>
+</li>
+</ul>
 <blockquote>
 <p>For more information, check out <a href="https://www.w3schools.com/java/java_hashset.asp">w3schools</a></p>
 </blockquote>
 <hr />
 <h2 id="task"><a class="header" href="#task">Task</a></h2>
-<p>Create a set of your favorite foods (Strings). Print the set, check if a certain food is in it, and remove one.</p>
+<p>Create a set of your favorite foods (<code>String</code>s). Print the set, check if a certain food is in it, and remove one.</p>
 
                         </div>
                         <div id="sidetoc">
