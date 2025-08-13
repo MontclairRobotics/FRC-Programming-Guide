@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/css/variables.css">
 <link rel="stylesheet" href="/css/chrome.css">
 
-<link rel="stylesheet" href="/FRC-Programming-Guide/css/font-awesome.css">
+<link rel="stylesheet" href="/FRC-Programming-Guide/FontAwesome/css/font-awesome.css">
 <link rel="stylesheet" href="/FRC-Programming-Guide/css/chrome.css">
 <link rel="stylesheet" href="/FRC-Programming-Guide/css/variables.css">
 <style>
@@ -162,444 +162,473 @@
       </div>
     </div>
   </div>
-
 <script>
+/*
+  Notes admin script
+  Updated base URL construction to use configurable global variables.
+
+  How to configure before this script runs (optional):
+    window.NOTES_BASE_CONFIG = {
+      // full base URL used in production (must end with '/')
+      prodBase: 'https://montclairrobotics.github.io/FRC-Programming-Guide/',
+      // base used in development (must end with '/')
+      devBase: (location.origin + '/'),
+      // hostnames that indicate "production" — one or more entries
+      prodHostnames: ['montclairrobotics.github.io', 'www.montclairrobotics.github.io'],
+      // optional: if set, force this exact base URL (string). Overrides detection.
+      // forceBase: 'https://example.com/some-base/'
+    };
+*/
+
 const LS = localStorage;
 const NOTE_PREFIX = 'inlineNotes_';
+
 function parseMap(){
   try { return JSON.parse(LS.getItem('map') || '[]'); } catch(e){ console.error('Bad map', e); return []; }
 }
-(function(){
 
+/* ---------- Base path configuration ---------- */
+// Provide sensible defaults but allow page author to override via window.NOTES_BASE_CONFIG
+(function ensureDefaultBaseConfig(){
+  const cfg = window.NOTES_BASE_CONFIG || (window.NOTES_BASE_CONFIG = {});
+  if(!cfg.prodBase) cfg.prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
+  if(!cfg.devBase) cfg.devBase = (location.origin + '/');
+  if(!cfg.prodHostnames) cfg.prodHostnames = ['montclairrobotics.github.io', 'www.montclairrobotics.github.io'];
+  if(!('forceBase' in cfg)) cfg.forceBase = null;
+})();
 
-
-  function getBasePath() {
-    const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
-    
-    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-      return location.origin + '/'; 
-    } else if(location.hostname === 'montclairrobotics.github.io') {
-      return prodBase; 
-    } else {
-      return location.origin + '/';
-    }
+/**
+ * Returns the configured base path to resolve relative links against.
+ * Resolution priority:
+ *  1. window.NOTES_BASE_CONFIG.forceBase (if non-null)
+ *  2. If location.hostname matches one of prodHostnames -> prodBase
+ *  3. Otherwise -> devBase
+ *
+ * All returned bases should include a trailing slash; defaults above include that.
+ */
+function getBasePath() {
+  const cfg = window.NOTES_BASE_CONFIG;
+  if(cfg && cfg.forceBase) {
+    return cfg.forceBase;
   }
-
-  function normalizeToAbsHtmlPath(link){
-    if(!link) return '';
-    const html = link.replace(/\.md$/i, '.html');
-    try {
-      const base = getBasePath();
-      const resolved = new URL(html, base).pathname;
-      return resolved;
-    } catch(e){
-      return '/' + html.replace(/^\/*/, '');
+  try {
+    const host = location.hostname;
+    if(cfg && Array.isArray(cfg.prodHostnames) && cfg.prodHostnames.indexOf(host) !== -1) {
+      return cfg.prodBase;
     }
+  } catch(e) {
+    // ignore and fall through to dev
   }
+  return (window.NOTES_BASE_CONFIG && window.NOTES_BASE_CONFIG.devBase) || (location.origin + '/');
+}
 
-  function findExistingNoteKeyForAbsPath(absPath){
+function normalizeToAbsHtmlPath(link){
+  if(!link) return '';
+  const html = link.replace(/\.md$/i, '.html');
+  try {
     const base = getBasePath();
-    for(let i=0;i<LS.length;i++){
-      const k = LS.key(i);
-      if(!k || !k.startsWith(NOTE_PREFIX)) continue;
-      const suffix = k.slice(NOTE_PREFIX.length);
-      if(suffix === absPath) return k;
-      if('/' + suffix === absPath) return k;
-      const replaced = suffix.replace(/_/g, '/');
-      try {
-        const resolved = new URL(replaced, base).pathname;
-        if(resolved === absPath) return k;
-      } catch(e){}
-      try {
-        const resolved2 = new URL(suffix, base).pathname;
-        if(resolved2 === absPath) return k;
-      } catch(e){}
+    const resolved = new URL(html, base).pathname;
+    return resolved;
+  } catch(e){
+    return '/' + html.replace(/^\/*/, '');
+  }
+}
+
+function findExistingNoteKeyForAbsPath(absPath){
+  const base = getBasePath();
+  for(let i=0;i<LS.length;i++){
+    const k = LS.key(i);
+    if(!k || !k.startsWith(NOTE_PREFIX)) continue;
+    const suffix = k.slice(NOTE_PREFIX.length);
+    if(suffix === absPath) return k;
+    if('/' + suffix === absPath) return k;
+    const replaced = suffix.replace(/_/g, '/');
+    try {
+      const resolved = new URL(replaced, base).pathname;
+      if(resolved === absPath) return k;
+    } catch(e){}
+    try {
+      const resolved2 = new URL(suffix, base).pathname;
+      if(resolved2 === absPath) return k;
+    } catch(e){}
+  }
+  return null;
+}
+function canonicalKeyForAbsPath(absPath){ return NOTE_PREFIX + absPath; }
+
+function readNotesForLink(rawLink){
+  const abs = normalizeToAbsHtmlPath(rawLink);
+  const existingKey = findExistingNoteKeyForAbsPath(abs);
+  if(existingKey){
+    try { return { key: existingKey, data: JSON.parse(LS.getItem(existingKey) || '{}') }; } catch(e){ return { key: existingKey, data: {} }; }
+  }
+  return { key: canonicalKeyForAbsPath(abs), data: {} };
+}
+
+function saveNotesForLink(rawLink, notesObj){
+  const abs = normalizeToAbsHtmlPath(rawLink);
+  const canonical = canonicalKeyForAbsPath(abs);
+  const existingKey = findExistingNoteKeyForAbsPath(abs);
+  LS.setItem(canonical, JSON.stringify(notesObj));
+  if(existingKey && existingKey !== canonical){ LS.removeItem(existingKey); }
+  return canonical;
+}
+
+function deleteNotesForLinkIfEmpty(rawLink, notesObj){
+  const abs = normalizeToAbsHtmlPath(rawLink);
+  const canonical = canonicalKeyForAbsPath(abs);
+  // if notesObj has no own keys, remove any existing key(s)
+  if(Object.keys(notesObj).length === 0){
+    // remove canonical and any other variant
+    const existingKey = findExistingNoteKeyForAbsPath(abs);
+    if(existingKey) LS.removeItem(existingKey);
+    LS.removeItem(canonical);
+    return true;
+  } else {
+    // otherwise write canonical
+    saveNotesForLink(rawLink, notesObj);
+    return false;
+  }
+}
+
+/* ---------- Sidebar / tree (unchanged) ---------- */
+const filterNotesBtn = document.getElementById('filterNotes');
+let filterOnlyWithNotes = false;
+
+function pageHasNotes(rawLink){
+  const abs = normalizeToAbsHtmlPath(rawLink);
+  const k = findExistingNoteKeyForAbsPath(abs);
+  if(!k) return false;
+  try { const obj = JSON.parse(LS.getItem(k) || '{}'); return Object.keys(obj).length > 0; } catch { return false; }
+}
+
+function makePageItem(node){
+  const li = document.createElement('li');
+  const row = document.createElement('div'); row.className = 'node-row';
+  const spacer = document.createElement('span'); spacer.style.width = '22px';
+  row.appendChild(spacer);
+
+  const pageItem = document.createElement('div'); pageItem.className = 'page-item'; pageItem.tabIndex = 0;
+  const left = document.createElement('div'); left.className = 'left';
+  const title = document.createElement('span'); title.className = 'title'; title.textContent = node.title || '(untitled)';
+  left.appendChild(title);
+  if(node.link){
+    const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = node.link.replace(/^\/*/,'' );
+    left.appendChild(meta);
+  }
+  pageItem.appendChild(left);
+
+  const right = document.createElement('div'); right.className = 'right';
+  if(node.link && pageHasNotes(node.link)){
+    const star = document.createElement('span'); star.className = 'badge'; star.textContent = '★';
+    right.appendChild(star);
+  }
+  pageItem.appendChild(right);
+
+  if(node.link && node.link.trim()){
+    pageItem.addEventListener('click', (e) => { e.stopPropagation(); loadPage(node.link, node.title); highlightByLink(node.link); });
+  } else { pageItem.classList.add('disabled'); }
+  pageItem.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pageItem.click(); } });
+
+  row.appendChild(pageItem);
+  li.appendChild(row);
+  return li;
+}
+
+function renderTree(nodes, parentContainer){
+  for(const node of nodes){
+    if(filterOnlyWithNotes){
+      function subtreeHasNotes(n){
+        if(n.link && pageHasNotes(n.link)) return true;
+        if(n.children) return n.children.some(c => subtreeHasNotes(c));
+        return false;
+      }
+      if(!subtreeHasNotes(node)) continue;
+    }
+
+    const li = document.createElement('li');
+
+    if(node.children && node.children.length){
+      const row = document.createElement('div'); row.className = 'node-row';
+      const expandBtn = document.createElement('button');
+      expandBtn.className = 'expand-btn';
+      expandBtn.innerHTML = '<i class="fa fa-chevron-down"></i>';
+      expandBtn.title = 'Expand / collapse';
+      expandBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const expanded = expandBtn.dataset.expanded === '1';
+        expandBtn.dataset.expanded = expanded ? '0' : '1';
+        expandBtn.querySelector('i').classList.toggle('fa-rotate-270', !expanded);
+        if(expanded) childUL.style.display = 'none'; else childUL.style.display = 'block';
+      });
+      row.appendChild(expandBtn);
+
+      const titleSpan = document.createElement('div'); titleSpan.style.flex = '1';
+      titleSpan.className = 'page-item'; titleSpan.tabIndex = 0;
+      const left = document.createElement('div'); left.className='left';
+      const title = document.createElement('span'); title.className='title'; title.textContent = node.title;
+      left.appendChild(title);
+      if(node.link){
+        const meta = document.createElement('span'); meta.className='meta'; meta.textContent = node.link.replace(/^\/*/,'' );
+        left.appendChild(meta);
+      }
+      titleSpan.appendChild(left);
+      if(node.link && pageHasNotes(node.link)){
+        const star = document.createElement('span'); star.className='badge'; star.textContent = '★';
+        titleSpan.appendChild(star);
+      }
+      if(node.link && node.link.trim()){
+        titleSpan.addEventListener('click', (e)=>{ e.stopPropagation(); loadPage(node.link, node.title); highlightByLink(node.link); });
+      } else {
+        titleSpan.classList.add('disabled');
+      }
+      row.appendChild(titleSpan);
+      li.appendChild(row);
+
+      const childUL = document.createElement('ul');
+      childUL.style.margin = '6px 0 6px 26px'; childUL.style.padding = '0'; childUL.style.display = 'none';
+      renderTree(node.children, childUL);
+      li.appendChild(childUL);
+
+    } else {
+      const p = makePageItem(node);
+      li.appendChild(p);
+    }
+    parentContainer.appendChild(li);
+  }
+}
+
+const mapData = parseMap();
+const treeRoot = document.getElementById('treeRoot');
+function clearTree(){ treeRoot.innerHTML = ''; }
+function buildSidebar(){ clearTree(); const ul = document.createElement('ul'); ul.style.padding = '0'; renderTree(mapData, ul); treeRoot.appendChild(ul); }
+
+function highlightByLink(link){
+  const abs = normalizeToAbsHtmlPath(link);
+  document.querySelectorAll('.page-item').forEach(el=>{
+    const meta = el.querySelector('.meta');
+    const text = meta ? meta.textContent.replace(/^\//,'') : '';
+    if( normalizeToAbsHtmlPath(text) === abs ){ el.classList.add('active'); } else { el.classList.remove('active'); }
+  });
+}
+
+// fetch helpers + loadPage (unchanged behavior, but block buttons differ now)
+const pageTitle = document.getElementById('pageTitle');
+const pagePath = document.getElementById('pagePath');
+const notesArea = document.getElementById('notesArea');
+const openPageBtn = document.getElementById('openPage');
+const addBlockNoteBtn = document.getElementById('addBlockNote');
+let currentPageLink = null;
+let currentPageTitle = null;
+let currentChildren = [];
+
+async function fetchPageHtml(absPath){
+  try {
+    const res = await fetch(absPath, {cache:'no-store'});
+    if(!res.ok) throw new Error('Not ok: ' + res.status);
+    const text = await res.text();
+    return text;
+  } catch(e){
+    console.warn('Fetch failed for', absPath, e);
+    return null;
+  }
+}
+
+async function loadPage(rawLink, title){
+  currentPageLink = rawLink;
+  currentPageTitle = title;
+  pageTitle.textContent = title || '(untitled)';
+  pagePath.textContent = rawLink || '';
+  notesArea.innerHTML = '<p class="muted">Loading page content...</p>';
+  openPageBtn.disabled = true;
+  addBlockNoteBtn.disabled = true;
+
+  const abs = normalizeToAbsHtmlPath(rawLink);
+  const htmlText = await fetchPageHtml(abs);
+  if(!htmlText){
+    markPageDisabledInSidebar(rawLink);
+    notesArea.innerHTML = `<p class="muted">Failed to fetch page: ${abs}</p>`;
+    return;
+  }
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlText, 'text/html');
+  const contentWrap = doc.querySelector('main .content-wrap');
+  if(!contentWrap){
+    notesArea.innerHTML = '<p class="muted">No <code>main .content-wrap</code> found in the page.</p>';
+    return;
+  }
+  const children = Array.from(contentWrap.children);
+  currentChildren = children;
+
+  const { key: noteKey, data: notesObj } = readNotesForLink(rawLink);
+
+  notesArea.innerHTML = '';
+  children.forEach((child, idx) => {
+    const blockNum = idx + 1;
+    const blockDiv = document.createElement('div'); blockDiv.className = 'block';
+    const head = document.createElement('div'); head.className = 'head';
+    const left = document.createElement('div');
+    left.innerHTML = `<strong>Block ${blockNum}</strong> <div class="muted" style="font-size:0.88rem; margin-top:4px;">${truncateText(child.textContent.trim(), 240)}</div>`;
+    head.appendChild(left);
+    const actions = document.createElement('div'); actions.className = 'actions';
+
+    // NEW: Add/Edit/Delete buttons per-block depending on note existence.
+    if(notesObj[blockNum]){
+      // Edit button
+      const editBtn = document.createElement('button'); editBtn.className = 'btn'; editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', () => openEditModal(blockNum, notesObj[blockNum]));
+      actions.appendChild(editBtn);
+
+      // Delete button
+      const delBtn = document.createElement('button'); delBtn.className = 'btn'; delBtn.textContent = 'Delete';
+      delBtn.addEventListener('click', () => openConfirmDeleteModal(blockNum));
+      actions.appendChild(delBtn);
+    } else {
+      // Add button
+      const addBtn = document.createElement('button'); addBtn.className = 'btn'; addBtn.textContent = 'Add';
+      addBtn.addEventListener('click', () => openEditModal(blockNum, ''));
+      actions.appendChild(addBtn);
+    }
+
+    head.appendChild(actions);
+    blockDiv.appendChild(head);
+
+    // existing note display
+    if(notesObj[blockNum]){
+      const noteEl = document.createElement('div'); noteEl.className = 'note';
+      noteEl.textContent = notesObj[blockNum];
+      blockDiv.appendChild(noteEl);
+    }
+
+    notesArea.appendChild(blockDiv);
+  });
+
+  openPageBtn.disabled = false;
+  addBlockNoteBtn.disabled = false;
+  openPageBtn.onclick = () => { window.open(abs, '_blank'); };
+
+  // addBlockNote now opens a tiny chooser prompt for which block to add (kept minimal)
+  addBlockNoteBtn.onclick = () => {
+    const blockNum = prompt(`Enter block number to add/edit note (1..${currentChildren.length}):`, `${currentChildren.length}`);
+    const n = parseInt(blockNum,10);
+    if(!n || n < 1 || n > currentChildren.length) { alert('Invalid block number'); return; }
+    openEditModal(n, '');
+  };
+}
+
+function truncateText(s, n){ if(!s) return ''; return s.length > n ? s.slice(0,n-1) + '…' : s; }
+function markPageDisabledInSidebar(rawLink){ const abs = normalizeToAbsHtmlPath(rawLink); document.querySelectorAll('.page-item').forEach(el=>{ const meta = el.querySelector('.meta'); if(!meta) return; if(normalizeToAbsHtmlPath(meta.textContent.trim()) === abs) { el.classList.add('disabled'); } }); }
+
+// REPLACED: openEditPrompt now uses custom modal
+// openEditModal: opens the modal, prefills text, handles Save to storage
+const editModalBackdrop = document.getElementById('editModalBackdrop');
+const editModalTextarea = document.getElementById('editModalTextarea');
+const editModalBlockNumSpan = document.getElementById('editModalBlockNum');
+const editModalPageSpan = document.getElementById('editModalPage');
+const editModalSave = document.getElementById('editModalSave');
+const editModalCancel = document.getElementById('editModalCancel');
+
+// Confirm modal elements
+const confirmModalBackdrop = document.getElementById('confirmModalBackdrop');
+const confirmModalBlockNumSpan = document.getElementById('confirmModalBlockNum');
+const confirmModalPageSpan = document.getElementById('confirmModalPage');
+const confirmModalDelete = document.getElementById('confirmModalDelete');
+const confirmModalCancel = document.getElementById('confirmModalCancel');
+
+// track current editing state
+let modalEditingBlock = null;
+
+function openEditModal(blockNum, currentText){
+  modalEditingBlock = blockNum;
+  editModalBlockNumSpan.textContent = blockNum;
+  editModalPageSpan.textContent = currentPageTitle || '';
+  editModalTextarea.value = currentText || '';
+  editModalBackdrop.style.display = 'flex';
+  editModalBackdrop.setAttribute('aria-hidden','false');
+  editModalTextarea.focus();
+}
+
+editModalCancel.addEventListener('click', () => {
+  editModalBackdrop.style.display = 'none';
+  editModalBackdrop.setAttribute('aria-hidden','true');
+  modalEditingBlock = null;
+});
+
+editModalSave.addEventListener('click', () => {
+  if(modalEditingBlock == null) return;
+  const newText = editModalTextarea.value;
+  const { key: existingKey, data: existingNotes } = readNotesForLink(currentPageLink);
+  // set or update
+  existingNotes[modalEditingBlock] = newText;
+  saveNotesForLink(currentPageLink, existingNotes);
+  // close modal and refresh
+  editModalBackdrop.style.display = 'none';
+  editModalBackdrop.setAttribute('aria-hidden','true');
+  modalEditingBlock = null;
+  loadPage(currentPageLink, currentPageTitle);
+  buildSidebar();
+});
+
+// Delete flow
+let modalDeletingBlock = null;
+function openConfirmDeleteModal(blockNum){
+  modalDeletingBlock = blockNum;
+  confirmModalBlockNumSpan.textContent = blockNum;
+  confirmModalPageSpan.textContent = currentPageTitle || '';
+  confirmModalBackdrop.style.display = 'flex';
+  confirmModalBackdrop.setAttribute('aria-hidden','false');
+}
+confirmModalCancel.addEventListener('click', () => {
+  confirmModalBackdrop.style.display = 'none';
+  confirmModalBackdrop.setAttribute('aria-hidden','true');
+  modalDeletingBlock = null;
+});
+confirmModalDelete.addEventListener('click', () => {
+  if(modalDeletingBlock == null) return;
+  const { key: existingKey, data: existingNotes } = readNotesForLink(currentPageLink);
+  delete existingNotes[modalDeletingBlock];
+  // remove key if empty, otherwise save
+  deleteNotesForLinkIfEmpty(currentPageLink, existingNotes);
+  confirmModalBackdrop.style.display = 'none';
+  confirmModalBackdrop.setAttribute('aria-hidden','true');
+  modalDeletingBlock = null;
+  loadPage(currentPageLink, currentPageTitle);
+  buildSidebar();
+});
+
+// Sidebar & initial state
+buildSidebar();
+(function autoSelect(){
+  function findFirstWithNotes(nodes){
+    for(const n of nodes){
+      if(n.link && pageHasNotes(n.link)) return n;
+      if(n.children){ const c = findFirstWithNotes(n.children); if(c) return c; }
     }
     return null;
   }
-  function canonicalKeyForAbsPath(absPath){ return NOTE_PREFIX + absPath; }
-
-  function readNotesForLink(rawLink){
-    const abs = normalizeToAbsHtmlPath(rawLink);
-    const existingKey = findExistingNoteKeyForAbsPath(abs);
-    if(existingKey){
-      try { return { key: existingKey, data: JSON.parse(LS.getItem(existingKey) || '{}') }; } catch(e){ return { key: existingKey, data: {} }; }
+  const withNotes = findFirstWithNotes(mapData);
+  if(withNotes) { loadPage(withNotes.link, withNotes.title); highlightByLink(withNotes.link); return; }
+  function findFirstLeaf(nodes){
+    for(const n of nodes){
+      if(n.children && n.children.length){ const c = findFirstLeaf(n.children); if(c) return c; }
+      else if(n.link) return n;
     }
-    return { key: canonicalKeyForAbsPath(abs), data: {} };
+    return null;
   }
-
-  function saveNotesForLink(rawLink, notesObj){
-    const abs = normalizeToAbsHtmlPath(rawLink);
-    const canonical = canonicalKeyForAbsPath(abs);
-    const existingKey = findExistingNoteKeyForAbsPath(abs);
-    LS.setItem(canonical, JSON.stringify(notesObj));
-    if(existingKey && existingKey !== canonical){ LS.removeItem(existingKey); }
-    return canonical;
-  }
-
-  function deleteNotesForLinkIfEmpty(rawLink, notesObj){
-    const abs = normalizeToAbsHtmlPath(rawLink);
-    const canonical = canonicalKeyForAbsPath(abs);
-    // if notesObj has no own keys, remove any existing key(s)
-    if(Object.keys(notesObj).length === 0){
-      // remove canonical and any other variant
-      const existingKey = findExistingNoteKeyForAbsPath(abs);
-      if(existingKey) LS.removeItem(existingKey);
-      LS.removeItem(canonical);
-      return true;
-    } else {
-      // otherwise write canonical
-      saveNotesForLink(rawLink, notesObj);
-      return false;
-    }
-  }
-
-  /* ---------- Sidebar / tree (unchanged) ---------- */
-  //const mapData = parseMap();
-  //const treeRoot = document.getElementById('treeRoot');
-  const filterNotesBtn = document.getElementById('filterNotes');
-  let filterOnlyWithNotes = false;
-
-  function pageHasNotes(rawLink){
-    const abs = normalizeToAbsHtmlPath(rawLink);
-    const k = findExistingNoteKeyForAbsPath(abs);
-    if(!k) return false;
-    try { const obj = JSON.parse(LS.getItem(k) || '{}'); return Object.keys(obj).length > 0; } catch { return false; }
-  }
-
-  function makePageItem(node){
-    const li = document.createElement('li');
-    const row = document.createElement('div'); row.className = 'node-row';
-    const spacer = document.createElement('span'); spacer.style.width = '22px';
-    row.appendChild(spacer);
-
-    const pageItem = document.createElement('div'); pageItem.className = 'page-item'; pageItem.tabIndex = 0;
-    const left = document.createElement('div'); left.className = 'left';
-    const title = document.createElement('span'); title.className = 'title'; title.textContent = node.title || '(untitled)';
-    left.appendChild(title);
-    if(node.link){
-      const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = node.link.replace(/^\/*/,'' );
-      left.appendChild(meta);
-    }
-    pageItem.appendChild(left);
-
-    const right = document.createElement('div'); right.className = 'right';
-    if(node.link && pageHasNotes(node.link)){
-      const star = document.createElement('span'); star.className = 'badge'; star.textContent = '★';
-      right.appendChild(star);
-    }
-    pageItem.appendChild(right);
-
-    if(node.link && node.link.trim()){
-      pageItem.addEventListener('click', (e) => { e.stopPropagation(); loadPage(node.link, node.title); highlightByLink(node.link); });
-    } else { pageItem.classList.add('disabled'); }
-    pageItem.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pageItem.click(); } });
-
-    row.appendChild(pageItem);
-    li.appendChild(row);
-    return li;
-  }
-
-  function renderTree(nodes, parentContainer){
-    for(const node of nodes){
-      if(filterOnlyWithNotes){
-        function subtreeHasNotes(n){
-          if(n.link && pageHasNotes(n.link)) return true;
-          if(n.children) return n.children.some(c => subtreeHasNotes(c));
-          return false;
-        }
-        if(!subtreeHasNotes(node)) continue;
-      }
-
-      const li = document.createElement('li');
-
-      if(node.children && node.children.length){
-        const row = document.createElement('div'); row.className = 'node-row';
-        const expandBtn = document.createElement('button');
-        expandBtn.className = 'expand-btn';
-        expandBtn.innerHTML = '<i class="fa fa-chevron-down"></i>';
-        expandBtn.title = 'Expand / collapse';
-        expandBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const expanded = expandBtn.dataset.expanded === '1';
-          expandBtn.dataset.expanded = expanded ? '0' : '1';
-          expandBtn.querySelector('i').classList.toggle('fa-rotate-270', !expanded);
-          if(expanded) childUL.style.display = 'none'; else childUL.style.display = 'block';
-        });
-        row.appendChild(expandBtn);
-
-        const titleSpan = document.createElement('div'); titleSpan.style.flex = '1';
-        titleSpan.className = 'page-item'; titleSpan.tabIndex = 0;
-        const left = document.createElement('div'); left.className='left';
-        const title = document.createElement('span'); title.className='title'; title.textContent = node.title;
-        left.appendChild(title);
-        if(node.link){
-          const meta = document.createElement('span'); meta.className='meta'; meta.textContent = node.link.replace(/^\/*/,'' );
-          left.appendChild(meta);
-        }
-        titleSpan.appendChild(left);
-        if(node.link && pageHasNotes(node.link)){
-          const star = document.createElement('span'); star.className='badge'; star.textContent = '★';
-          titleSpan.appendChild(star);
-        }
-        if(node.link && node.link.trim()){
-          titleSpan.addEventListener('click', (e)=>{ e.stopPropagation(); loadPage(node.link, node.title); highlightByLink(node.link); });
-        } else {
-          titleSpan.classList.add('disabled');
-        }
-        row.appendChild(titleSpan);
-        li.appendChild(row);
-
-        const childUL = document.createElement('ul');
-        childUL.style.margin = '6px 0 6px 26px'; childUL.style.padding = '0'; childUL.style.display = 'none';
-        renderTree(node.children, childUL);
-        li.appendChild(childUL);
-
-      } else {
-        const p = makePageItem(node);
-        li.appendChild(p);
-      }
-      parentContainer.appendChild(li);
-    }
-  }
-
-  const mapData = parseMap();
-  const treeRoot = document.getElementById('treeRoot');
-  function clearTree(){ treeRoot.innerHTML = ''; }
-  function buildSidebar(){ clearTree(); const ul = document.createElement('ul'); ul.style.padding = '0'; renderTree(mapData, ul); treeRoot.appendChild(ul); }
-
-  function highlightByLink(link){
-    const abs = normalizeToAbsHtmlPath(link);
-    document.querySelectorAll('.page-item').forEach(el=>{
-      const meta = el.querySelector('.meta');
-      const text = meta ? meta.textContent.replace(/^\//,'') : '';
-      if( normalizeToAbsHtmlPath(text) === abs ){ el.classList.add('active'); } else { el.classList.remove('active'); }
-    });
-  }
-
-  // fetch helpers + loadPage (unchanged behavior, but block buttons differ now)
-  const pageTitle = document.getElementById('pageTitle');
-  const pagePath = document.getElementById('pagePath');
-  const notesArea = document.getElementById('notesArea');
-  const openPageBtn = document.getElementById('openPage');
-  const addBlockNoteBtn = document.getElementById('addBlockNote');
-  let currentPageLink = null;
-  let currentPageTitle = null;
-  let currentChildren = [];
-
-  async function fetchPageHtml(absPath){
-    try {
-      const res = await fetch(absPath, {cache:'no-store'});
-      if(!res.ok) throw new Error('Not ok: ' + res.status);
-      const text = await res.text();
-      return text;
-    } catch(e){
-      console.warn('Fetch failed for', absPath, e);
-      return null;
-    }
-  }
-
-  async function loadPage(rawLink, title){
-    currentPageLink = rawLink;
-    currentPageTitle = title;
-    pageTitle.textContent = title || '(untitled)';
-    pagePath.textContent = rawLink || '';
-    notesArea.innerHTML = '<p class="muted">Loading page content...</p>';
-    openPageBtn.disabled = true;
-    addBlockNoteBtn.disabled = true;
-
-    const abs = normalizeToAbsHtmlPath(rawLink);
-    const htmlText = await fetchPageHtml(abs);
-    if(!htmlText){
-      markPageDisabledInSidebar(rawLink);
-      notesArea.innerHTML = `<p class="muted">Failed to fetch page: ${abs}</p>`;
-      return;
-    }
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlText, 'text/html');
-    const contentWrap = doc.querySelector('main .content-wrap');
-    if(!contentWrap){
-      notesArea.innerHTML = '<p class="muted">No <code>main .content-wrap</code> found in the page.</p>';
-      return;
-    }
-    const children = Array.from(contentWrap.children);
-    currentChildren = children;
-
-    const { key: noteKey, data: notesObj } = readNotesForLink(rawLink);
-
-    notesArea.innerHTML = '';
-    children.forEach((child, idx) => {
-      const blockNum = idx + 1;
-      const blockDiv = document.createElement('div'); blockDiv.className = 'block';
-      const head = document.createElement('div'); head.className = 'head';
-      const left = document.createElement('div');
-      left.innerHTML = `<strong>Block ${blockNum}</strong> <div class="muted" style="font-size:0.88rem; margin-top:4px;">${truncateText(child.textContent.trim(), 240)}</div>`;
-      head.appendChild(left);
-      const actions = document.createElement('div'); actions.className = 'actions';
-
-      // NEW: Add/Edit/Delete buttons per-block depending on note existence.
-      if(notesObj[blockNum]){
-        // Edit button
-        const editBtn = document.createElement('button'); editBtn.className = 'btn'; editBtn.textContent = 'Edit';
-        editBtn.addEventListener('click', () => openEditModal(blockNum, notesObj[blockNum]));
-        actions.appendChild(editBtn);
-
-        // Delete button
-        const delBtn = document.createElement('button'); delBtn.className = 'btn'; delBtn.textContent = 'Delete';
-        delBtn.addEventListener('click', () => openConfirmDeleteModal(blockNum));
-        actions.appendChild(delBtn);
-      } else {
-        // Add button
-        const addBtn = document.createElement('button'); addBtn.className = 'btn'; addBtn.textContent = 'Add';
-        addBtn.addEventListener('click', () => openEditModal(blockNum, ''));
-        actions.appendChild(addBtn);
-      }
-
-      head.appendChild(actions);
-      blockDiv.appendChild(head);
-
-      // existing note display
-      if(notesObj[blockNum]){
-        const noteEl = document.createElement('div'); noteEl.className = 'note';
-        noteEl.textContent = notesObj[blockNum];
-        blockDiv.appendChild(noteEl);
-      }
-
-      notesArea.appendChild(blockDiv);
-    });
-
-    openPageBtn.disabled = false;
-    addBlockNoteBtn.disabled = false;
-    openPageBtn.onclick = () => { window.open(abs, '_blank'); };
-
-    // addBlockNote now opens a tiny chooser prompt for which block to add (kept minimal)
-    addBlockNoteBtn.onclick = () => {
-      const blockNum = prompt(`Enter block number to add/edit note (1..${currentChildren.length}):`, `${currentChildren.length}`);
-      const n = parseInt(blockNum,10);
-      if(!n || n < 1 || n > currentChildren.length) { alert('Invalid block number'); return; }
-      openEditModal(n, '');
-    };
-  }
-
-  function truncateText(s, n){ if(!s) return ''; return s.length > n ? s.slice(0,n-1) + '…' : s; }
-  function markPageDisabledInSidebar(rawLink){ const abs = normalizeToAbsHtmlPath(rawLink); document.querySelectorAll('.page-item').forEach(el=>{ const meta = el.querySelector('.meta'); if(!meta) return; if(normalizeToAbsHtmlPath(meta.textContent.trim()) === abs) { el.classList.add('disabled'); } }); }
-
-  // REPLACED: openEditPrompt now uses custom modal
-  // openEditModal: opens the modal, prefills text, handles Save to storage
-  const editModalBackdrop = document.getElementById('editModalBackdrop');
-  const editModalTextarea = document.getElementById('editModalTextarea');
-  const editModalBlockNumSpan = document.getElementById('editModalBlockNum');
-  const editModalPageSpan = document.getElementById('editModalPage');
-  const editModalSave = document.getElementById('editModalSave');
-  const editModalCancel = document.getElementById('editModalCancel');
-
-  // Confirm modal elements
-  const confirmModalBackdrop = document.getElementById('confirmModalBackdrop');
-  const confirmModalBlockNumSpan = document.getElementById('confirmModalBlockNum');
-  const confirmModalPageSpan = document.getElementById('confirmModalPage');
-  const confirmModalDelete = document.getElementById('confirmModalDelete');
-  const confirmModalCancel = document.getElementById('confirmModalCancel');
-
-  // track current editing state
-  let modalEditingBlock = null;
-
-  function openEditModal(blockNum, currentText){
-    modalEditingBlock = blockNum;
-    editModalBlockNumSpan.textContent = blockNum;
-    editModalPageSpan.textContent = currentPageTitle || '';
-    editModalTextarea.value = currentText || '';
-    editModalBackdrop.style.display = 'flex';
-    editModalBackdrop.setAttribute('aria-hidden','false');
-    editModalTextarea.focus();
-  }
-
-  editModalCancel.addEventListener('click', () => {
-    editModalBackdrop.style.display = 'none';
-    editModalBackdrop.setAttribute('aria-hidden','true');
-    modalEditingBlock = null;
-  });
-
-  editModalSave.addEventListener('click', () => {
-    if(modalEditingBlock == null) return;
-    const newText = editModalTextarea.value;
-    const { key: existingKey, data: existingNotes } = readNotesForLink(currentPageLink);
-    // set or update
-    existingNotes[modalEditingBlock] = newText;
-    saveNotesForLink(currentPageLink, existingNotes);
-    // close modal and refresh
-    editModalBackdrop.style.display = 'none';
-    editModalBackdrop.setAttribute('aria-hidden','true');
-    modalEditingBlock = null;
-    loadPage(currentPageLink, currentPageTitle);
-    buildSidebar();
-  });
-
-  // Delete flow
-  let modalDeletingBlock = null;
-  function openConfirmDeleteModal(blockNum){
-    modalDeletingBlock = blockNum;
-    confirmModalBlockNumSpan.textContent = blockNum;
-    confirmModalPageSpan.textContent = currentPageTitle || '';
-    confirmModalBackdrop.style.display = 'flex';
-    confirmModalBackdrop.setAttribute('aria-hidden','false');
-  }
-  confirmModalCancel.addEventListener('click', () => {
-    confirmModalBackdrop.style.display = 'none';
-    confirmModalBackdrop.setAttribute('aria-hidden','true');
-    modalDeletingBlock = null;
-  });
-  confirmModalDelete.addEventListener('click', () => {
-    if(modalDeletingBlock == null) return;
-    const { key: existingKey, data: existingNotes } = readNotesForLink(currentPageLink);
-    delete existingNotes[modalDeletingBlock];
-    // remove key if empty, otherwise save
-    deleteNotesForLinkIfEmpty(currentPageLink, existingNotes);
-    confirmModalBackdrop.style.display = 'none';
-    confirmModalBackdrop.setAttribute('aria-hidden','true');
-    modalDeletingBlock = null;
-    loadPage(currentPageLink, currentPageTitle);
-    buildSidebar();
-  });
-
-  // Sidebar & initial state
-  buildSidebar();
-  (function autoSelect(){
-    function findFirstWithNotes(nodes){
-      for(const n of nodes){
-        if(n.link && pageHasNotes(n.link)) return n;
-        if(n.children){ const c = findFirstWithNotes(n.children); if(c) return c; }
-      }
-      return null;
-    }
-    const withNotes = findFirstWithNotes(mapData);
-    if(withNotes) { loadPage(withNotes.link, withNotes.title); highlightByLink(withNotes.link); return; }
-    function findFirstLeaf(nodes){
-      for(const n of nodes){
-        if(n.children && n.children.length){ const c = findFirstLeaf(n.children); if(c) return c; }
-        else if(n.link) return n;
-      }
-      return null;
-    }
-    const leaf = findFirstLeaf(mapData);
-    if(leaf) { loadPage(leaf.link, leaf.title); highlightByLink(leaf.link); }
-  })();
-
-  // filter toggle
-  filterNotesBtn.addEventListener('click', () => { filterOnlyWithNotes = !filterOnlyWithNotes; filterNotesBtn.classList.toggle('active', filterOnlyWithNotes); buildSidebar(); });
-
-  // // theme toggle (unchanged)
-  // const themeToggle = document.getElementById('theme-toggle');
-  // const darkFlag = LS.getItem('notes-admin-dark');
-  // if(darkFlag === '1') { /* dark default */ }
-  // themeToggle.addEventListener('click', () => {
-  //   const current = LS.getItem('notes-admin-dark') === '1';
-  //   LS.setItem('notes-admin-dark', current ? '0' : '1');
-  //   document.body.classList.toggle('light');
-  // });
-
+  const leaf = findFirstLeaf(mapData);
+  if(leaf) { loadPage(leaf.link, leaf.title); highlightByLink(leaf.link); }
 })();
+
+// filter toggle
+if(filterNotesBtn) {
+  filterNotesBtn.addEventListener('click', () => { filterOnlyWithNotes = !filterOnlyWithNotes; filterNotesBtn.classList.toggle('active', filterOnlyWithNotes); buildSidebar(); });
+}
+
+// expose helper for debugging (optional)
+window.getNotesBasePath = getBasePath;
 </script>
+
 
 
 <script>
@@ -750,15 +779,46 @@ const insertEditButton = () => {
 };
 
 const keyboardArrowNav = () => {
+  // Use global configuration if provided:
+  // window.NOTES_BASE_CONFIG = {
+  //   prodBase: 'https://montclairrobotics.github.io/FRC-Programming-Guide/',
+  //   devBase: location.origin + '/',
+  //   prodHostnames: ['montclairrobotics.github.io', 'www.montclairrobotics.github.io'],
+  //   forceBase: null
+  // }
   const getBasePathLocal = () => {
-    const prodBase = 'https://montclairrobotics.github.io/FRC-Programming-Guide/';
-    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-      return location.origin + '/';
-    } else if(location.hostname === 'montclairrobotics.github.io') {
-      return prodBase;
-    } else {
-      return location.origin + '/';
+    const cfg = window.NOTES_BASE_CONFIG || {};
+    // ensure defaults
+    const defaults = {
+      prodBase: 'https://montclairrobotics.github.io/FRC-Programming-Guide/',
+      devBase: (location.origin + '/'),
+      prodHostnames: ['montclairrobotics.github.io', 'www.montclairrobotics.github.io'],
+      forceBase: null
+    };
+    const prodBase = cfg.prodBase || defaults.prodBase;
+    const devBase = cfg.devBase || defaults.devBase;
+    const prodHostnames = Array.isArray(cfg.prodHostnames) ? cfg.prodHostnames : defaults.prodHostnames;
+
+    // forceBase overrides everything (if set and non-empty)
+    if(cfg && cfg.forceBase) {
+      try {
+        // ensure it's a valid URL and has trailing slash
+        const u = new URL(cfg.forceBase);
+        return u.href.endsWith('/') ? u.href : u.href + '/';
+      } catch(e) {
+        // ignore invalid forceBase
+      }
     }
+
+    try {
+      const host = location.hostname;
+      if(prodHostnames.indexOf(host) !== -1) {
+        return prodBase.endsWith('/') ? prodBase : prodBase + '/';
+      }
+    } catch(e) {
+      // ignore
+    }
+    return devBase.endsWith('/') ? devBase : devBase + '/';
   };
 
   // Convert any incoming link-like string to an absolute site pathname
@@ -768,13 +828,13 @@ const keyboardArrowNav = () => {
   const normalizeToAbsHtmlPathLocal = (link) => {
     if(!link) return '';
     let html = (link || '').replace(/\.md$/i, '.html').trim();
-    // try if link is already a full URL
+
+    // if html already looks like a full absolute URL, return its pathname+search+hash
     try {
       const u = new URL(html);
-      // preserve pathname+search+hash
       return (u.pathname || '') + (u.search || '') + (u.hash || '');
     } catch(e) {
-      // not a full URL -> resolve against site base
+      // resolve against configured base (which may include repo subpath)
       try {
         const base = getBasePathLocal();
         const u2 = new URL(html, base);
@@ -790,21 +850,14 @@ const keyboardArrowNav = () => {
   // normalize a meta string to absolute path (convert .md -> .html)
   const normalizePath = (raw) => {
     if(!raw) return null;
+    const trimmed = (raw || '').trim();
     try {
       // Try full URL first (handles if meta already contains full url)
-      const trimmed = raw.trim();
-      try {
-        const u = new URL(trimmed);
-        return (u.pathname || '') + (u.search || '') + (u.hash || '');
-      } catch(_) {
-        // Not a full URL, use site base resolution which accounts for repo-subpath
-        return normalizeToAbsHtmlPathLocal(trimmed);
-      }
-    } catch(e){
-      // fallback
-      try { raw = (raw || '').replace(/\.md$/i, '.html'); } catch(_) {}
-      const cleaned = (raw || '').replace(/^\/*/, '');
-      return '/' + cleaned;
+      const u = new URL(trimmed);
+      return (u.pathname || '') + (u.search || '') + (u.hash || '');
+    } catch(_) {
+      // Not a full URL, use site base resolution which accounts for repo-subpath
+      return normalizeToAbsHtmlPathLocal(trimmed);
     }
   };
 
@@ -834,27 +887,35 @@ const keyboardArrowNav = () => {
       const idx = list.findIndex(i => i.norm === cur || i.norm === (cur.startsWith('/') ? cur.slice(1) : '/' + cur));
       if(idx !== -1) return idx;
     }
-    // fallback: match location.pathname (+search/hash) — location.pathname already includes repo subpath
+    // fallback: match location.pathname (+search/hash)
     const locCandidates = [
-      location.pathname + (location.search || '') + (location.hash || ''),
-      location.pathname,
-      (location.pathname + location.search) || ''
+      (location.pathname || '') + (location.search || '') + (location.hash || ''),
+      (location.pathname || '') + (location.search || ''),
+      location.pathname || ''
     ].filter(Boolean);
     const idx = list.findIndex(i => locCandidates.includes(i.norm));
     if(idx !== -1) return idx;
     return 0;
   };
 
-  // helper to build an absolute fetch URL from a pathname (i.e. "/repo/x.html" -> full URL)
-  const makeFetchUrl = (pathname) => {
-    // if pathname already looks like a full URL, return as-is
+  // helper to build an absolute fetch URL from a pathname or URL
+  // Uses configured base so repo subpaths are respected.
+  const makeFetchUrl = (pathnameOrUrl) => {
+    // if it already looks like a full URL, return as-is
     try {
-      const u = new URL(pathname);
+      const u = new URL(pathnameOrUrl);
       return u.href;
     } catch(_) {
-      // ensure leading slash
-      const p = pathname.startsWith('/') ? pathname : '/' + pathname;
-      return location.origin.replace(/\/$/, '') + p;
+      // not a full URL => resolve relative to configured base
+      try {
+        const base = getBasePathLocal();
+        const resolved = new URL(pathnameOrUrl, base);
+        return resolved.href;
+      } catch(e) {
+        // fallback to origin based resolution
+        const p = pathnameOrUrl.startsWith('/') ? pathnameOrUrl : '/' + pathnameOrUrl;
+        return location.origin.replace(/\/$/, '') + p;
+      }
     }
   };
 
@@ -870,7 +931,7 @@ const keyboardArrowNav = () => {
       if(!target || !target.norm){ i += direction; continue; }
       try {
         // ensure .md -> .html and build a full url to fetch
-        const pathHtml = target.norm.replace(/\.md$/i, '.html');
+        const pathHtml = (target.norm || '').replace(/\.md$/i, '.html');
         const fetchUrl = makeFetchUrl(pathHtml);
         let ok = false;
         try {
@@ -891,8 +952,6 @@ const keyboardArrowNav = () => {
             target.el.click();
           } catch(e){
             console.warn('click failed, falling back to location assign', e);
-            // navigate to the resolved path relative to site base
-            // if target.norm is already a pathname (e.g. /repo/page.html) set location.href to full URL
             location.href = fetchUrl;
           }
           return;
@@ -925,7 +984,6 @@ const keyboardArrowNav = () => {
     }
   }, { passive: true });
 };
-
 
 const addOnscreenNavButtons = () => {
   try {
