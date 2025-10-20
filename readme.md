@@ -43,7 +43,7 @@ Roadmap:
    7. PID \[✔️\]
    8. Swerve \[❌\]
    9. Autonomous \[❌\]
-   10. Command-Based Programming vs OOP \[❌\]
+   10. Command-Based Programming \[❌\]
    11. Robot Interfacing (Driver Station)
 5. Advanced Java (ALL need refining)\[❌\]
    1. Inheritance (ext resource) \[🚧\]

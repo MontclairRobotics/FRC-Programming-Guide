@@ -29,7 +29,7 @@
   - [PID](FRC/course/PID.md)
   - [Swerve]()
   - [Autonomous]()
-  - [Command-Based Programming vs OOP]()
+  - [Command-Based Programming]()
   - [Robot Interfacing (Driver Station)]()
 - [💫 Advanced Java]()
   - [Inheritance](Advanced-Java/Inheritance.md)
