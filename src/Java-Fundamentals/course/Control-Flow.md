@@ -1,24 +1,26 @@
 # Control Flow 
-Control flow is the way a program decides what to do and when. Generally, code is executed top to bottom, in the order of appearance, but control flow statements allows for branching and conditionally-executed code.   can be modified using `functions`, `loops`, `if` / `else` statements, `jump` statements, and `try`/ `catch` blocks.
+Control flow is the way a program decides what to do and when. Generally, *code is executed top to bottom*, in the order of appearance, but control flow statements allows for branching and conditionally-executed code. This can be done using `functions`, `loops`, `if` / `else` statements, `jump` statements, and `try`/ `catch` blocks. We will learn about a few of these later but for no here is an overview of what each is before we start learning about them.
 
 <hr>
 
 # Terminology
 
-**Functions** : Allow for repeated portions of code to be executed differently each time based on a parameter
->`System.out.println("HELLO")` is a function that changes its execution based on the parameter passed, the string. We'll cover these more in depth later. 
+The following is stuff we haven't learned yet but will later!
 
-**Loops** : Repeats a block of code several times, either in iteration, or while a condition is true. 
+- [**Functions**](./Functions.md) : Allow for repeated portions of code to be executed differently each time based on a parameter
+>`System.out.println("HELLO")` is a function that changes its execution based on the parameter passed, the string. We'll cover these very soon! 
+
+- [**Loops**](./Loops.md) : Repeats a block of code several times, either in iteration, or while a condition is true. 
 >Imagine printing 
 >```python
 >>>> Hello 1
 >>>> Hello 2
 >>>> Hello 3
 >```
->with just a single block of code rather than 3 lines. Its more cleaner.  
->They will be covered more in depth later.
+>With just a single block of code that repeats rather than 3 lines.  
+>They will be covered soon as well.
 
-**If/Else** statements : Let you branch between different executions of the same code based on a condition. 
+- [**If/Else**](./If-Else.md) statements : Let you branch between different executions of the same code based on a condition. 
 >Like a human, we conditionally behave as well.
 >```
 >If hungry, Then Eat().
@@ -31,7 +33,7 @@ Control flow is the way a program decides what to do and when. Generally, code i
 ## Jump Statements
 These statements move the "flow" of execution of code. Instead of the code running in a straight line down the file, jump statements move around where the execution occurs in the code. 
 
-```break``` : Stops a flow early
+- ```break``` : Stops a flow early
 ```java
 for (int i = 0; i < 10; i++) {
     if (i == 3) break;
@@ -45,7 +47,7 @@ for (int i = 0; i < 10; i++) {
 >>>> 2
 >```
 
-```continue``` : Skips the current iteration:
+- ```continue``` : Skips the current iteration:
 
 ```java
 for (int i = 0; i < 5; i++) {
@@ -61,7 +63,7 @@ for (int i = 0; i < 5; i++) {
 >>>> 4
 >```
 
-Switch Cases:
+- Switch Cases:
 To chose between many options of a variable, and a cleaner than chaining ```if else``` statements.
 ```java
 String day = "Tuesday";
@@ -85,7 +87,7 @@ switch (day) {
 >>>> Second day of the week
 >```
 
-```Return ``` : End a function or execution of a loop, and output a value from the call
+- ```Return ``` : End a function or execution of a loop, and output a value from the call
 
 ```java
 public class MyClass {
@@ -132,4 +134,4 @@ System.out.println("Program continues...");
 >>>> Cannot divide by zero!
 >>>> Program continues...
 >```
-Without the try catch block, if the ArithmeticException went to Java, then the rest of any code following would not execute (see the print statement after not present in the terminal output). 
+Without the try catch block, if the ArithmeticException went to Java, then the rest of any code following would not execute (see the print statement after not present in the terminal output). more 

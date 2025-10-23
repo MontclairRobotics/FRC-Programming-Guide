@@ -1,4 +1,4 @@
-# Java Branching: If, Else, Elif
+# Java Branching: If, Else, & Else if
 This page is a continuation to the explanation of [control flow](./Control-Flow.md). `If` and `else` statements let your program conditionally execute particular blocks of code.
 
 ## If Statement

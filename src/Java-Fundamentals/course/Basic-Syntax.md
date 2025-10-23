@@ -15,9 +15,9 @@ public class Main {
 Let's go through this line by line:
 
 1. `public class Main { [...] }`
-   - In Java, every file contains one main *class* that has the same name as the file its in (in this case the above file would be called `Main.java`). We’ll talk about [classes](../../Object-Oriented-Programming/course/Classes.md) more in the future, but for now think of them as a container for parts of our code. Code between the opening and closing curly parenthesis is considered "part" of that class.
+   - You don't have to worry about this but in Java, every file contains one main *class* that has the same name as the file its in (in this case the above file would be called `Main.java`). We’ll talk about [classes](../../Object-Oriented-Programming/course/Classes.md) more in the future, but for now think of them as a *container* for parts of our code. Code between the opening and closing curly parenthesis is considered "part" of that class.
 2. `public static void main(String[] args) { [...] }`
-   - This is the *main method* Every application in Java contains a main method. When we run our program, the java compiler starts running our code from here. 
+   - This is the *main method* Every application in Java contains a main method. When we run our program, the java compiler *starts running our code from here*. 
 3. `System.out.println("hello World");`
    - This is known as a **print statement**. It prints the text "Hello, World!" to standard output (your screen). The text inside the quotation marks is called a [String](./Variables.md#) in Java. We use `System.out.println(" [...]
   ")` to print the text inside the double quotes to the screen.
