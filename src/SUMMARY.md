@@ -20,7 +20,7 @@
   - [Using Git & GitHub](Git/course/Usage.md)
   - [Effectively Contributing](Git/course/Effective-Contributing.md)
 - [🤖 FRC](FRC/Intro.md)
-  - [Installing WPILib](FRC/course/Install.md)
+  - [Starting w/ WPILib](FRC/course/Install.md)
   - [Terminology]()
   - [An Electronics Primer](FRC/course/ElectricalPrimer.md)
   - [Code Structure]()

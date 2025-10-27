@@ -5,7 +5,7 @@ An array is a list of variables, or more succinctly, a list of values. Each valu
 Let's discuss more about how to create and modify arrays using the following example:
 
 ```java
-int[] x = new int[] {2, 4, 6, 8, 10, 12};
+int[] x = new int[] {2, 4, 6, 8, 10, -7};
 ```
 
 This stores the numbers 2, 4, 6, 8, and 10 in the array `x`. The `int` at the beginning
@@ -24,6 +24,7 @@ int b = x[1]; // 4
 int c = x[2]; // 6
 int d = x[3]; // 8
 int e = x[4]; // 10
+int f = x[5]; //-7
 ```
 
 The indices of an array **start at 0** and increment from left to right. Here is a model of the index-value pairs inside the above array:
@@ -35,6 +36,7 @@ The indices of an array **start at 0** and increment from left to right. Here is
 | 2     | 6     |
 | 3     | 8     |
 | 4     | 10    |
+| 5     | 12    |
 
 ## Setting Array Values
 
