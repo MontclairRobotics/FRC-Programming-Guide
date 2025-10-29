@@ -9,7 +9,7 @@ The `while` loop is the simplest loop and is used to repeat a part of the progra
 Here is the structure of a while loop:
 
 ```java
-while (condition) { // the condition that is evaluated to true or false
+while (condition) { // the condition that is evaluated to true or false like an if statement
     // Do things here
 
     // Last line of the loop body is the one right before the }
@@ -73,7 +73,7 @@ ______________________________________________________________________
 
 ## For each loops
 
-The for each loop runs code for every part of a collection. It will run a loop that is the number of indexes in an [Array](./Arrays.md) or String.
+The for each loop runs code for every part of a collection. It will run a loop that is the number of indexes in an [Array](./Arrays.md).
 
 This may be confusing but the format is:
 ```java
@@ -86,6 +86,7 @@ This splits your array into individual data entries that can be referred to by a
 
 ```java
 String[] appleTypes = new String[] {"Pink Lady", "Red Delicious", "Granny Smith", "umm I'm out of apple names"};
+
 for (String theTypeOfApple: appleTypes) {
     [...]
     System.out.println(theTypeOfApple);
@@ -93,24 +94,20 @@ for (String theTypeOfApple: appleTypes) {
 ```
 Here we have an array of apple types. The code in for loop runs "for each" type of apple. In this code the type of apple we are currently on is referred to as `theTypeOfApple`. Each time this runs we are on a different entry in the array and the code is done on all of them. Each of these entries is of type `String` and we are calling them `theTypeOfApple` for the for loop. The array we are looping through is called `appleTypes`. That is why we have `String theTypeOfApple: appleTypes` because this runs through the everything in array with each individual String.
 
-Here are some examples:
+Here is an example:
 ```java
-String name = "Connor";
-for (char letter: name) {
-    //here there can be code where the code runs each character that makes up the String "name". Every character that it runs through will be referred to as "letter" every time the loop goes around.
-}
-```java
-int[] numbers = new int[] {3, 5, -7, 1}
-int total = 0
+int[] numbers = new int[] {3, 5, -7, 1};
+int total = 0;
+
 for (int number: numbers) {
-    total += number
+    total += number;
 }
 ```
 This last example adds every integer in numbers together. Also since arrays are often a named a plural noun, using it's singular to refer to each entry makes sense. Here we are referring to each number that is a part of numbers.
 
 ______________________________________________________________________
 
-The regular loop can also be used to go through an Array or String but still allowing us to use the index in the code:
+The regular for loop can also be used to go through an Array but still allowing us to use the index in the code:
 ```java
 for (int i = 0; i < arrayName.length; i++) {
     System.out.println("This is the index: " + i);
@@ -118,6 +115,8 @@ for (int i = 0; i < arrayName.length; i++) {
 }
 ```
 This lets us use both the index and the value (through `arrayName[index]`) in each iteration of the loop. This too will go through every entry into the array.
+
+______________________________________________________________________
 
 ## Resources    
 
