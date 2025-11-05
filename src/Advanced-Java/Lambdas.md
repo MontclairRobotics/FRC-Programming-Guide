@@ -31,7 +31,7 @@ For example, we need to pass in a function into a Command* so that when the butt
 In Lambdas, we pass the parameters to a function, without having to declare an entire method. We define a functional interface first, because like a method, if you pass parameters to it like in `(a, b)`, the lambda will not know how to handle it, and will have an error. Java needs to have declared type parameters. 
 >Notice how the parameters are defined in the `PrintOperations` interface, and then again how the same parameters are being referenced from the declaration of the lambda, in `PrintOperations printSequence = (a, b) -> {[...]}`
 After declaring the lambda, we can use the function anywhere within its scope in the code. 
-Right now, Lambdas may appear to be challenging and overcomplicate basic methods, such as `add`. However, we use them for concise syntax, prevent us from writing new methods and classes, and can be paired with loops, forEach. 
+Right now, Lambdas may appear to be challenging and overcomplicate basic methods, such as `printSequence`. However, when use for more complex things, lambdas simplify the process immensely. 
 
 ---
 ## Task: Practice with Lambdas
@@ -76,22 +76,23 @@ public class LambdaTest {
 There are a three types of common FunctionalInterfaces, or lambdas, that we interact with: Consumer, Supplier, and Runnable. Notice how each of these describes the action it will take. A Consumer lambda takes in a variable, with no outputs. A Supplier lambda takes in no inputs, and returns a value. A Runnable lambda is simply code that you want to run later. For example, let's say we want a function to be able to access the robot's arm angle throughout a match? Use lambdas. Want to tell Java, "Here's how we move our elevator to this height," so it can execute it on a button press? Use lambdas.    
 
 Here's an example
-```Java
+>```Java
 >//function that takes in a supplier of our arm angle, and prints out the value
 >void printArmAngle(Supplier<T> armAngleSupplier) {
-    System.out.println("Arm angle: " + armAngleSupplier.get());
-}
+>    System.out.println("Arm angle: " + armAngleSupplier.get());
+>}
 >//we can execute this as follows:
 >printArmAngle(() -> getArmAngle());
 >//notice how we pass in a lambda function to "supply" the function printArmAngle() with a way to get the current arm angle. If we were to simply pass in a variable, that would have the same value throughout the match instead of continuosly updating by ACTIVELY getting the arm angle each time we print it.
-```
 
-Here's another example
-```Java
+>```
+
+>Here's another example
+>```Java
 >//Commands.runOnce is a method that accepts a Runnable lambda, a function that we want to run later
 >//When this command, zeroGyro is scheduled, it will proceed to call the function setGyroAngle(double angle) with an input of 0 radians
 >Command zeroGyro = Commands.runOnce(() -> setGyroAngle(0));
 >//Don't worry about the syntax with commands just yet. This is part of WPILib, which will be covered later
 >
-```
+>```
 For more information, check out [w3schools](https://www.w3schools.com/java/java_lambda.asp)
