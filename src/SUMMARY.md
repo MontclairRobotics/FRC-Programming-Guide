@@ -20,7 +20,7 @@
   - [Using Git & GitHub](Git/course/Usage.md)
   - [Effectively Contributing](Git/course/Effective-Contributing.md)
 - [🤖 FRC](FRC/Intro.md)
-  - [Starting w/ WPILib](FRC/course/Install.md)
+  - [Starting w/ WPILib](FRC/course/WPIlib.md)
   - [Terminology]()
   - [An Electronics Primer](FRC/course/ElectricalPrimer.md)
   - [Code Structure]()
@@ -37,6 +37,7 @@
   - [Arraylists](Advanced-Java/Arraylists.md)
   - [Hashmaps](Advanced-Java/Hashmaps.md)
   - [Hashsets]()
+  - [Enums]()
   - [Lambdas](Advanced-Java/Lambdas.md)
   - [Style Guide]()
 

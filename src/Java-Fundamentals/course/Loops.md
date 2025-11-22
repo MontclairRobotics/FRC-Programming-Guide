@@ -25,7 +25,7 @@ Let's go over how this loop will be executed:
 
 ## For Loops
 
-Another common loop is the for loop. The for loop is useful when you need to loop through a set number of items. Let's say we want to loop through a set of numbers to add them up, here is how you would do it:
+Another common loop is the `for` loop. The for loop is useful when you need to loop through a set number of items. Let's say we want to loop through a set of numbers to add them up, here is how you would do it:
 
 ```java
 int number = 3;
@@ -103,7 +103,7 @@ for (int number: numbers) {
     total += number;
 }
 ```
-This last example adds every integer in numbers together. Also since arrays are often a named a plural noun, using it's singular to refer to each entry makes sense. Here we are referring to each number that is a part of numbers.
+This adds every integer in the Array numbers together. Also since arrays are often a named a plural noun, using it's singular to refer to each entry makes sense. Here we are referring to each number that is a part of numbers.
 
 ______________________________________________________________________
 
