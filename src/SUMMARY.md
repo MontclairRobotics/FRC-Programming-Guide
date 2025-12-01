@@ -36,7 +36,7 @@
   - [Advanced String Usage]()
   - [Arraylists](Advanced-Java/Arraylists.md)
   - [Hashmaps](Advanced-Java/Hashmaps.md)
-  - [Hashsets]()
+  - [Hashsets](Advanced-Java/Hashsets.md)
   - [Enums]()
   - [Lambdas](Advanced-Java/Lambdas.md)
   - [Style Guide]()
