@@ -39,9 +39,9 @@
   - [Hashsets](Advanced-Java/Hashsets.md)
   - [Enums]()
   - [Lambdas](Advanced-Java/Lambdas.md)
-  - [Style Guide]()
 
 -----------
 [Appendix](Appendix/Intro.md)
+[Style Guide](Appendix/StyleGuide.md)
 [A Special Thanks](Appendix/Special-Thanks.md)
 [Your Notes](notes.html)
